@@ -1,20 +1,21 @@
-
 spring:
-  datasource: 
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-    driver-class-name: org.postgresql.Driver
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://dpg-d0ej0sadbo4c738oaib0-a:5432/mysql_qdgc?sslmode=require}
+    username: ${SPRING_DATASOURCE_USERNAME:appuser}
+    password: ${SPRING_DATASOURCE_PASSWORD:Str0ngP@ss2025!}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
+
   jpa:
-    
     show-sql: true
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect    
+        dialect: ${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.PostgreSQLDialect}
+
   thymeleaf:
-    cache: false 
+    cache: false
+
 server:
   error:
     whitelabel:
@@ -24,4 +25,4 @@ server:
       cookie:
         http-only: true
       tracking-modes:
-      - cookie
+        - cookie
