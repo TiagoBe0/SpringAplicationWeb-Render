@@ -1,147 +1,128 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>rahip</title>
-  <link rel="stylesheet" href="servicios.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title> <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #5A1D87;
+            color: white;
+            /* text-align: center; Ya no es necesario centrar todo el body si la tabla tiene su propio ancho */
+            margin: 0;
+            padding: 20px; /* Añadido padding general al body */
+        }
+        .container {
+            width: 95%; /* Ajustado para un mejor uso del espacio */
+            margin: auto;
+            padding: 20px;
+            background-color: #6A1E99; /* Fondo para el contenedor principal para mejor contraste */
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+        .header-logo { /* Clase específica para el logo en el encabezado */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header-logo img {
+            width: 100px; /* Tamaño del logo */
+            height: auto;
+        }
+        h2 { /* Estilo para el título de la tabla */
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: white; /* Fondo blanco para la tabla para legibilidad */
+            color: #333; /* Texto oscuro para la tabla */
+            border-radius: 8px; /* Bordes redondeados para la tabla */
+            overflow: hidden; /* Para que el border-radius afecte a los th/td */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd; /* Borde más sutil para celdas */
+            padding: 12px 15px; /* Más padding para mejor espaciado */
+            text-align: left; /* Alineación a la izquierda para el contenido de las celdas */
+        }
+        th {
+            background-color: #8A2BE2; /* Fondo violeta más claro para encabezados de tabla */
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) { /* Estilo para filas pares para mejor legibilidad */
+            background-color: #f9f9f9;
+        }
+        tr:hover { /* Efecto hover en las filas */
+            background-color: #f1f1f1;
+        }
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
-  
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
-        crossorigin="anonymous">
+        /* Estilos para los paneles (si los necesitas mantener, considera si esta página es solo para la tabla) */
+        /* .left-panel, .right-panel podrían necesitar ajustes si esta página es diferente */
+
+        /* Estilos de botones y otros elementos de la página original, si son necesarios aquí */
+        .button {
+            display: inline-block; /* Ajustado para que puedan estar en línea */
+            background-color: white;
+            color: #5A1D87;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin: 10px 5px; /* Margen ajustado */
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none; /* Para que parezcan botones si son <a> */
+            border: 2px solid #5A1D87;
+        }
+        .button:hover {
+            background-color: #5A1D87;
+            color: white;
+        }
+        .search-controls { /* Contenedor para la barra y botones de búsqueda */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .search-bar {
+            width: 50%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd; /* Borde para la barra de búsqueda */
+            margin-right: 10px;
+        }
+
+    </style>
 </head>
 <body>
-  <div class="wrapper">
-      <header>
-    <nav>
-      <ul class="nav-list">
-        <li class="brand">
-          <a th:href="@{/index}">
-            <img src="layaout-web/archivos/rahip-logo-blanco.svg"
-                 alt="Marca" width="100px" class="brand-icon">
-          </a>
-        </li>
-        <li class="nav-item"><a th:href="@{/nosotros}">NOSOTROS</a></li>
-        <li class="nav-item"><a th:href="@{/servicios}">SERVICIOS</a></li>
-        <li class="nav-item"><a th:href="@{/brief}">BRIEF</a></li>
-        <li class="nav-item"><a th:href="@{/calificanos}">CALIFICÁNOS</a></li>
-        <li class="nav-item"><a th:href="@{/contacto}">CONTACTO</a></li>
-        <li class="user">
-          <a th:href="@{/login}">
-            <img src="layaout-web/archivos/base-datos-icono.svg"
-                 alt="Usuario" class="user-icon">
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
-
-    <!-- Botón cambio de tema -->
-    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
-
-    <!-- Botón flotante de WhatsApp -->
-    <a href="https://wa.me/+5492617501005"
-       target="_blank"
-       class="whatsapp-float">
-      <img src="layaout-web/archivos/iconos-redes/whatsapp-blanco.svg"
-           alt="WhatsApp">
-    </a>
-
-    <!-- Contenido principal -->
-    <main class="content">
-      <section class="brief-form">
-        <div class="container py-5">
-          <!-- Datos Personales -->
-          <h2 class="text-center text-white mb-4">Datos Personales</h2>
-          <form action="TU_ENDPOINT" method="post">
-            <div class="mb-3">
-              <input type="text" name="empresa"
-                     class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
-                     placeholder="Nombre de la empresa" required>
-            </div>
-            <div class="mb-3">
-              <input type="text" name="nombre"
-                     class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
-                     placeholder="Nombre completo" required>
-            </div>
-            <div class="mb-3">
-              <input type="tel" name="telefono"
-                     class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
-                     placeholder="Número de celular" required>
-            </div>
-
-            <!-- Empresa y Filosofía -->
-            <h2 class="text-center text-white mt-5 mb-4">Empresa y Filosofía</h2>
-            <div class="mb-3">
-              <textarea name="historia" rows="2"
-                        class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
-                        placeholder="Historia de la empresa" required></textarea>
-            </div>
-            <div class="mb-3">
-              <textarea name="objetivos" rows="2"
-                        class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
-                        placeholder="Objetivos a largo plazo" required></textarea>
-            </div>
-
-            <!-- reCAPTCHA -->
-            <div class="d-flex justify-content-center my-4">
-              <div class="g-recaptcha" data-sitekey="TU_SITE_KEY"></div>
-            </div>
-
-            <!-- Botón Enviar -->
-            <div class="text-center">
-              <button type="submit"
-                      class="btn btn-outline-light rounded-pill px-5 py-2">
-                ENVIAR
-              </button>
-            </div>
-          </form>
+    <div class="container">
+        <div class="header-logo">
+            <img th:src="@{/img/rahip-logo-blanco.svg}" alt="Logo Rahip">
         </div>
-      </section>
-    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-left">
-        <p>RAHIP Estudio Creativo | Todos los derechos reservados 2025</p>
-      </div>
-      <div class="footer-right">
-        <a href="#" class="social-icon">
-          <img src="layaout-web/archivos/iconos-redes/whatsapp-blanco.svg" alt="WhatsApp">
-        </a>
-        <a href="#" class="social-icon">
-          <img src="layaout-web/archivos/iconos-redes/instagram-blanco.svg" alt="Instagram">
-        </a>
-        <a href="#" class="social-icon">
-          <img src="layaout-web/archivos/iconos-redes/linkedin-blanco.svg" alt="LinkedIn">
-        </a>
-        <a href="#" class="social-icon">
-          <img src="layaout-web/archivos/iconos-redes/mail-blanco.svg" alt="Email">
-        </a>
-      </div>
-    </footer>
+        <h2>Listado de Usuarios</h2>
 
-  </div> <!-- /.wrapper -->
-
-  <!-- Scripts -->
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-          crossorigin="anonymous"></script>
-  <script>
-    function toggleTheme() {
-      const body = document.body;
-      const button = document.getElementById('theme-toggle');
-      body.classList.toggle('dark-theme');
-      button.textContent = body.classList.contains('dark-theme') ? '☀️' : '🌙';
-    }
-  </script>
+        <table>
+            <thead> <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Mail</th>
+                    </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${#lists.isEmpty(usuarios)}">
+                    <td colspan="4" style="text-align: center;">No hay usuarios para mostrar.</td>
+                </tr>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.id}">1</td>
+                    <td th:text="${usuario.nombre}">Juan</td>
+                    <td th:text="${usuario.apellido}">Pérez</td>
+                    <td th:text="${usuario.mail}">juan.perez@example.com</td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

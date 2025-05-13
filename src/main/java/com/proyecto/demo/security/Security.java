@@ -23,7 +23,7 @@ public class Security extends WebSecurityConfigurerAdapter {
                         "/**").permitAll()
                 .and().
                 formLogin()
-                .loginPage("/usuario/loginUsuario")
+                .loginPage("/login-render")
                 .loginProcessingUrl("/logincheck")
                 .usernameParameter("username")
                 .passwordParameter("password")
