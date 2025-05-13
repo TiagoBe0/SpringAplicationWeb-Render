@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
+<!-- Head -->
+<head th:replace="/fragments/head :: head"></head>
 <body>
 <!-- Navigation -->
 <nav th:replace="/fragments/navbar :: nav"></nav>
@@ -12,14 +14,33 @@
       <div class="row align-items-center">
         <div class="col-lg-6 order-lg-2">
           <div class="p-5">
-              <img class="img-fluid rounded-circle" src="../static/img/bartender.jpg" alt="">
+            <img class="img-fluid rounded-circle" src="img/m1.jpeg" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <div class="p-5">
+            <h2 class="display-4">Registrate</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 <h2 class="display-4">Algunos de Nuestros Usuarios</h2>
-
+ <section>
+    <div class="container" th:each="usuario : ${usuarios}">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2">
+          <div class="p-5">
+           <img th:if="${usuario.foto != null}" class="rounded-circle" th:src="${'/foto/usuario/' + usuario.id}" alt="" style="max-height: 100px">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+         
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="py-5 bg-black">

@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <!-- Head -->
-
+<head th:replace="/fragments/head :: head"></head>
 <body>
  <!-- Navigation -->
+<nav th:replace="/fragments/navbar :: nav"></nav>
+ <!-- Header -->
+<header th:replace="/fragments/headergenerico :: header"></header>
 
   <section>
     <div class="container">
@@ -15,9 +18,7 @@
         </div>
         <div class="col-lg-6 order-lg-1">
           <div class="p-5">
-            <h2 class="display-4">Ingresá a tu Bar</h2>
-            
-            
+            <h2 class="display-4">Ingresá a Tinder</h2>
             <form action="/logincheck" method="POST">
                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
                <p th:if="${logout != null}" th:text="${logout}" style="color:greenyellow"></p>
