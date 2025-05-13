@@ -25,6 +25,13 @@ public class Controlador {
     @Autowired
     private ZonaRepositorio zonaRepositorio;
 
+    
+    
+    @GetMapping("/render")
+    public String inde_test_render(){
+    
+    return "index_render.html";
+    }
     @GetMapping("/")
     public String index(ModelMap modelo) {
         List<Usuario> usuariosActivos = usuarioServicio.todosLosUsuarios();
