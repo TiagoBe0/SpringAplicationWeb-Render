@@ -7,8 +7,6 @@ WORKDIR /app
 
 # Copiamos primero el pom.xml para aprovechar el caché de Docker para las dependencias
 COPY pom.xml .
-# Descargamos las dependencias (opcional, pero puede acelerar builds si el pom.xml no cambia mucho)
-# RUN mvn dependency:go-offline -B
 
 # Copiamos el resto del código fuente de tu aplicación
 COPY src ./src
@@ -25,11 +23,14 @@ FROM eclipse-temurin:11-jre-alpine
 # Establecemos el directorio de trabajo
 WORKDIR /app
 
-# Copiamos el .war generado en la etapa 'builder' al directorio actual de la imagen final
+# Copiamos el .war generado en la etapa 'builder' al directorio /app/app.war en la imagen final
+# El nombre original del artefacto es /app/target/SpringUsoSesionesUsuario-0.0.1-SNAPSHOT.war en la etapa builder
 COPY --from=builder /app/target/SpringUsoSesionesUsuario-0.0.1-SNAPSHOT.war app.war
 
 # Exponemos el puerto en el que tu aplicación Spring Boot se ejecuta (por defecto 8080)
 EXPOSE 8080
 
 # Comando para ejecutar la aplicación cuando el contenedor inicie
-ENTRYPOINT ["java","-jar","/app.war"]
+# CORRECCIÓN: La ruta al archivo WAR ahora es /app/app.war
+ENTRYPOINT ["java","-jar","/app/app.war"]
+
