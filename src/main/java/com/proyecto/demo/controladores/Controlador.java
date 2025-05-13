@@ -32,6 +32,11 @@ public class Controlador {
     
     return "index_render.html";
     }
+     @GetMapping("/render-index")
+    public String index_test(){
+    
+    return "index.html";
+    }
     @GetMapping("/")
     public String index(ModelMap modelo) {
         List<Usuario> usuariosActivos = usuarioServicio.todosLosUsuarios();
