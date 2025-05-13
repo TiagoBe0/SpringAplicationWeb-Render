@@ -19,31 +19,29 @@
 </head>
 <body>
   <div class="wrapper">
-
-    <!-- Header / Navegación -->
-    <header>
-      <nav>
-        <ul class="nav-list">
-          <li class="brand">
-            <a href="index.html">
-              <img src="layaout-web/archivos/rahip-logo-blanco.svg"
-                   alt="Marca" class="brand-icon">
-            </a>
-          </li>
-          <li class="nav-item"><a href="nosotros.html">NOSOTROS</a></li>
-          <li class="nav-item"><a href="servicios.html">SERVICIOS</a></li>
-          <li class="nav-item"><a href="brief.html">BRIEF</a></li>
-          <li class="nav-item"><a href="calificanos.html">CALIFICANOS</a></li>
-          <li class="nav-item"><a href="contacto.html">CONTACTO</a></li>
-          <li class="user">
-            <a href="login.html">
-              <img src="layaout-web/archivos/base-datos-icono.svg"
-                   alt="Usuario" class="user-icon">
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+      <header>
+    <nav>
+      <ul class="nav-list">
+        <li class="brand">
+          <a th:href="@{/index}">
+            <img src="layaout-web/archivos/rahip-logo-blanco.svg"
+                 alt="Marca" width="100px" class="brand-icon">
+          </a>
+        </li>
+        <li class="nav-item"><a th:href="@{/nosotros}">NOSOTROS</a></li>
+        <li class="nav-item"><a th:href="@{/servicios}">SERVICIOS</a></li>
+        <li class="nav-item"><a th:href="@{/brief}">BRIEF</a></li>
+        <li class="nav-item"><a th:href="@{/calificanos}">CALIFICÁNOS</a></li>
+        <li class="nav-item"><a th:href="@{/contacto}">CONTACTO</a></li>
+        <li class="user">
+          <a th:href="@{/login}">
+            <img src="layaout-web/archivos/base-datos-icono.svg"
+                 alt="Usuario" class="user-icon">
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
     <!-- Botón cambio de tema -->
     <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
