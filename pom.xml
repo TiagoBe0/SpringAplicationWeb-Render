@@ -95,12 +95,10 @@
       <optional>true</optional>
     </dependency>
 
-    <!-- 8. Tomcat como contenedor externo -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-tomcat</artifactId>
-      <scope>provided</scope>
-    </dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-tomcat</artifactId>
+</dependency>
 
     <!-- 9. Testing -->
     <dependency>
