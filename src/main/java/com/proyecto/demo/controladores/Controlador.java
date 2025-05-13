@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("/portal")
 public class Controlador {
 
     @Autowired
@@ -39,8 +38,42 @@ public class Controlador {
     
     return "index.html";
     }
-    @GetMapping("/")
+    
+    
+        @GetMapping("/")
     public String index(ModelMap modelo) {
+        List<Usuario> usuariosActivos = usuarioServicio.todosLosUsuarios();
+        //Recordar que utilizo el modelo,para viajar con la llave usuarios al HTML la lista usuariosactivos
+        modelo.addAttribute("usuarios", usuariosActivos);
+        return "index.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @GetMapping("/inicio-render")
+    public String inicio() {
+        return "inicio.html";
+    }
+
+    @GetMapping("/login-render")
+    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap model) {
+        if (error != null) {
+            model.put("error", "Usuario o clave incorrectos");
+        }
+        if (logout != null) {
+            model.put("logout", "Ha salido correctamente.");
+        }
+        return "login.html";
+    }
+
+    @GetMapping("/registro-render")
+    public String registro(ModelMap modelo) {
+        List<Zona> zonas = zonaRepositorio.findAll();
+        modelo.put("zonas", zonas);
+        return "registro.html";
+    }
+
+    @GetMapping("/s")
+    public String indexx(ModelMap modelo) {
         List<Usuario> usuariosActivos = usuarioServicio.todosLosUsuarios();
         //Recordar que utilizo el modelo,para viajar con la llave usuarios al HTML la lista usuariosactivos
         modelo.addAttribute("usuarios", usuariosActivos);
@@ -67,7 +100,7 @@ public class Controlador {
     }
 
     @GetMapping("/loginUsuarioModelo")
-    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap model) {
+    public String loginn(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap model) {
         if (error != null) {
             model.put("error", "Usuario o clave incorrectos");
         }
