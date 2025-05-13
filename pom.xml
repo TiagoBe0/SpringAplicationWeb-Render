@@ -10,15 +10,12 @@
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.5.4</version>
-    <relativePath/>
-  </parent>
+    <relativePath/> </parent>
 
   <groupId>com.proyecto</groupId>
   <artifactId>SpringUsoSesionesUsuario</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-
-  <name>SpringUsoSesionesUsuario</name>
+  <packaging>war</packaging> <name>SpringUsoSesionesUsuario</name>
   <description>Demo project for Spring Boot</description>
 
   <properties>
@@ -26,78 +23,42 @@
   </properties>
 
   <dependencies>
-    <!-- 1. Spring Data JPA (incluye Hibernate y JPA API) -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
 
-    <!-- 2. Spring Security -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 
-    <!-- 3. Thymeleaf Core -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
-    <!-- Thymeleaf + Spring Security extras -->
     <dependency>
       <groupId>org.thymeleaf.extras</groupId>
       <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-      <version>3.0.4.RELEASE</version>
-    </dependency>
+      </dependency>
 
-    <!-- 4. Spring MVC / Web -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
-<<<<<<< HEAD
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-=======
-    <!-- 5. PostgreSQL Driver -->
     <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>42.5.4</version>
-      <scope>runtime</scope>
-    </dependency>
->>>>>>> cbcf487 (df)
-
-    <!-- 6. Java EE APIs necesarios -->
-
-    <!-- JPA API (en caso de que no lo resuelva el starter-data-jpa) -->
-    <dependency>
-      <groupId>javax.persistence</groupId>
-      <artifactId>javax.persistence-api</artifactId>
-      <version>2.2</version>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <scope>runtime</scope>
     </dependency>
 
-    <!-- Transacciones JTA -->
-    <dependency>
-      <groupId>javax.transaction</groupId>
-      <artifactId>javax.transaction-api</artifactId>
-      <version>1.3</version>
-    </dependency>
-
-    <!-- Servlet API (para HttpServletRequest, HttpSession, etc.) -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
-      <version>4.0.1</version>
       <scope>provided</scope>
     </dependency>
 
-    <!-- 7. Devtools (opcional, sólo en desarrollo) -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
@@ -105,26 +66,6 @@
       <optional>true</optional>
     </dependency>
 
-<<<<<<< HEAD
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-tomcat</artifactId>
-=======
-    <!-- 8. Tomcat como contenedor externo -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-tomcat</artifactId>
-   
-    </dependency>
-    
-    <dependency>
-    <groupId>com.h2database</groupId>
-    <artifactId>h2</artifactId>
-    <scope>test</scope>
->>>>>>> cbcf487 (df)
-</dependency>
-
-    <!-- 9. Testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -135,31 +76,27 @@
       <artifactId>spring-security-test</artifactId>
       <scope>test</scope>
     </dependency>
+    
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <scope>test</scope>
+    </dependency>
 
-    <!-- 10. Mail -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-mail</artifactId>
     </dependency>
 
-    <!-- 11. OpenPDF -->
     <dependency>
       <groupId>com.github.librepdf</groupId>
       <artifactId>openpdf</artifactId>
-      <version>1.3.8</version>
-    </dependency>
+      <version>1.3.8</version> </dependency>
 
-    <!-- 12. Bean Validation API -->
-    <dependency>
-      <groupId>javax.validation</groupId>
-      <artifactId>validation-api</artifactId>
-      <version>2.0.1.Final</version>
-    </dependency>
-  </dependencies>
+    </dependencies>
 
   <build>
     <plugins>
-      <!-- Plugin de empaquetado Spring Boot -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
