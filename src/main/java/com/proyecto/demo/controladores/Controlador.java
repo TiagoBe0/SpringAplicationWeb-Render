@@ -215,7 +215,7 @@ public class Controlador {
         }
         modelo.put("titulo", "Bienvenido a Tinder de Mascotas");
         modelo.put("descripcion", "Tu usuario fue registrado de manera satisfactoria");
-        return "exito.html";
+        return "index.html";
     }
 
 }

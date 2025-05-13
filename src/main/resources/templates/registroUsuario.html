@@ -189,15 +189,15 @@
             <div class="icon">📝</div> <h2>Crear Nueva Cuenta</h2>
             <form th:action="@{/registrar}" method="POST"  enctype="multipart/form-data"> <div class="input-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" >
                 </div>
                 <div class="input-group">
                     <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" name="apellido" placeholder="Ingresa tu apellido" required>
+                    <input type="text" id="apellido" name="apellido" placeholder="Ingresa tu apellido" >
                 </div>
                 <div class="input-group">
                     <label for="mail">Correo Electrónico</label>
-                    <input type="email" id="mail" name="mail" placeholder="tu.correo@ejemplo.com" required>
+                    <input type="email" id="mail" name="mail" placeholder="tu.correo@ejemplo.com" >
                 </div>
                 <div class="input-group">
                     <label for="foto">Foto de Perfil</label>
@@ -205,16 +205,16 @@
                 </div>
                 <div class="input-group">
                     <label for="clave">Contraseña</label>
-                    <input type="password" id="clave" name="clave1" placeholder="Crea una contraseña segura" required>
+                    <input type="password" id="clave1" name="clave1" placeholder="Crea una contraseña segura" >
                 </div>
                 <div class="input-group">
                     <label for="clave2">Confirmar Contraseña</label>
-                    <input type="password" id="clave2" name="clave2" placeholder="Vuelve a escribir tu contraseña" required>
+                    <input type="password" id="clave2" name="clave2" placeholder="Vuelve a escribir tu contraseña" >
                 </div>
                 <button type="submit" class="btn">Enviar</button>
             </form>
             <div class="links">
-                <a th:href="@{/registro}">¿Ya tienes una cuenta? Ingresa aquí</a>
+                <a th:href="@{/login-render}">¿Ya tienes una cuenta? Ingresa aquí</a>
             </div>
         </div>
     </div>
