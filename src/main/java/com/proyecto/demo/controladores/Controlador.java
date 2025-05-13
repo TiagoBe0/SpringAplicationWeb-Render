@@ -81,6 +81,16 @@ public class Controlador {
     }
     
     
+    
+       
+     @GetMapping("/tablaUsuario")
+    public String tablaUsuarios(ModelMap modelo){
+        
+        modelo.put("usuarios",usuarioServicio.todosLosUsuarios());
+        return "tablaUsuario.html";
+    }
+    
+    
     //CONTROLADORES VIEJOS DE AQUI ABAJO
     
     
@@ -105,6 +115,11 @@ public class Controlador {
     
     return "index.html";
     }
+    
+    
+    
+    
+    
     
     
         @GetMapping("/")
