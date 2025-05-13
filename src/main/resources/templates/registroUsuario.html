@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registro de Usuario - Bartender Stock</title> <link rel="stylesheet" href="ruta/a/tu/contacto.css" /> <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet" />
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+        crossorigin="anonymous"
+    />
+
+    </head>
+<body>
+    <div class="wrapper"> <header th:replace="/fragments/navbar :: nav"></header> <main class="content"> <section class="contact-form"> <div class="container py-5">
+                    <h2 class="display-4 text-center text-white mb-4">Regístrate</h2> <form th:action="@{/registrar}" method="POST" enctype="multipart/form-data">
+                        
+                        <p th:if="${error != null}" th:text="${error}" class="text-center text-danger mb-3"></p> <div class="mb-3">
+                            <input type="text" class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white" 
+                                   name="nombre" th:value="${nombre}" placeholder="Nombre completo" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
+                                   name="apellido" th:value="${apellido}" placeholder="Apellido" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="email" class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
+                                   name="mail" th:value="${mail}" placeholder="E-mail" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="password" class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
+                                   name="clave1" placeholder="Clave" required />
+                        </div>
+                        
+                        <div class="mb-3">
+                            <input type="password" class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
+                                   name="clave2" placeholder="Verificar Clave" required />
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="archivo" class="form-label text-white">Foto de perfil (opcional):</label>
+                            <input type="file" class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded text-white" 
+                                   name="archivo" id="archivo" />
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-outline-light rounded-pill px-5 py-2">
+                                REGISTRARME
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer th:replace="/fragments/footer :: footer"></footer> </div><script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"
+    ></script>
+    </body>
+</html>

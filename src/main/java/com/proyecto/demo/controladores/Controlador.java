@@ -75,6 +75,12 @@ public class Controlador {
     }
     
     
+     @GetMapping("/registro")
+    public String registro(){
+        return "registroUsuario.html";
+    }
+    
+    
     //CONTROLADORES VIEJOS DE AQUI ABAJO
     
     
@@ -176,8 +182,8 @@ public class Controlador {
         return "loginUsuario1.html";
     }
 
-    @GetMapping("/registro")
-    public String registro() {
+    @GetMapping("/registrol")
+    public String registrol() {
         
         
         return "registroUsuario.html";
