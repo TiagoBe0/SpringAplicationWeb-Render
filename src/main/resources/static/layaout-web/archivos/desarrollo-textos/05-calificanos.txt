@@ -1,0 +1,9 @@
+Nombre de la empresa
+
+Del 1 al 5, ¿que tan satisfecho estás con la atención recibida?
+
+Del 1 al 5, ¿que tan conforme estas con el tiempo de espera para recibir tu diseño finalizado?
+
+Del 1 al 5, ¿que tanto te agrado el resultado de diseño recibido?
+
+Si la empresa fuera tuya, ¿que cambiarías para mejorarla o mejorar nuestros servicios?

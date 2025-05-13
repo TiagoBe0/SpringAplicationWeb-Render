@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>rahip</title>
+  <link rel="stylesheet" href="servicios.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+        crossorigin="anonymous">
+</head>
+<body>
+  <div class="wrapper">
+
+    <!-- Header / Navegación -->
+    <header>
+      <nav>
+        <ul class="nav-list">
+          <li class="brand">
+            <a href="index.html">
+              <img src="layaout-web/archivos/rahip-logo-blanco.svg"
+                   alt="Marca" class="brand-icon">
+            </a>
+          </li>
+          <li class="nav-item"><a href="nosotros.html">NOSOTROS</a></li>
+          <li class="nav-item"><a href="servicios.html">SERVICIOS</a></li>
+          <li class="nav-item"><a href="brief.html">BRIEF</a></li>
+          <li class="nav-item"><a href="calificanos.html">CALIFICANOS</a></li>
+          <li class="nav-item"><a href="contacto.html">CONTACTO</a></li>
+          <li class="user">
+            <a href="login.html">
+              <img src="layaout-web/archivos/base-datos-icono.svg"
+                   alt="Usuario" class="user-icon">
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Botón cambio de tema -->
+    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/+5492617501005"
+       target="_blank"
+       class="whatsapp-float">
+      <img src="layaout-web/archivos/iconos-redes/whatsapp-blanco.svg"
+           alt="WhatsApp">
+    </a>
+
+    <!-- Contenido principal -->
+    <main class="content">
+      <section class="brief-form">
+        <div class="container py-5">
+          <!-- Datos Personales -->
+          <h2 class="text-center text-white mb-4">Datos Personales</h2>
+          <form action="TU_ENDPOINT" method="post">
+            <div class="mb-3">
+              <input type="text" name="empresa"
+                     class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
+                     placeholder="Nombre de la empresa" required>
+            </div>
+            <div class="mb-3">
+              <input type="text" name="nombre"
+                     class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
+                     placeholder="Nombre completo" required>
+            </div>
+            <div class="mb-3">
+              <input type="tel" name="telefono"
+                     class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
+                     placeholder="Número de celular" required>
+            </div>
+
+            <!-- Empresa y Filosofía -->
+            <h2 class="text-center text-white mt-5 mb-4">Empresa y Filosofía</h2>
+            <div class="mb-3">
+              <textarea name="historia" rows="2"
+                        class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
+                        placeholder="Historia de la empresa" required></textarea>
+            </div>
+            <div class="mb-3">
+              <textarea name="objetivos" rows="2"
+                        class="form-control form-control-lg bg-white bg-opacity-25 border-0 rounded-pill text-white"
+                        placeholder="Objetivos a largo plazo" required></textarea>
+            </div>
+
+            <!-- reCAPTCHA -->
+            <div class="d-flex justify-content-center my-4">
+              <div class="g-recaptcha" data-sitekey="TU_SITE_KEY"></div>
+            </div>
+
+            <!-- Botón Enviar -->
+            <div class="text-center">
+              <button type="submit"
+                      class="btn btn-outline-light rounded-pill px-5 py-2">
+                ENVIAR
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-left">
+        <p>RAHIP Estudio Creativo | Todos los derechos reservados 2025</p>
+      </div>
+      <div class="footer-right">
+        <a href="#" class="social-icon">
+          <img src="layaout-web/archivos/iconos-redes/whatsapp-blanco.svg" alt="WhatsApp">
+        </a>
+        <a href="#" class="social-icon">
+          <img src="layaout-web/archivos/iconos-redes/instagram-blanco.svg" alt="Instagram">
+        </a>
+        <a href="#" class="social-icon">
+          <img src="layaout-web/archivos/iconos-redes/linkedin-blanco.svg" alt="LinkedIn">
+        </a>
+        <a href="#" class="social-icon">
+          <img src="layaout-web/archivos/iconos-redes/mail-blanco.svg" alt="Email">
+        </a>
+      </div>
+    </footer>
+
+  </div> <!-- /.wrapper -->
+
+  <!-- Scripts -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+          crossorigin="anonymous"></script>
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const button = document.getElementById('theme-toggle');
+      body.classList.toggle('dark-theme');
+      button.textContent = body.classList.contains('dark-theme') ? '☀️' : '🌙';
+    }
+  </script>
+</body>
+</html>
