@@ -56,12 +56,22 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
+<<<<<<< HEAD
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
+=======
+    <!-- 5. PostgreSQL Driver -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.5.4</version>
+      <scope>runtime</scope>
+    </dependency>
+>>>>>>> cbcf487 (df)
 
     <!-- 6. Java EE APIs necesarios -->
 
@@ -95,9 +105,23 @@
       <optional>true</optional>
     </dependency>
 
+<<<<<<< HEAD
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-tomcat</artifactId>
+=======
+    <!-- 8. Tomcat como contenedor externo -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+   
+    </dependency>
+    
+    <dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <scope>test</scope>
+>>>>>>> cbcf487 (df)
 </dependency>
 
     <!-- 9. Testing -->
