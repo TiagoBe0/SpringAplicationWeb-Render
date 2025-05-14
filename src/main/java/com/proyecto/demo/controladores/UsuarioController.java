@@ -215,7 +215,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
             //barraServicio.registrar(nombre, id);
             Usuario usuario = usuarioServicio.buscarPorId(id);
               usuarioServicio.actualizarCapitalTotal(id);
-                List<Cristaleria> cristalerias=usuario.getTodasLasCristalerias();
+                List<Cristaleria> cristalerias=barraServicio.listarTodas().get(0).getListaCristalerias();
                 model.addAttribute("cristalerias",cristalerias );
              model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
               model.addAttribute("proveedores", usuario.getProveedores());

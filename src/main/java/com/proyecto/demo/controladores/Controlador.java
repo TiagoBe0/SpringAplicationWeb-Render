@@ -52,7 +52,7 @@ public class Controlador {
     
     
     
-        @GetMapping("/calificanos")
+    @GetMapping("/calificanos")
     public String calificanos(){
         return "calificanos.html";
     }
