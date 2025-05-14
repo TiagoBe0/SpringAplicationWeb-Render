@@ -354,7 +354,7 @@
                 <div th:if="${param.success}" class="alert alert-success" style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom:15px;">
                     <p>Cristalería registrada con éxito.</p> </div>
 
-          <form action="/usuario/actualizar-cristaleria" method="POST" enctype="multipart/form-data">
+          <form action="/usuario/registrarCristaleria" method="POST" enctype="multipart/form-data">
        
   <input  class="controls" type="text" name="tipo" id="nombre" placeholder="tipo de cristaleria">
   <input type="hidden" name="id" th:value="${perfil.id}"/>

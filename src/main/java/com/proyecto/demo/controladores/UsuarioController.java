@@ -648,6 +648,22 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     
     
     
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+     @PostMapping("/registrarCristaleria")
+    public String registrar(ModelMap modelo,  MultipartFile archivo,@RequestParam String tipo, @RequestParam String idBarra,@RequestParam String descripcion,@RequestParam float precio,@RequestParam int enStock) {
+
+        try {
+            cristaleriaServicio.registrar( archivo,  tipo,  descripcion,  precio,  enStock,idBarra);
+        } catch (ErrorServicio ex) {
+           modelo.put(tipo,"tipo");
+            modelo.put(descripcion,"tipo");
+             
+            return "registro.html";
+        }
+        modelo.put("titulo", "Bienvenido");
+        modelo.put("descripcion", "Cristaleria cargada correctamente");
+        return "exito.html";
+    }
     
     @GetMapping("/tablaCristalerias")
     public String tablaCristaleria(ModelMap modelo){
