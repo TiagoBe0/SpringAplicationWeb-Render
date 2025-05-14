@@ -318,10 +318,22 @@
                 </div>
 
                 <form th:action="@{/usuario/actualizar-foto-cristal}" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="id" th:value="${perfil?.id}"/> <div class="form-input-group">
+                    <input type="hidden" name="id" th:value="${perfil.id}"/> <div class="form-input-group">
                         <label for="tipoCristal">Tipo de Cristal / Nombre de Referencia</label>
                         <input class="form-control" type="text" name="tipo" id="tipoCristal" placeholder="Ej: Copa Flauta, Vaso Old Fashioned" required>
                     </div>
+                      <div class="form-check">
+  <input class="form-input-group" type="radio" name="insumo" value="-1">
+  <label for="flexRadioDefault1">
+    Cristal
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="insumo"  value="1" checked>
+  <label  for="flexRadioDefault2">
+    Insumo
+  </label>
+</div>
                     
                     <div class="form-input-group">
                         <label for="fotoArchivoCristal">Subir Foto del Cristal</label>

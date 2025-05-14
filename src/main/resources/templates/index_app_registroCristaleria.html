@@ -355,7 +355,7 @@
                     <p>Cristalería registrada con éxito.</p> </div>
 
                 <form th:action="@{/usuario/actualizar-cristaleria}" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="id" th:value="${perfil?.id}"/>
+                    <input type="hidden" name="id" th:value="${perfil.id}"/>
 
                     <div class="form-input-group">
                         <label for="tipoCristaleria">Tipo de Cristalería</label>
