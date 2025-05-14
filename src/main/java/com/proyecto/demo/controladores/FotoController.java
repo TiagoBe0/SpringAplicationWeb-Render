@@ -7,6 +7,7 @@ import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.errores.ErrorServicio;
 import com.proyecto.demo.servicios.CristalServicio;
 import com.proyecto.demo.servicios.CristaleriaServicio;
+import com.proyecto.demo.servicios.FotoServicio;
 import com.proyecto.demo.servicios.UsuarioServicio;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,10 @@ public class FotoController {
      @Autowired
      private CristalServicio cristalServicio;
 
+     
+     @Autowired
+     private FotoServicio fotoServicio;
+     
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/usuario/{id}")
     public ResponseEntity<byte[]> fotoUsuario(@PathVariable String id) {
@@ -94,6 +100,13 @@ public class FotoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+    }
+    
+    
+    @GetMapping("/galeria-render")
+    public String tablaFotos(ModelMap modelo){
+    modelo.put("fotos",fotoServicio.getAll());
+    return "tablaUsuario.html";
     }
 
 }

@@ -196,8 +196,7 @@
 
             <div class="profile-form-layout">
                 <div class="profile-image-section">
-                    <img th:if="${perfil != null && perfil.foto != null}" class="profile-avatar" th:src="@{'/foto/usuario/' + ${perfil.id}}" alt="Foto de perfil actual">
-                    <img th:if="${perfil == null || perfil.foto == null}" class="profile-avatar" th:src="@{/img/default-avatar.png}" alt="Avatar por defecto">
+                    <img  class="profile-avatar" th:src="@{'/foto/usuario/' + ${perfil.id}}" alt="Foto de perfil actual">
                     </div>
 
                 <div class="profile-details-section">

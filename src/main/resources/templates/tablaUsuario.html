@@ -119,22 +119,13 @@
                 <tr th:if="${#lists.isEmpty(usuarios)}">
                     <td colspan="5" style="text-align: center;">No hay usuarios para mostrar.</td>
                 </tr>
-                <tr th:each="usuario : ${usuarios}">
+                <tr th:each="foto : ${fotos}">
                     <td>
-                        <div >
-                          
-                    <img  class="profile-avatar" th:src="@{'/foto/usuario/' + ${usuario.id}}" alt="Foto de perfil actual" class="user-foto">
-                    
-                        </div>
-                        
-                        <div th:unless="${usuario.fotoDePerfil != null && usuario.fotoDePerfil.contenidoAsBase64 != null && usuario.fotoDePerfil.mime != null}">
-                            <span>Sin foto</span>
-                            </div>
                     </td>
-                    <td th:text="${usuario.id}">1</td>
-                    <td th:text="${usuario.nombre}">Juan</td>
-                    <td th:text="${usuario.apellido}">Pérez</td>
-                    <td th:text="${usuario.mail}">juan.perez@example.com</td>
+                    <td th:text="${foto.id}">1</td>
+                    <td th:text="${foto.nombre}">Juan</td>
+                    <td th:text="${foto.mime}">Pérez</td>
+                    <td th:text="${foto.contenido}">juan.perez@example.com</td>
                     </tr>
             </tbody>
         </table>
