@@ -602,7 +602,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
             modelo.addAttribute("rupturas",barra.getUsuario().getTodasLasRupturas());
           
             modelo.put("cristalerias",barraServicio.buscarPorId(id).getListaCristalerias() );
-            return "modificarBarraPanel.html";
+            return "index_app_modificarBarraPanel.html";
 	}
         
         
