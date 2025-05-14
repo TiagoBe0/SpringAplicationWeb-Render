@@ -178,7 +178,7 @@ public class Controlador {
     	
     	modelo.addAttribute("usuarios", usuarios);
     	
-        return "index_app_inicio.html";
+        return "index_app.html";
     }
 
     @GetMapping("/loginUsuarioModelo")

@@ -73,7 +73,7 @@ public class UsuarioController {
         } catch (ErrorServicio e) {
             model.addAttribute("error", e.getMessage());
         }
-        return "perfilModificar.html";
+        return "index_app_perfilModificar.html";
     }
         //Este es el que llega a crear barra
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
@@ -544,7 +544,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         } catch (ErrorServicio ex) {
            
 
-            return "perfil.html";
+            return "index_app.html";
         }
 
     }
