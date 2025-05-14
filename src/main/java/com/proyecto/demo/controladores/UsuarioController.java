@@ -204,8 +204,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         
         model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
-        List<Cristaleria> cristalerias=usuarioServicio.buscarPorId(id).getTodasLasCristalerias();
-         model.put("cristalerias",cristalerias );
+      
          
          
         if (login == null || !login.getId().equals(id)) {
@@ -216,6 +215,8 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
             //barraServicio.registrar(nombre, id);
             Usuario usuario = usuarioServicio.buscarPorId(id);
               usuarioServicio.actualizarCapitalTotal(id);
+                List<Cristaleria> cristalerias=usuario.getTodasLasCristalerias();
+                model.put("cristalerias",cristalerias );
              model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
               model.addAttribute("proveedores", usuario.getProveedores());
             model.addAttribute("rupturas",usuario.getTodasLasRupturas());

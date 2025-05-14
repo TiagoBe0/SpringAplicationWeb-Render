@@ -1,62 +1,278 @@
 <!DOCTYPE html>
-<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<!-- Head -->
-<head th:replace="/fragments/head :: head"></head>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Página de inicio del usuario">
+    <meta name="author" content="Tu Nombre/Empresa">
 
+    <title>BARTENDER STOCK - Inicio</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
+
+    <style>
+        /* Estilos Globales y Resets (Similares a las páginas anteriores) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #6f42c1; /* Fondo principal violeta */
+            color: white;
+            line-height: 1.6;
+        }
+
+        .page-container { /* Contenedor principal de la página */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header similar al de las páginas de login/registro */
+        .main-header {
+            background-color: blueviolet;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .main-header .logo img {
+            width: 100px;
+            height: 100px;
+            vertical-align: middle;
+        }
+
+        /* Barra de Navegación Adaptada */
+        .custom-navbar {
+            background-color: #5a34a7; /* Un tono de violeta para la navbar */
+            padding: 0.75rem 1rem;
+        }
+
+        .custom-navbar .navbar-brand {
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .custom-navbar .nav-link {
+            color: #f0f0f0;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .custom-navbar .nav-link:hover,
+        .custom-navbar .nav-link.active {
+            color: white;
+            font-weight: bold;
+        }
+        .navbar-toggler{
+             background-color: #f0f0f0; /* Para que el icono del toggler sea visible */
+        }
+
+
+        /* Contenido Principal */
+        .content-wrapper {
+            flex-grow: 1;
+            padding: 30px 15px; /* Padding general para el contenido */
+            width: 100%;
+            max-width: 1200px; /* Ancho máximo para el contenido principal */
+            margin: 0 auto; /* Centrar el contenido */
+        }
+
+        .welcome-section {
+            background-color: rgba(255, 255, 255, 0.1); /* Fondo sutil para la sección de bienvenida */
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .welcome-section h1 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section h2 {
+            font-size: 1.8rem;
+            color: #f0f0f0;
+            margin-bottom: 25px;
+        }
+
+        /* Estilo para los botones de acción */
+        .action-buttons .btn-custom {
+            display: inline-block;
+            background-color: white;
+            color: #6f42c1;
+            padding: 12px 25px;
+            border-radius: 25px;
+            margin: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            border: 2px solid #6f42c1; /* Borde violeta */
+        }
+
+        .action-buttons .btn-custom:hover {
+            background-color: #6f42c1;
+            color: white;
+            border-color: white; /* Borde blanco al hacer hover */
+            transform: translateY(-2px);
+        }
+        
+        /* Sección de Información Adicional */
+        .info-section {
+            background-color: #f3f3f3; /* Fondo claro para contraste */
+            color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .info-section h3 {
+            color: #6f42c1;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Estilo de la Tabla (similar a la tabla de usuarios) */
+        .table-custom {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: white;
+            color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .table-custom th,
+        .table-custom td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        .table-custom th {
+            background-color: #8A2BE2; /* Encabezado de tabla violeta */
+            color: white;
+            font-weight: bold;
+        }
+
+        .table-custom tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .table-custom tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: #333; /* Footer oscuro */
+            color: #ccc;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto; /* Empuja el footer al final si el contenido es corto */
+        }
+        .main-footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
 <body>
-<!-- Navigation -->
-<nav th:replace="/fragments/navbar :: nav"></nav>
- <!-- Header -->
-<header th:replace="/fragments/headergenerico :: header"></header>
-  
 
-  <section>
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6 order-lg-2">
-          <div class="p-5">
-            <img class="img-fluid rounded-circle" src="../statics/img/bartender.jpg" alt="">
-          </div>
+<div class="page-container">
+
+    <header class="main-header">
+        <div class="logo">
+            <img th:src="@{/img/rahip-logo-blanco.svg}" alt="Logo Rahip">
+            </div>
+    </header>
+
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">BARTENDER STOCK</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto"> <li class="nav-item" th:if="${session.usuariosession == null}">
+                        <a class="nav-link" th:href="@{/usuario/registroUsuario}">Regístrate</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.usuariosession == null}">
+                        <a class="nav-link" th:href="@{/usuario/loginUsuario}">Log In</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.usuariosession != null}">
+                        <a class="nav-link" th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}">Editar Perfil</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.usuariosession != null}">
+                        <a class="nav-link" th:href="@{/logout}">Salir</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link" th:href="@{/admin/dashboard}">Dashboard Admin</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="col-lg-12 order-lg-1">
-          <div class="p-5">
-              <h1 href="/barras">Usuario Logueado</h1>
-              <h1 th:text="${session.usuariosession.nombre}">Usuario Logueado</h1>
-              <table class="table table-dark">
-			<thead>
-				<tr>
-					<th scope="col">Nombre</th>
-					<th scope="col">Apellido</th>
-				</tr>
-			</thead>
-			<tbody th:each="usuario : ${usuarios}"> 
-				<tr>
-					<td th:text="${usuario.nombre}"></td>
-					<td th:text="${usuario.apellido}"></td>
-				</tr>
+    </nav>
 
-			</tbody>
-		</table>
-          </div>
+    <main class="content-wrapper">
+        <section class="welcome-section">
+            <h1>Bienvenido a Bartender Stock</h1>
+            <h2 th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}">Nombre Usuario</h2>
+            <p th:if="${session.usuariosession == null}">Gestiona tu stock de barra de forma eficiente.</p>
+        </section>
+
+        <section class="action-buttons text-center mb-4" th:if="${session.usuariosession != null}">
+            <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}" class="btn-custom">Crear Barra</a> <a th:href="@{/usuario/editar-barra(id=${session.usuariosession.id})}" class="btn-custom">Crear Cristalería</a> <a th:href="@{/usuario/panel-barra(id=${session.usuariosession.id})}" class="btn-custom">Administrar Barra</a> <a th:href="@{/usuario/editar-ruptura(id=${session.usuariosession.id})}" class="btn-custom">Nueva Ruptura</a> <a th:href="@{/usuario/editar-cristal(id=${session.usuariosession.id})}" class="btn-custom">Nuevo Cristal</a> <a th:href="@{/usuario/editar-perfil-nuevo(id=${session.usuariosession.id})}" class="btn-custom">Modificar Perfil</a> </section>
+        
+        <section class="action-buttons text-center mb-4" th:if="${session.usuariosession == null}">
+             <a th:href="@{/usuario/registroUsuario}" class="btn-custom">¡Regístrate para empezar!</a>
+        </section>
+
+
+        <section class="info-section" th:if="${usuarios != null && !#lists.isEmpty(usuarios)}">
+            <h3>Listado de Usuarios del Sistema</h3>
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.nombre}"></td>
+                        <td th:text="${usuario.apellido}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="info-section" th:if="${session.usuariosession != null && (usuarios == null || #lists.isEmpty(usuarios))}">
+            <h3>Información</h3>
+            <p class="text-center">Utiliza los botones de acción para gestionar tu inventario y perfil.</p>
+             <p class="text-center" th:if="${session.usuariosession != null}">
+                Usuario actual: <strong th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></strong>
+            </p>
+        </section>
+
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>Copyright &copy; Bartender Stock <span th:text="${#dates.year(#dates.createNow())}">2024</span></p>
         </div>
-          
-          
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="py-5 bg-black">
-    <div class="container">
-      <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container -->
-  </footer>
-
-  <!-- Bootstrap core JavaScript -->
- <script th:replace="/fragments/boostjs :: script"></script>
-
+</div> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
-
 </html>
