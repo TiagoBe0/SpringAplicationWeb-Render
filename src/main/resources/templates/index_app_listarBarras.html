@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="icon" type="image/svg+xml" th:href="@{/img/rahip-logo-blanco.svg}" />
+
+    <title>BartenderStock - Listado de Barras</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
+
+    <style>
+        /* ESTILOS GENERALES Y RESET */
+        :root {
+            --primary-color: #6f42c1;
+            --primary-color-darker: #5a34a7;
+            --secondary-color: blueviolet; /* Para el header */
+            --light-grey: #f3f3f3;
+            --dark-grey: #333;
+            --text-color-light: #ffffff;
+            --text-color-dark: #333333;
+            --card-bg: #ffffff; /* Fondo para la tarjeta/contenedor de la tabla */
+            --table-header-bg: #8A2BE2; /* Violeta más claro para encabezados de tabla */
+            --table-border-color: #ddd;
+            --button-primary-bg: #6f42c1;
+            --button-primary-text: #ffffff;
+            --button-primary-hover-bg: #5a34a7;
+            --button-action-link: var(--primary-color);
+            --button-action-link-hover: var(--primary-color-darker);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 20px; 
+        }
+
+        a { text-decoration: none; color: var(--button-action-link); }
+        a:hover { color: var(--button-action-link-hover); }
+        img { max-width: 100%; height: auto; }
+
+        /* --- HEADER SIMPLE --- */
+        .main-header {
+            background-color: var(--secondary-color);
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        .main-header .logo img {
+            width: 100px;
+            height: 100px;
+            vertical-align: middle;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL DE LA TABLA --- */
+        .table-page-container {
+            flex-grow: 1;
+            padding: 20px;
+            width: 100%;
+            max-width: 1100px; /* Ancho para la tabla */
+            margin: 0 auto; /* Centrar */
+        }
+        .table-card {
+            background-color: var(--card-bg);
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        .table-card .table-title {
+            text-align: center;
+            color: var(--text-color-dark);
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .table-actions-header { /* Para el botón "Crear Nueva Barra" */
+            margin-bottom: 20px;
+            text-align: right; /* Alinear el botón a la derecha */
+        }
+         .btn-create {
+            display: inline-block;
+            background-color: var(--button-primary-bg);
+            color: var(--button-primary-text);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+        .btn-create:hover {
+            background-color: var(--button-primary-hover-bg);
+            color: var(--button-primary-text);
+        }
+        .btn-create .fas, .btn-create .bx { /* Para iconos en el botón */
+            margin-right: 8px;
+        }
+
+        /* Estilos para la tabla */
+        .responsive-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .responsive-table th,
+        .responsive-table td {
+            border: 1px solid var(--table-border-color);
+            padding: 12px 15px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        .responsive-table thead th {
+            background-color: var(--table-header-bg);
+            color: var(--text-color-light);
+            font-weight: bold;
+        }
+        .responsive-table tbody tr:nth-child(even) {
+            background-color: var(--light-grey);
+        }
+        .responsive-table tbody tr:hover {
+            background-color: #e9e9e9;
+        }
+        .responsive-table .action-icons a {
+            margin: 0 6px;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+         .responsive-table .action-icons a:hover {
+            color: var(--primary-color-darker);
+        }
+        .responsive-table .action-icons .icon-delete {
+            color: #e74c3c;
+        }
+        .responsive-table .action-icons .icon-delete:hover {
+            color: #c0392b;
+        }
+
+
+        /* --- FOOTER SIMPLE --- */
+        .main-footer {
+            background-color: var(--dark-grey);
+            color: #ccc;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+        .main-footer p { margin: 0; font-size: 0.9rem; }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .table-card {
+                padding: 20px 15px;
+            }
+            .responsive-table th,
+            .responsive-table td {
+                padding: 8px 10px;
+                font-size: 0.9rem; /* Reducir fuente en tablas pequeñas */
+            }
+            /* Podría ser necesario hacer la tabla más responsive aquí (ej. display:block en tr/td) */
+        }
+         @media (max-width: 576px) {
+             .table-card .table-title {
+                font-size: 22px;
+             }
+             .btn-create {
+                 width: 100%;
+                 margin-bottom: 15px;
+             }
+             .table-actions-header {
+                 text-align: center;
+             }
+         }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">
+            <a th:href="@{/}"> 
+                 <img th:src="@{/img/rahip-logo-blanco.svg}" alt="Logo Rahip">
+            </a>
+        </div>
+    </header>
+
+    <div class="table-page-container">
+        <div class="table-card">
+            <h2 class="table-title">Listado de Mis Barras</h2>
+            
+            <div th:if="${exito}" class="alert alert-success" style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom:15px; text-align:center;">
+                <p th:text="${exito}"></p>
+            </div>
+            <div th:if="${error}" class="alert alert-danger" style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom:15px; text-align:center;">
+                <p th:text="${error}"></p>
+            </div>
+
+            <div class="table-actions-header">
+                <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}" class="btn-create"> <i class="fas fa-plus-circle"></i> Crear Nueva Barra
+                </a>
+            </div>
+
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Nombre de la Barra</th>
+                        <th>Valor Total Estimado</th>
+                        <th>Total Unidades Cristalería</th>
+                        <th>Activa</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr th:if="${#lists.isEmpty(barras)}">
+                        <td colspan="5" style="text-align: center;">No tienes barras registradas. ¡Crea una!</td>
+                    </tr>
+                    <tr th:each="barra : ${barras}">
+                        <td th:text="${barra.nombre}">Barra Ejemplo</td>
+                        <td th:text="${(barra.precioTotal ?: 0) + ' $'}">$0.00</td>
+                        <td th:text="${barra.totalUnidades ?: 0}">0</td>
+                        <td>
+                             <span th:if="${barra.activa}" style="color: green; font-weight:bold;">Sí</span>
+                             <span th:unless="${barra.activa}" style="color: red;">No</span>
+                        </td>
+                        <td class="action-icons">
+                            <a th:href="@{/usuario/modificar-barra-panel/__${barra.id}__}" title="Ver/Gestionar Barra">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a th:href="@{'/usuario/editar-nombre-barra/' + ${barra.id}}" title="Editar Nombre"> <i class="fas fa-edit"></i>
+                            </a>
+                            <a th:href="@{'/barra/eliminar/' + ${barra.id}}" title="Eliminar Barra" onclick="return confirm('¿Estás seguro de que quieres eliminar esta barra? Esta acción no se puede deshacer.');" class="icon-delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>Copyright &copy; Bartender Stock <span th:text="${#dates.year(#dates.createNow())}">2024</span></p>
+        </div>
+    </footer>
+
+</body>
+</html>
