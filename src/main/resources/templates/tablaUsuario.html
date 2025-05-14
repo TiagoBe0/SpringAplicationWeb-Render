@@ -125,7 +125,7 @@
                     <td th:text="${foto.id}">1</td>
                     <td th:text="${foto.nombre}">Juan</td>
                     <td th:text="${foto.mime}">Pérez</td>
-                    <td th:text="${foto.contenido}">juan.perez@example.com</td>
+                    <td > <img th:src="${'data:' + foto.mime + ';base64,' + foto.contenido}" /></td>
                     </tr>
             </tbody>
         </table>
