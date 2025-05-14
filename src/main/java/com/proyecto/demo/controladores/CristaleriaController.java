@@ -73,4 +73,11 @@ public class CristaleriaController {
 		}
 	}
 
+        
+        
+          @GetMapping("/tablaCristaleria")
+    public String tablaCristaleria(ModelMap modelo){
+        modelo.put("cristalerias", cristaleriaServicio.todasCristalrias());
+    return "tablaCristaleria.html";
+    }
 }

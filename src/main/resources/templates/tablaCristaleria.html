@@ -112,19 +112,13 @@
                                 <th>Tipo</th>
                                 <th>Descripción</th>
                                 <th>Barra</th>
-                                <th>Stock <span th:if="${perfil != null}" th:text="'(Total: ' + ${perfil.totalCristalerias ?: 0} + ')'"></span></th>
+                                <th>Stock </th>
                                 <th>Precio Unit.</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr >
-                                <td colspan="5" style="text-align: center;">No hay cristalerías para mostrar.</td>
-                            </tr>
                             <tr th:each="cristaleria : ${cristalerias}">
-                                <td>
-                                    <img th:if="${cristaleria.id != null}" th:src="@{'/foto/cristaleriafoto/' + ${cristaleria.id}}" alt="Foto cristalería">
-                                    <p th:text="${cristaleria.tipo}"></p>
-                                </td>
+                                
                                 <td th:text="${cristaleria.descripcion}"></td>
                                 <td th:text="${cristaleria.barraPertenecienteNombre}"></td>
                                 <td th:text="${cristaleria.enStock}"></td>
