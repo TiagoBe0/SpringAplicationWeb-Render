@@ -121,10 +121,10 @@
                 </tr>
                 <tr th:each="usuario : ${usuarios}">
                     <td>
-                        <div th:if="${usuario.fotoDePerfil != null && usuario.fotoDePerfil.contenidoAsBase64 != null && usuario.fotoDePerfil.mime != null}">
+                        <div >
                           
-                    <img th:if="${perfil != null && perfil.foto != null}" class="profile-avatar" th:src="@{'/foto/usuario/' + ${perfil.id}}" alt="Foto de perfil actual" class="user-foto">
-                    <img th:if="${perfil == null || perfil.foto == null}" class="profile-avatar" th:src="@{/img/default-avatar.png}" alt="Avatar por defecto" class="user-foto">
+                    <img  class="profile-avatar" th:src="@{'/foto/usuario/' + ${usuario.id}}" alt="Foto de perfil actual" class="user-foto">
+                    
                         </div>
                         
                         <div th:unless="${usuario.fotoDePerfil != null && usuario.fotoDePerfil.contenidoAsBase64 != null && usuario.fotoDePerfil.mime != null}">

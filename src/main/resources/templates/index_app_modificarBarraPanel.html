@@ -396,14 +396,14 @@
                             <td colspan="7" style="text-align:center;">No hay rupturas registradas para esta barra.</td>
                         </tr>
                         <tr th:each="ruptura : ${rupturas}">
-                            <td th:text="${ruptura.tipoCristaleria?.tipo}"></td>
+                            <td th:text="${ruptura.tipoCristaleria.tipo}"></td>
                             <td th:text="${ruptura.numeroDeRuptura}"></td>
                             <td th:text="${(ruptura.costoRuptura ?: 0) + '$'}"></td>
                             <td th:text="${ruptura.explicacion}"></td>
                             <td th:text="${ruptura.nombre}"></td>
                             <td th:text="${ruptura.dia + '/' + ruptura.mes + '/' + ruptura.anio}"></td>
                             <td>
-                                <img th:if="${ruptura.tipoCristaleria?.id != null}" class="img-fluid" th:src="@{'/foto/cristaleriafoto/' + ${ruptura.tipoCristaleria.id}}" alt="Foto Cristalería Rota">
+                                <img th:if="${ruptura.tipoCristaleria.id != null}" class="img-fluid" th:src="@{'/foto/cristaleriafoto/' + ${ruptura.tipoCristaleria.id}}" alt="Foto Cristalería Rota">
                             </td>
                         </tr>
                     </tbody>
