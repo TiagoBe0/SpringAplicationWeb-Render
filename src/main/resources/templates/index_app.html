@@ -693,12 +693,12 @@
                                 <th>Tipo</th>
                                 <th>Descripción</th>
                                 <th>Barra</th>
-                                <th>Stock <span th:if="${perfil != null}" th:text="'(Total: ' + ${perfil.totalCristalerias} + ')'"></span></th>
+                                <th>Stock <span th:if="${perfil != null}" th:text="'(Total: ' + ${perfil.totalCristalerias ?: 0} + ')'"></span></th>
                                 <th>Precio Unit.</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr >
+                            <tr th:if="${#lists.isEmpty(cristalerias)}">
                                 <td colspan="5" style="text-align: center;">No hay cristalerías para mostrar.</td>
                             </tr>
                             <tr th:each="cristaleria : ${cristalerias}">
