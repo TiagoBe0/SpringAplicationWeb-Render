@@ -645,5 +645,14 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         }
 
     }
+    
+    
+    
+    
+    @GetMapping("/tablaCristalerias")
+    public String tablaCristaleria(ModelMap modelo){
+        modelo.put("cristalerias", cristaleriaServicio.todasCristalrias());
+    return "tablaCristaleria.html";
+    }
 
 }//llave de clase

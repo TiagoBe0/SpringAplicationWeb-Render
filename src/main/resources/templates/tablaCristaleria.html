@@ -106,29 +106,32 @@
 
         <h2>Listado de Usuarios</h2>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Foto</th> <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Mail</th>
-                    </tr>
-            </thead>
-            <tbody>
-                <tr th:if="${#lists.isEmpty(usuarios)}">
-                    <td colspan="5" style="text-align: center;">No hay usuarios para mostrar.</td>
-                </tr>
-                <tr th:each="foto : ${fotos}">
-                    <td>
-                    </td>
-                    <td th:text="${foto.id}">1</td>
-                    <td th:text="${foto.nombre}">Juan</td>
-                    <td th:text="${foto.mime}">Pérez</td>
-                    <td > <img th:src="${'data:' + foto.mime + ';base64,' + foto.contenido}" /></td>
-                    </tr>
-            </tbody>
-        </table>
+      <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Descripción</th>
+                                <th>Barra</th>
+                                <th>Stock <span th:if="${perfil != null}" th:text="'(Total: ' + ${perfil.totalCristalerias ?: 0} + ')'"></span></th>
+                                <th>Precio Unit.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td colspan="5" style="text-align: center;">No hay cristalerías para mostrar.</td>
+                            </tr>
+                            <tr th:each="cristaleria : ${cristalerias}">
+                                <td>
+                                    <img th:if="${cristaleria.id != null}" th:src="@{'/foto/cristaleriafoto/' + ${cristaleria.id}}" alt="Foto cristalería">
+                                    <p th:text="${cristaleria.tipo}"></p>
+                                </td>
+                                <td th:text="${cristaleria.descripcion}"></td>
+                                <td th:text="${cristaleria.barraPertenecienteNombre}"></td>
+                                <td th:text="${cristaleria.enStock}"></td>
+                                <td><strong th:text="${cristaleria.precio + '$'}"></strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
     </div>
 </body>
 </html>
