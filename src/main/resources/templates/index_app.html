@@ -1,825 +1,290 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org"> <head>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     
-    <link rel="icon" type="image/svg+xml" th:href="@{/img/rahip-logo-blanco.svg}" /> <title>BartenderStock - Dashboard</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/img/rahip-logo-blanco.svg}" />
+
+    <title>Bienvenido a BartenderStock</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 
     <style>
-        /* ESTILOS GENERALES Y RESET */
         :root {
-            --primary-color: #6f42c1; /* Violeta principal */
+            --primary-color: #6f42c1;
             --primary-color-darker: #5a34a7;
-            --secondary-color: blueviolet; /* Violeta más claro para acentos */
+            --secondary-color: blueviolet; 
+            --header-logo-bg: blueviolet; /* Color del header del logo */
+            --navbar-bg: #5a34a7; /* Color para la barra de navegación simple */
+            --hero-bg: #6f42c1; /* Fondo para la sección hero */
+            --hero-text-color: #ffffff;
+            --feature-section-bg: #f9f9f9; /* Fondo claro para secciones de características */
+            --feature-text-color: #333333;
             --light-grey: #f3f3f3;
             --dark-grey: #333;
             --text-color-light: #ffffff;
             --text-color-dark: #333333;
-            --sidebar-bg: #4e2a8e; /* Un violeta más oscuro para el sidebar */
-            --content-bg: #f9f9f9; /* Fondo claro para el area de contenido */
             --card-bg: #ffffff;
             --border-color: #e0e0e0;
+            --button-cta-bg: #ffffff;
+            --button-cta-text: var(--primary-color);
+            --button-cta-hover-bg: #e9e9e9;
+            --footer-bg: var(--dark-grey);
+            --footer-text: #ccc;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
 
         body {
-            background-color: var(--primary-color); /* Fondo violeta principal */
-            color: var(--text-color-dark); /* Color de texto por defecto para el contenido */
-            overflow-x: hidden; /* Prevenir scroll horizontal innecesario */
-        }
-
-        a {
-            text-decoration: none;
-            color: var(--primary-color-darker);
-        }
-        a:hover {
-            color: var(--secondary-color);
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* --- ESTRUCTURA PRINCIPAL --- */
-        #app-container {
+            color: var(--text-color-dark);
+            line-height: 1.6;
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
+            background-color: var(--light-grey); /* Fondo general claro para la página */
         }
 
-        /* --- SIDEBAR --- */
-        #sidebar {
-            background: var(--sidebar-bg);
-            color: var(--text-color-light);
-            width: 280px;
-            position: fixed; /* O 'sticky' dependiendo del comportamiento deseado */
-            top: 0;
-            left: 0;
-            height: 100%;
-            overflow-y: auto;
-            z-index: 1000;
-            transition: width 0.3s ease;
-        }
+        img { max-width: 100%; height: auto; border-radius: 8px; /* Bordes redondeados para imágenes */ }
+        .container { width: 90%; max-width: 1100px; margin: 0 auto; padding: 0 15px; }
 
-        #sidebar.hide { /* Para cuando el sidebar se oculte con JS */
-            width: 60px;
-        }
-        #sidebar.hide .text {
-            display: none;
-        }
-         #sidebar.hide .brand i {
-            margin-right: 0;
-        }
-        #sidebar.hide .side-menu a i {
-            margin-right: 0;
-        }
-
-
-        #sidebar .brand {
-            font-size: 24px;
-            font-weight: 700;
-            height: 64px; /* Altura de la navbar superior */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-color-light);
-            padding: 0 10px;
-            gap: 10px; /* Espacio entre icono y texto */
-        }
-        #sidebar .brand .bx {
-            min-width: 40px; /* Para alinear con los iconos del menú */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 28px;
-        }
-
-        #sidebar .side-menu {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        /* --- HEADER SIMPLE CON LOGO --- */
+        .main-app-header { /* Diferente al .main-header de las páginas de formulario simples */
+            background-color: var(--header-logo-bg);
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             width: 100%;
         }
-        #sidebar .side-menu a {
+        .main-app-header .logo img {
+            width: 100px;
+            height: 100px;
+            vertical-align: middle;
+        }
+        
+        /* --- BARRA DE NAVEGACIÓN SIMPLE --- */
+        .main-navbar {
+            background-color: var(--navbar-bg);
+            padding: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .main-navbar .container {
             display: flex;
+            justify-content: space-between; /* Logo/nombre a la izquierda, links a la derecha */
             align-items: center;
-            padding: 12px 20px;
+        }
+        .main-navbar .navbar-brand {
+            font-size: 1.6rem;
             color: var(--text-color-light);
-            font-size: 16px;
-            white-space: nowrap;
-            border-left: 3px solid transparent;
-            transition: background 0.3s ease, border-left-color 0.3s ease;
+            font-weight: bold;
+            text-decoration: none;
         }
-        #sidebar .side-menu a:hover,
-        #sidebar .side-menu li.active > a {
-            background: var(--primary-color-darker);
-            border-left-color: var(--secondary-color);
+        .main-navbar .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
         }
-        #sidebar .side-menu a .bx {
-            margin-right: 15px;
-            font-size: 20px;
-            min-width: 20px; /* Alineación */
+        .main-navbar .nav-links a {
+            color: var(--text-color-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .main-navbar .nav-links a:hover,
+        .main-navbar .nav-links a.active {
+            background-color: rgba(255,255,255,0.15);
+        }
+
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            background-color: var(--hero-bg);
+            color: var(--hero-text-color);
+            padding: 60px 0;
             text-align: center;
         }
-        #sidebar .side-menu .logout a {
-            color: #f36d6d; /* Color distintivo para logout */
+        .hero-section .container {
+            max-width: 800px;
         }
-        #sidebar .side-menu .logout a:hover {
-            background: #c83a3a;
-            color: white;
+        .hero-section .hero-title {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            line-height: 1.2;
         }
-
-
-        /* --- ÁREA DE CONTENIDO --- */
-        #content {
-            position: relative;
-            width: calc(100% - 280px);
-            margin-left: 280px; /* Espacio para el sidebar */
-            transition: width 0.3s ease, margin-left 0.3s ease;
-            background-color: var(--content-bg); /* Fondo más claro para el contenido */
-            min-height: 100vh; /* Para que el fondo cubra toda la altura */
-            padding-bottom: 20px; /* Espacio al final */
+        .hero-section .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
         }
-        #sidebar.hide + #content { /* Ajuste cuando el sidebar está oculto */
-            width: calc(100% - 60px);
-            margin-left: 60px;
-        }
-
-        /* NAVBAR SUPERIOR (dentro de #content) */
-        #content nav {
-            height: 64px;
-            background: var(--card-bg);
-            padding: 0 24px;
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            position: sticky; /* Navbar fija al hacer scroll */
-            top: 0;
-            z-index: 900;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        #content nav .bx.bx-menu { /* Botón para colapsar sidebar */
-            cursor: pointer;
-            font-size: 24px;
-            color: var(--text-color-dark);
-        }
-        #content nav .nav-link { /* Título "Categories" o similar */
-            color: var(--text-color-dark);
-            font-size: 16px;
-        }
-        #content nav form {
-            flex-grow: 1;
-            margin-right: auto; /* Empuja el resto de elementos a la derecha */
-        }
-        #content nav .form-input {
-            display: flex;
-            align-items: center;
-            background: var(--light-grey);
-            border-radius: 20px;
-            overflow: hidden;
-            max-width: 350px; /* Ancho de la barra de búsqueda */
-        }
-        #content nav .form-input input {
-            border: none;
-            background: transparent;
-            padding: 10px 15px;
-            outline: none;
-            width: 100%;
-            color: var(--text-color-dark);
-        }
-        #content nav .form-input .search-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0 12px;
-            height: 36px; /* Alineado con el input */
-            border-radius: 0 20px 20px 0;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #content nav .form-input .search-btn .bx {
-            font-size: 18px;
-        }
-
-        #content nav .switch-mode { /* Modo oscuro toggle */
-            display: block;
-            min-width: 50px;
-            height: 25px;
-            background: var(--light-grey);
-            cursor: pointer;
-            position: relative;
-            border-radius: 25px;
-        }
-        #content nav .switch-mode::before {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            bottom: 2px;
-            width: calc(25px - 4px);
-            background: var(--primary-color);
-            border-radius: 50%;
-            transition: all .3s ease;
-        }
-        #content nav #switch-mode:checked + .switch-mode::before {
-            left: calc(100% - (25px - 4px) - 2px);
-        }
-
-        #content nav .notification,
-        #content nav .profile img {
-            font-size: 20px;
-            color: var(--text-color-dark);
-            position: relative;
-        }
-        #content nav .notification .num {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #e74c3c; /* Rojo para notificaciones */
-            color: white;
-            font-weight: 700;
-            font-size: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #content nav .profile img {
-            width: 36px;
-            height: 36px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid var(--primary-color);
-        }
-
-
-        /* MAIN CONTENT AREA */
-        #content main {
-            padding: 24px;
-            width: 100%;
-        }
-        #content main .head-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap; /* Para responsividad */
-            margin-bottom: 24px;
-        }
-        #content main .head-title .left h1 {
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--text-color-dark);
-            margin-bottom: 8px;
-        }
-        #content main .head-title .left .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            list-style: none;
-            padding: 0;
-        }
-        #content main .head-title .left .breadcrumb a {
-            color: #888;
-            font-size: 14px;
-        }
-        #content main .head-title .left .breadcrumb a.active,
-        #content main .head-title .left .breadcrumb .bx {
-            color: var(--primary-color);
-        }
-        #content main .btn-download {
-            background: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        #content main .btn-download .bx {
-            font-size: 20px;
-        }
-
-
-        /* BOX INFO (TARJETAS DE ESTADÍSTICAS) */
-        #content main .box-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
-            list-style: none;
-            padding: 0;
-            margin-bottom: 24px;
-        }
-        #content main .box-info li {
-            padding: 20px;
-            background: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center; /* Alinear icono y texto */
-            gap: 20px; /* Espacio entre icono y texto */
-        }
-         #content main .box-info li .bx { /* Estilo para iconos dentro de box-info */
-            font-size: 36px; /* Tamaño del icono */
-            color: var(--text-color-light); /* Color del icono */
-            padding: 12px;
-            border-radius: 8px;
-            /* Colores de fondo para los iconos */
-        }
-        #content main .box-info li:nth-child(1) .bx { background: #3498db; } /* Azul */
-        #content main .box-info li:nth-child(2) .bx { background: #2ecc71; } /* Verde */
-        #content main .box-info li:nth-child(3) .bx { background: #f1c40f; } /* Amarillo */
-        #content main .box-info li:nth-child(4) .bx, /* Los dos últimos pueden tener nuestro color primario */
-        #content main .box-info li:nth-child(5) .bx { background: var(--primary-color); }
-
-        #content main .box-info li .text h3 {
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--text-color-dark);
-        }
-        #content main .box-info li .text p {
-            color: #666;
-            font-size: 14px;
-            margin-top: 4px;
-        }
-        /* Estilos para las tarjetas con gradientes (si se quieren mantener) */
-        #content main .box-info li.gradient-loss {
-             background: linear-gradient(90deg, rgba(217,168,2,0.8) 0%, rgba(128,9,19,0.6) 43%, rgba(162,11,29,0.6) 100%);
-             color: white;
-        }
-        #content main .box-info li.gradient-capital {
-            background: linear-gradient(90deg, rgba(2,212,217,0.8) 0%, rgba(9,128,31,0.6) 43%, rgba(11,162,94,0.6) 100%);
-            color: white;
-        }
-         #content main .box-info li.gradient-loss h3,
-         #content main .box-info li.gradient-loss p,
-         #content main .box-info li.gradient-capital h3,
-         #content main .box-info li.gradient-capital p {
-            color: white;
-        }
-         #content main .box-info li.gradient-loss .bx,
-         #content main .box-info li.gradient-capital .bx {
-            background: rgba(255,255,255,0.2); /* Icono más sutil en gradientes */
-            color: white;
-         }
-
-
-        /* TABLAS DE DATOS */
-        #content main .table-data {
-            display: flex;
-            flex-wrap: wrap; /* Para responsividad */
-            gap: 24px;
-            margin-bottom: 24px;
-        }
-        #content main .table-data > div { /* .order, .todo */
-            border-radius: 10px;
-            background: var(--card-bg);
-            padding: 20px;
-            flex-grow: 1;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        }
-        #content main .table-data .head {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-        #content main .table-data .head h3 {
-            margin-right: auto; /* Empuja iconos a la derecha */
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--text-color-dark);
-        }
-        #content main .table-data .head .bx {
-            cursor: pointer;
-            font-size: 20px;
-            color: #666;
-        }
-        #content main .table-data .order table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        #content main .table-data .order th,
-        #content main .table-data .order td {
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 8px; /* Menos padding horizontal si hay muchas columnas */
-            font-size: 14px;
-            text-align: left;
-        }
-        #content main .table-data .order th {
-            font-weight: 600;
-            background-color: var(--light-grey); /* Encabezado sutil */
-            color: var(--text-color-dark);
-        }
-         #content main .table-data .order td img { /* Estilo para imágenes en tablas */
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 10px;
-            vertical-align: middle;
-        }
-        #content main .table-data .order td p {
+        .hero-section .btn-cta {
             display: inline-block;
-            vertical-align: middle;
-            margin:0;
+            background-color: var(--button-cta-bg);
+            color: var(--button-cta-text);
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 5px;
+            border: 2px solid transparent;
         }
-         #content main .table-data .order td .bx { /* Iconos de acción en tablas */
-            font-size: 20px;
-            color: var(--primary-color);
-         }
-         #content main .table-data .order td .bx:hover {
-            color: var(--primary-color-darker);
-         }
+        .hero-section .btn-cta:hover {
+            background-color: var(--button-cta-hover-bg);
+            transform: translateY(-2px);
+            border-color: var(--button-cta-text);
+        }
 
-        /* LISTA "TODO" (PROVEEDORES) */
-        #content main .todo .todo-list {
-            list-style: none;
-            padding: 0;
+        /* --- FEATURE SECTIONS --- */
+        .feature-section {
+            padding: 60px 0;
         }
-        #content main .todo .todo-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .feature-section:nth-child(odd) { /* Alternar fondo para secciones */
+             background-color: var(--card-bg); /* Fondo blanco */
         }
-        #content main .todo .todo-list li:last-child {
-            border-bottom: none;
+        .feature-section:nth-child(even) {
+             background-color: var(--light-grey); /* Fondo gris claro */
         }
-        #content main .todo .todo-list li.completed h4,
-        #content main .todo .todo-list li.completed h5 {
-            text-decoration: line-through; /* Ejemplo si "completed" significa algo */
-            color: #999;
-        }
-        #content main .todo .todo-list li h4 {
-            font-size: 15px;
-            font-weight: 500;
-            margin-bottom: 2px;
-        }
-        #content main .todo .todo-list li h5 {
-            font-size: 13px;
-            color: #777;
-        }
-        #content main .todo .todo-list li .bx { /* Icono de puntos */
-            cursor: pointer;
-        }
-        #content main .todo .todo-list li a { /* Enlace WhatsApp */
-            font-size: 13px;
-            background-color: #25D366; /* Color WhatsApp */
-            color: white;
-            padding: 3px 8px;
-            border-radius: 10px;
-        }
-        #content main .todo .todo-list li a:hover {
-            background-color: #1DAE50;
-        }
-         /* Estilo para el item "Nuevo Pedido" */
-        #content main .todo .todo-list li.new-order-item a {
-            background: none; /* Quitar fondo de WhatsApp */
-            color: var(--primary-color);
-            font-weight: 500;
-            padding: 5px 0;
+        .feature-section .container {
             display: flex;
             align-items: center;
-            gap: 8px;
+            flex-wrap: wrap; /* Para responsividad */
+            gap: 40px;
         }
-         #content main .todo .todo-list li.new-order-item a .bx {
-            font-size: 18px;
-         }
-         #content main .todo .todo-list li.new-order-item a:hover {
-            color: var(--primary-color-darker);
-         }
-
-
-        /* RESPONSIVIDAD (BÁSICA) */
-        @media screen and (max-width: 768px) {
-            #sidebar {
-                width: 60px; /* Sidebar colapsado por defecto en móviles */
-            }
-            #sidebar .text, #sidebar .brand .text {
-                display: none;
-            }
-             #sidebar .brand i { margin-right: 0; }
-             #sidebar .side-menu a i { margin-right: 0; }
-
-            #content {
-                width: calc(100% - 60px);
-                margin-left: 60px;
-            }
-            #content nav .form-input { /* Ocultar búsqueda en móviles pequeños o hacerla más pequeña */
-                display: none; /* O ajustar max-width */
-            }
+        .feature-section .feature-image,
+        .feature-section .feature-content {
+            flex: 1;
+            min-width: 300px; /* Evitar que se encojan demasiado */
         }
+        .feature-section .feature-image img {
+            border-radius: 15px; /* Bordes más redondeados para imágenes de características */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .feature-section .feature-content h2 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .feature-section .feature-content p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.7;
+        }
+        /* Para alternar el orden de imagen y texto */
+        .feature-section.image-right .feature-image { order: 2; }
+        .feature-section.image-right .feature-content { order: 1; }
 
-        @media screen and (max-width: 576px) {
-            #content main .head-title {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            #content main .btn-download {
-                width: 100%;
-                justify-content: center;
-                margin-top: 10px;
-            }
-            #content main .box-info {
-                grid-template-columns: 1fr; /* Una columna en móviles */
-            }
-             #content nav .nav-link { /* Ocultar "Categories" */
-                display:none;
-             }
-             #content nav .profile {
-                 margin-left: auto; /* Empujar perfil a la derecha si search y categories se ocultan */
-             }
+
+        /* --- FOOTER SIMPLE --- */
+        .main-app-footer { /* Diferente al .main-footer */
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            text-align: center;
+            padding: 25px 0;
+            margin-top: auto; 
+        }
+        .main-app-footer p { margin: 0; font-size: 0.9rem; }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .main-navbar .container { flex-direction: column; gap: 10px;}
+            .main-navbar .nav-links { width: 100%; justify-content: center; }
+            .hero-section .hero-title { font-size: 2.2rem; }
+            .hero-section .hero-subtitle { font-size: 1.1rem; }
+            .feature-section .container { flex-direction: column; text-align: center; }
+            .feature-section.image-right .feature-image,
+            .feature-section.image-right .feature-content { order: initial; } /* Resetear orden en móvil */
+             .feature-section .feature-content h2 { font-size: 1.8rem;}
         }
 
     </style>
 </head>
 <body>
 
-<div id="app-container"> <section id="sidebar"> <a th:href="@{/}" class="brand"> <i class='bx bxs-drink'></i> <span class="text">B&S</span>
-        </a>
-        <ul class="side-menu top">
-            <li class="active"> <a th:href="@{/usuario/panel-barra(id=${session.usuariosession.id})}">
-                    <i class='bx bxs-chalkboard'></i>
-                    <span class="text">Dashboard Cristalería</span>
-                </a>
-            </li>
-            <li>
-                 <a th:href="@{/usuario/panel-insumos(id=${session.usuariosession.id})}">
-                    <i class='bx bxs-flask'></i>
-                    <span class="text">Dashboard Insumos</span>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/usuario/panel-barra(id=${session.usuariosession.id})}">
-                    <i class='bx bx-slider-alt'></i>
-                    <span class="text">Administrar Barra</span>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}">
-                    <i class='bx bx-plus-circle'></i>
-                    <span class="text">Nueva Barra</span>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/usuario/editar-barra(id=${session.usuariosession.id})}">
-                    <i class='bx bx-plus-circle'></i>
-                    <span class="text">Crear Cristalería</span>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/usuario/editar-ruptura(id=${session.usuariosession.id})}">
-                    <i class='bx bx-error-alt'></i>
-                    <span class="text">Nueva Ruptura</span>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/usuario/editar-proveedor(id=${session.usuariosession.id})}">
-                    <i class='bx bxs-user-plus'></i>
-                    <span class="text">Nuevo Proveedor</span>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/usuario/editar-cristal(id=${session.usuariosession.id})}">
-                    <i class='bx bx-image-add'></i>
-                    <span class="text">Subir Imagen Cristalería</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="side-menu">
-            <li>
-                <a th:href="@{/usuario/editar-perfil-nuevo(id=${session.usuariosession.id})}">
-                    <i class='bx bxs-cog'></i>
-                    <span class="text">Settings</span>
-                </a>
-            </li>
-            <li class="logout">
-                <a th:href="@{/logout}" th:if="${session.usuariosession != null}">
-                    <i class='bx bxs-log-out-circle'></i>
-                    <span class="text">Logout</span>
-                </a>
-            </li>
-        </ul>
-    </section>
-    <section id="content">
-        <nav>
-            <i class='bx bx-menu'></i> <a href="#" class="nav-link">Categorías</a> <form action="#">
-                <div class="form-input">
-                    <input type="search" placeholder="Buscar...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-                </div>
-            </form>
-            <input type="checkbox" id="switch-mode" hidden>
-            <label for="switch-mode" class="switch-mode"></label> <a href="#" class="notification"> <i class='bx bxs-bell'></i>
-                <span class="num" th:if="${notificaciones != null && notificaciones > 0}" th:text="${notificaciones}">0</span>
-            </a>
-            <a href="#" class="profile" th:if="${perfil != null && perfil.id != null}">
-                <img th:src="@{'/foto/usuario/' + ${perfil.id}}" alt="Foto de perfil">
-            </a>
-        </nav>
-        <main>
-            <div class="head-title">
-                <div class="left">
-                    <h1>Dashboard</h1>
-                    <ul class="breadcrumb">
-                        <li><a href="#">Dashboard</a></li>
-                        <li><i class='bx bx-chevron-right'></i></li>
-                        <li><a class="active" th:href="@{/}">Home</a></li> </ul>
-                </div>
-                <a href="#" class="btn-download"> <i class='bx bxs-cloud-download'></i>
-                    <span class="text">Descargar PDF</span>
-                </a>
-            </div>
+    <header class="main-app-header">
+        <div class="logo">
+            <a th:href="@{/}"> 
+                 <img th:src="@{/img/rahip-logo-blanco.svg}" alt="Logo Rahip">
+                 </a>
+        </div>
+    </header>
 
-            <ul class="box-info" th:if="${perfil != null}">
-                <li>
-                    <i class='bx bxs-store-alt'></i>
-                    <span class="text">
-                        <h3>Barras</h3>
-                        <p th:text="${perfil.totalDeBarras ?: 0}"></p>
-                    </span>
-                </li>
-                <li>
-                    <i class='bx bxs-wine'></i>
-                    <span class="text">
-                        <h3>Cristalerías</h3>
-                        <p th:text="${perfil.totalCristalerias ?: 0}"></p>
-                    </span>
-                </li>
-                 <li>
-                    <i class='bx bx-calendar-check'></i>
-                    <span class="text">
-                        <h3>Días Sin Rupturas</h3>
-                        <p th:text="${perfil.diasLimpios ?: 0}"></p>
-                    </span>
-                </li>
-                <li class="gradient-loss"> <i class='bx bxs-dollar-circle'></i>
-                    <span class="text">
-                        <h3>Pérdidas del Mes</h3>
-                        <p th:text="${(perfil.costeMensual ?: 0) + '$'}"></p>
-                    </span>
-                </li>
-                <li class="gradient-capital"> <i class='bx bxs-wallet'></i>
-                    <span class="text">
-                        <h3>Capital Total</h3>
-                        <p th:text="${(perfil.capitalTotal ?: 0) + '$'}"></p>
-                    </span>
-                </li>
+    <nav class="main-navbar">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">BartenderStock</a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}" class="active">Inicio</a></li>
+                <li th:if="${session.usuariosession == null}"><a th:href="@{/usuario/registroUsuario}">Regístrate</a></li>
+                <li th:if="${session.usuariosession == null}"><a th:href="@{/usuario/loginUsuario}">Login</a></li>
+                <li th:if="${session.usuariosession != null}"><a th:href="@{/usuario/panel-barra(id=${session.usuariosession.id})}">Mi Dashboard</a></li>
+                <li th:if="${session.usuariosession != null}"><a th:href="@{/logout}">Salir</a></li>
             </ul>
+        </div>
+    </nav>
 
-            <div class="table-data">
-                <div class="order">
-                    <div class="head">
-                        <h3>Panel De Cristalerías</h3>
-                        <i class='bx bx-search'></i> <i class='bx bx-filter'></i> </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Tipo</th>
-                                <th>Descripción</th>
-                                <th>Barra</th>
-                                <th>Stock <span th:if="${perfil != null}" th:text="'(Total: ' + ${perfil.totalCristalerias ?: 0} + ')'"></span></th>
-                                <th>Precio Unit.</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:if="${#lists.isEmpty(cristalerias)}">
-                                <td colspan="5" style="text-align: center;">No hay cristalerías para mostrar.</td>
-                            </tr>
-                            <tr th:each="cristaleria : ${cristalerias}">
-                                <td>
-                                    <img th:if="${cristaleria.id != null}" th:src="@{'/foto/cristaleriafoto/' + ${cristaleria.id}}" alt="Foto cristalería">
-                                    <p th:text="${cristaleria.tipo}"></p>
-                                </td>
-                                <td th:text="${cristaleria.descripcion}"></td>
-                                <td th:text="${cristaleria.barraPertenecienteNombre}"></td>
-                                <td th:text="${cristaleria.enStock}"></td>
-                                <td><strong th:text="${cristaleria.precio + '$'}"></strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Bartender Stock</h1>
+            <h2 class="hero-subtitle" th:if="${session.usuariosession != null}" th:text="'Bienvenido, ' + ${session.usuariosession.nombre} + '! Listo para organizar tu barra.'"></h2>
+            <h2 class="hero-subtitle" th:if="${session.usuariosession == null}">La herramienta definitiva para la gestión de tu inventario de bar.</h2>
+            
+            <div th:if="${session.usuariosession != null}">
+                <a th:href="@{/usuario/panel-barra(id=${session.usuariosession.id})}" class="btn-cta">Ir a mi Dashboard</a>
+                <a th:href="@{/usuario/editar-perfil-nuevo(id=${session.usuariosession.id})}" class="btn-cta">Configurar Perfil</a>
             </div>
-
-            <div class="table-data">
-                 <div class="order">
-                    <div class="head">
-                        <h3>Panel De Rupturas</h3>
-                        <i class='bx bx-search'></i>
-                        <i class='bx bx-filter'></i>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Imagen</th>
-                                <th>Total Unid.</th>
-                                <th>Explicación</th>
-                                <th>Responsable</th>
-                                <th>Tipo Cristal</th>
-                                <th>Barra</th>
-                                <th>Fecha</th>
-                                <th>Coste</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                             <tr th:if="${#lists.isEmpty(rupturas)}">
-                                <td colspan="8" style="text-align: center;">No hay rupturas registradas.</td>
-                            </tr>
-                            <tr th:each="ruptura : ${rupturas}">
-                                <td>
-                                    <img th:if="${ruptura.tipoCristaleria != null && ruptura.tipoCristaleria.id != null}" th:src="@{'/foto/cristaleriafoto/' + ${ruptura.tipoCristaleria.id}}" alt="Cristal roto">
-                                </td>
-                                <td><strong th:text="${ruptura.numeroDeRuptura}"></strong></td>
-                                <td th:text="${ruptura.explicacion}"></td>
-                                <td th:text="${ruptura.nombre}"></td>
-                                <td th:text="${ruptura.tipoCristaleria?.tipo}"></td> <td th:text="${ruptura.tipoCristaleria?.barraPertenecienteNombre}"></td>
-                                <td th:text="${ruptura.dia + '/' + ruptura.mes + '/' + ruptura.anio}"></td>
-                                <td><strong th:text="${ruptura.costoRuptura + '$'}"></strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div th:if="${session.usuariosession == null}">
+                <a th:href="@{/usuario/registroUsuario}" class="btn-cta">¡Regístrate Gratis!</a>
+                <a th:href="@{/usuario/loginUsuario}" class="btn-cta">Iniciar Sesión</a>
             </div>
+        </div>
+    </section>
 
-            <div class="table-data">
-                <div class="order"> <div class="head">
-                        <h3>Todas Tus Barras</h3>
-                        <i class='bx bx-search'></i>
-                        <i class='bx bx-filter'></i>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Total Cristalerías</th>
-                                <th>Valor Total</th>
-                                <th>Stock Unidades</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:if="${#lists.isEmpty(barras)}">
-                                <td colspan="5" style="text-align: center;">No hay barras creadas.</td>
-                            </tr>
-                            <tr th:each="barra : ${barras}" th:if="${barra.activa != false}">
-                                <td>
-                                    <i class='bx bxs-store' style="font-size: 24px; vertical-align: middle; margin-right: 10px; color: var(--primary-color);"></i>
-                                    <p th:text="${barra.nombre}"></p>
-                                </td>
-                                <td th:text="${barra.totalUnidades}"></td>
-                                <td><strong th:text="${barra.precioTotal + '$'}"></strong></td>
-                                <td th:text="${barra.totalUnidades}"></td>
-                                <td>
-                                    <a th:href="@{/usuario/modificar-barra-panel/__${barra.id}__}" title="Modificar Barra">
-                                        <i class='bx bxs-edit'></i>
-                                    </a>
-                                    </td>
-                            </tr>
-                        </tbody>
-                    </table>
+    <section class="feature-section">
+        <div class="container">
+            <div class="feature-image">
+                <img th:src="@{/img/barra0.jpg}" alt="Organiza tu Cristalería"> 
                 </div>
-
-                <div class="todo"> <div class="head">
-                        <h3>Proveedores</h3>
-                        <a th:href="@{/usuario/editar-proveedor(id=${session.usuariosession.id})}" title="Nuevo Proveedor"><i class='bx bx-user-plus'></i></a>
-                        <i class='bx bx-filter'></i>
-                    </div>
-                    <ul class="todo-list">
-                        <li th:if="${#lists.isEmpty(proveedores)}" style="justify-content: center;">
-                            <span>No hay proveedores.</span>
-                        </li>
-                        <li th:each="proveedor : ${proveedores}" > <div>
-                                <h4 th:text="${proveedor.nombre}">Nombre Proveedor</h4>
-                                <h5 th:text="'+' + ${proveedor.celular}">+54123456789</h5>
-                            </div>
-                            <a th:if="${proveedor.celular != null}" th:href="'https://api.whatsapp.com/send?phone=' + ${proveedor.celular} + '&text=Hola%20' + ${proveedor.nombre} + ',%20te%20contacto%20desde%20BartenderStock.'" target="_blank">
-                                <i class='bx bxl-whatsapp'></i> Chat
-                            </a>
-                        </li>
-                        <li class="new-order-item"> <a th:href="@{/usuario/editar-pedido(id=${session.usuariosession.id})}">
-                                <i class='bx bx-cart-add'></i>
-                                <span class="text">Nuevo Pedido</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="feature-content">
+                <h2>Organiza tu Cristalería</h2>
+                <p>La cristalería es lo más preciado para un bartender profesional. Administra tu inventario, tipos de copas, vasos y más, todo en un solo lugar. ¡Mantén tu barra impecable!</p>
             </div>
-        </main>
-        </section>
-    </div> <script th:src="@{/js/script.js}"></script> </body>
+        </div>
+    </section>
+
+    <section class="feature-section image-right">
+        <div class="container">
+             <div class="feature-image">
+                <img th:src="@{/img/barra2.jpg}" alt="Gestor de Stock Inteligente">
+            </div>
+            <div class="feature-content">
+                <h2>Gestor de Stock Inteligente</h2>
+                <p>¡Que no te falte nada en tu despacho! Gestiona cualquier tipo de insumo, desde licores hasta frutas y garnituras. Comunícate fácilmente con tus proveedores favoritos.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-section">
+        <div class="container">
+            <div class="feature-image">
+                <img th:src="@{/img/barra6.jpg}" alt="Control de Rupturas">
+            </div>
+            <div class="feature-content">
+                <h2>Control Preciso de Rupturas</h2>
+                <p>¿Los accidentes ocurren? Lleva un registro detallado de cada pieza de cristalería rota o insumo perdido y calcula los costos acumulados para una mejor gestión financiera.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="main-app-footer">
+        <div class="container">
+            <p>Copyright &copy; Bartender Stock <span th:text="${#dates.year(#dates.createNow())}">2025</span></p>
+        </div>
+    </footer>
+
+    </body>
 </html>
