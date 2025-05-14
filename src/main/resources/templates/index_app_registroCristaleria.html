@@ -354,57 +354,46 @@
                 <div th:if="${param.success}" class="alert alert-success" style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom:15px;">
                     <p>Cristalería registrada con éxito.</p> </div>
 
-                <form th:action="@{/usuario/actualizar-cristaleria}" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="id" th:value="${perfil.id}"/>
-
-                    <div class="form-input-group">
-                        <label for="tipoCristaleria">Tipo de Cristalería</label>
-                        <input class="form-control" type="text" name="tipo" id="tipoCristaleria" placeholder="Ej: Copa de Vino, Vaso Highball" required>
-                    </div>
-
-                    <div class="form-input-group">
-                        <label for="descripcionCristaleria">Descripción (Opcional)</label>
-                        <input class="form-control" type="text" name="descripcion" id="descripcionCristaleria" placeholder="Ej: Resistente, Tallada, etc.">
-                    </div>
-
-                    <div class="form-input-group">
-                        <label for="cantidadStock">Cantidad en Stock</label>
-                        <input class="form-control" type="number" name="enStock" id="cantidadStock" placeholder="0" required min="0">
-                    </div>
-
-                    <div class="form-input-group">
-                        <label for="precioUnidad">Precio por Unidad</label>
-                        <input class="form-control" type="number" name="precio" id="precioUnidad" placeholder="0.00" required step="0.01" min="0">
-                    </div>
-
-                    <div class="form-input-group">
-                        <label for="idBarraSelect">Barra Perteneciente</label>
-                        <select class="form-select" name="idBarra" id="idBarraSelect" required>
-                            <option value="" disabled selected>Selecciona una barra...</option>
-                            <option th:each="barra : ${barras}" th:value="${barra.id}" th:text="${barra.nombre}">Nombre de Barra</option>
-                        </select>
-                    </div>
-
-                    <fieldset class="cristal-gallery-container">
-                        <legend>Asignar Foto Existente (Opcional)</legend>
-                        <div class="gallery" th:if="${cristales != null && !#lists.isEmpty(cristales)}">
-                            <div class="gallery-item" th:each="cristal : ${cristales}">
-                                <input class="form-check-input" type="radio" th:value="${cristal.id}" name="idCristal" th:id="'cristalRadio' + ${cristal.id}">
-                                <label class="form-check-label" th:for="'cristalRadio' + ${cristal.id}">
-                                    <img th:if="${cristal.foto != null}" th:src="@{'/foto/cristalfoto/' + ${cristal.id}}" alt="Imagen de cristal">
-                                     </label>
-                            </div>
-                        </div>
-                         <p th:if="${cristales == null || #lists.isEmpty(cristales)}" style="text-align:center; color:#777;">No hay imágenes de cristalería existentes para seleccionar.</p>
-                    </fieldset>
-                    
-                    <div class="form-input-group">
-                        <label for="fotoArchivo">Subir Nueva Foto (Si no seleccionaste una existente)</label>
-                        <input class="form-control" type="file" name="archivo" id="fotoArchivo" accept="image/*">
-                    </div>
-
-                    <button class="btn-submit-form" type="submit">Registrar Cristalería</button>
-                </form>
+          <form action="/usuario/actualizar-cristaleria" method="POST" enctype="multipart/form-data">
+       
+  <input  class="controls" type="text" name="tipo" id="nombre" placeholder="tipo de cristaleria">
+  <input type="hidden" name="id" th:value="${perfil.id}"/>
+   <input  class="controls" type="text" name="descripcion" id="nombre" placeholder="descripcion (opcional)">
+ 
+  <input  class="controls" type="number" name="enStock" id="nombre" placeholder="cantidad de unidades ">
+  <input  class="controls" type="number" name="precio" id="nombre" placeholder="precio por unidad">
+  <label >Barra Perteneciente</label>
+  <select  class="controls"  name="idBarra"> 
+      <option  th:each="barra : ${barras}" th:value="${barra.id}" th:text="${barra.nombre}"> <</option>
+  </select> 
+   
+  <label>Foto </label>
+  
+  
+  <div class="gallery">
+            <!-- Iterar sobre la lista de cristales para mostrar cada imagen con checkbox -->
+            <div class="gallery-item" th:each="cristal : ${cristales}">
+                <input class="form-check-input" type="checkbox" th:value="${cristal.id}" name="idCristal" id="cristalCheckbox${cristal.id}">
+                <label class="form-check-label" for="cristalCheckbox${cristal.id}">
+                    <img th:if="${cristal.foto != null}" class="img-fluid rounded-circle" style="width: 60px" th:src="${'/foto/cristalfoto/' + cristal.id}" alt="Cristal Image">
+                </label>
+            </div>
+        </div>
+  
+   
+     
+                                                                                                      
+                                                                                                      
+                                                                                                       <label style="color: black">Subir Foto </label>
+  
+                                                                                                      
+                                                                                                      <input style="color: black" class="controls" type="file" name="archivo" id="nombre" placeholder="Subir foto ">
+  
+  
+  
+  
+  <input class="botons" type="submit" value="enviar">
+ </form>
             </div>
         </main>
         </section>
