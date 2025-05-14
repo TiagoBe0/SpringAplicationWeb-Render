@@ -113,6 +113,8 @@
                                 <th>Descripción</th>
                                 <th>Barra</th>
                                 <th>Stock </th>
+                                
+                                <th>idUsuario</th>
                                 <th>Precio Unit.</th>
                             </tr>
                         </thead>
@@ -122,6 +124,8 @@
                                 <td th:text="${cristaleria.descripcion}"></td>
                                 <td th:text="${cristaleria.barraPertenecienteNombre}"></td>
                                 <td th:text="${cristaleria.enStock}"></td>
+                                
+                                <td th:text="${cristaleria.idUsuario}"></td>
                                 <td><strong th:text="${cristaleria.precio + '$'}"></strong></td>
                             </tr>
                         </tbody>
