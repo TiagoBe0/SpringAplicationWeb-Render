@@ -3,32 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Usuarios</title> <style>
+    <title>Gestión de Usuarios</title>
+    <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #5A1D87;
             color: white;
-            /* text-align: center; Ya no es necesario centrar todo el body si la tabla tiene su propio ancho */
             margin: 0;
-            padding: 20px; /* Añadido padding general al body */
+            padding: 20px;
         }
         .container {
-            width: 95%; /* Ajustado para un mejor uso del espacio */
+            width: 95%;
             margin: auto;
             padding: 20px;
-            background-color: #6A1E99; /* Fondo para el contenedor principal para mejor contraste */
+            background-color: #6A1E99;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
         }
-        .header-logo { /* Clase específica para el logo en el encabezado */
+        .header-logo {
             text-align: center;
             margin-bottom: 20px;
         }
         .header-logo img {
-            width: 100px; /* Tamaño del logo */
+            width: 100px;
             height: auto;
         }
-        h2 { /* Estilo para el título de la tabla */
+        h2 {
             text-align: center;
             margin-bottom: 20px;
             color: white;
@@ -37,51 +37,47 @@
             width: 100%;
             margin-top: 20px;
             border-collapse: collapse;
-            background-color: white; /* Fondo blanco para la tabla para legibilidad */
-            color: #333; /* Texto oscuro para la tabla */
-            border-radius: 8px; /* Bordes redondeados para la tabla */
-            overflow: hidden; /* Para que el border-radius afecte a los th/td */
+            background-color: white;
+            color: #333;
+            border-radius: 8px;
+            overflow: hidden;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         th, td {
-            border: 1px solid #ddd; /* Borde más sutil para celdas */
-            padding: 12px 15px; /* Más padding para mejor espaciado */
-            text-align: left; /* Alineación a la izquierda para el contenido de las celdas */
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+            vertical-align: middle; /* Para alinear verticalmente el contenido de las celdas */
         }
         th {
-            background-color: #8A2BE2; /* Fondo violeta más claro para encabezados de tabla */
+            background-color: #8A2BE2;
             color: white;
             font-weight: bold;
         }
-        tr:nth-child(even) { /* Estilo para filas pares para mejor legibilidad */
+        tr:nth-child(even) {
             background-color: #f9f9f9;
         }
-        tr:hover { /* Efecto hover en las filas */
+        tr:hover {
             background-color: #f1f1f1;
         }
-
-        /* Estilos para los paneles (si los necesitas mantener, considera si esta página es solo para la tabla) */
-        /* .left-panel, .right-panel podrían necesitar ajustes si esta página es diferente */
-
-        /* Estilos de botones y otros elementos de la página original, si son necesarios aquí */
         .button {
-            display: inline-block; /* Ajustado para que puedan estar en línea */
+            display: inline-block;
             background-color: white;
             color: #5A1D87;
             padding: 10px 15px;
             border-radius: 20px;
-            margin: 10px 5px; /* Margen ajustado */
+            margin: 10px 5px;
             font-weight: bold;
             cursor: pointer;
             text-align: center;
-            text-decoration: none; /* Para que parezcan botones si son <a> */
+            text-decoration: none;
             border: 2px solid #5A1D87;
         }
         .button:hover {
             background-color: #5A1D87;
             color: white;
         }
-        .search-controls { /* Contenedor para la barra y botones de búsqueda */
+        .search-controls {
             text-align: center;
             margin-bottom: 20px;
         }
@@ -89,10 +85,17 @@
             width: 50%;
             padding: 10px;
             border-radius: 5px;
-            border: 1px solid #ddd; /* Borde para la barra de búsqueda */
+            border: 1px solid #ddd;
             margin-right: 10px;
         }
-
+        /* Estilo para las imágenes en la tabla */
+        .user-photo {
+            max-width: 80px; /* Ajusta el tamaño según necesites */
+            max-height: 80px;
+            border-radius: 4px; /* Opcional: para redondear las imágenes */
+            display: block; /* Para centrar si es necesario o manejar márgenes */
+            margin: auto; /* Para centrar la imagen en la celda */
+        }
     </style>
 </head>
 <body>
@@ -104,8 +107,9 @@
         <h2>Listado de Usuarios</h2>
 
         <table>
-            <thead> <tr>
-                    <th>ID</th>
+            <thead>
+                <tr>
+                    <th>Foto</th> <th>ID</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Mail</th>
@@ -113,9 +117,20 @@
             </thead>
             <tbody>
                 <tr th:if="${#lists.isEmpty(usuarios)}">
-                    <td colspan="4" style="text-align: center;">No hay usuarios para mostrar.</td>
+                    <td colspan="5" style="text-align: center;">No hay usuarios para mostrar.</td>
                 </tr>
                 <tr th:each="usuario : ${usuarios}">
+                    <td>
+                        <div th:if="${usuario.fotoDePerfil != null && usuario.fotoDePerfil.contenidoAsBase64 != null && usuario.fotoDePerfil.mime != null}">
+                          
+                    <img th:if="${perfil != null && perfil.foto != null}" class="profile-avatar" th:src="@{'/foto/usuario/' + ${perfil.id}}" alt="Foto de perfil actual" class="user-foto">
+                    <img th:if="${perfil == null || perfil.foto == null}" class="profile-avatar" th:src="@{/img/default-avatar.png}" alt="Avatar por defecto" class="user-foto">
+                        </div>
+                        
+                        <div th:unless="${usuario.fotoDePerfil != null && usuario.fotoDePerfil.contenidoAsBase64 != null && usuario.fotoDePerfil.mime != null}">
+                            <span>Sin foto</span>
+                            </div>
+                    </td>
                     <td th:text="${usuario.id}">1</td>
                     <td th:text="${usuario.nombre}">Juan</td>
                     <td th:text="${usuario.apellido}">Pérez</td>

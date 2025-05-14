@@ -206,7 +206,7 @@ public class Controlador {
 
     @PostMapping("/registrar")
     public String registrar( ModelMap modelo,MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2) {
-        System.out.println("LLEGAMOS A LOS CONTROLADORES TIOOOOOOO");
+       
         try {
             usuarioServicio.registrar(archivo, nombre, apellido, mail, clave1, clave2);
         } catch (ErrorServicio ex) {
