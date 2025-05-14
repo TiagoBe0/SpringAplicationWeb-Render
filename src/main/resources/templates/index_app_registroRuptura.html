@@ -305,15 +305,10 @@
                     </div>
 
                     <div class="form-input-group">
-                        <label for="idCristaleriaSelect">Tipo de Cristalería Rota</label>
-                        <select class="form-select" name="idCristaleria" id="idCristaleriaSelect" required>
-                            <option value="" disabled selected>Selecciona tipo de cristalería...</option>
-                            <option th:each="cristaleria : ${cristalerias}" 
-                                    th:value="${cristaleria.id}" 
-                                    th:text="${cristaleria.tipo + (cristaleria.barraPerteneciente != null ? ' - ' + cristaleria.barraPerteneciente.nombre : '')}">
-                                Tipo - Barra
-                            </option>
-                        </select>
+                       <label >Tipo de Cristaleria Rota</label>
+  <select class="form-select" name="idCristaleria"> 
+      <option th:each="cristaleria: ${cristalerias}" th:value="${cristaleria.id}" th:text="${cristaleria.tipo+'-'+cristaleria.barraPerteneciente.nombre}"  ></option>
+      </select>
                     </div>
                     
                     <button class="btn-submit-form" type="submit">Registrar Ruptura</button>
