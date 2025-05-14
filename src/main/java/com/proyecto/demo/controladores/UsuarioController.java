@@ -200,10 +200,10 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     @GetMapping("/panel-barra")
     public String panelBarra(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
         //barraServicio.registrar(nombre, id);
-        System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         
         model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
+        model.put("cristalerias", usuarioServicio.buscarPorId(id).getTodasLasCristalerias());
       
          
          
