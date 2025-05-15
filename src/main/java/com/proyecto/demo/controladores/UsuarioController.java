@@ -99,6 +99,19 @@ public class UsuarioController {
         }
         return "index_app_registroBarra.html";
     }
+    
+    
+    
+       @GetMapping("/cristaleriaUsuario")
+    public String verCristaleria(ModelMap modelo){
+        
+         modelo.put("cristalerias",usuarioServicio.todosLosUsuarios().get(0).getTodasLasCristalerias());
+        return "cristaleriaUsuario.html";
+    }
+    
+    
+    
+    
     //ESTE LELGA AL REGISTRO PEDIDO
        @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/editar-pedido")
