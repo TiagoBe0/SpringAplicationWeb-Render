@@ -5,96 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Usuarios</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #5A1D87;
-            color: white;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            width: 95%;
-            margin: auto;
-            padding: 20px;
-            background-color: #6A1E99;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.3);
-        }
-        .header-logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .header-logo img {
-            width: 100px;
-            height: auto;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: white;
-        }
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-            background-color: white;
-            color: #333;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px 15px;
-            text-align: left;
-            vertical-align: middle; /* Para alinear verticalmente el contenido de las celdas */
-        }
-        th {
-            background-color: #8A2BE2;
-            color: white;
-            font-weight: bold;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-        .button {
-            display: inline-block;
-            background-color: white;
-            color: #5A1D87;
-            padding: 10px 15px;
-            border-radius: 20px;
-            margin: 10px 5px;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            border: 2px solid #5A1D87;
-        }
-        .button:hover {
-            background-color: #5A1D87;
-            color: white;
-        }
-        .search-controls {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .search-bar {
-            width: 50%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            margin-right: 10px;
-        }
-        /* Estilo para las imágenes en la tabla */
-        .user-photo {
-            max-width: 80px; /* Ajusta el tamaño según necesites */
+        /* ... tus estilos ... */
+        .user-photo { /* O photo-thumbnail si lo renombraste */
+            max-width: 80px;
             max-height: 80px;
-            border-radius: 4px; /* Opcional: para redondear las imágenes */
-            display: block; /* Para centrar si es necesario o manejar márgenes */
-            margin: auto; /* Para centrar la imagen en la celda */
+            border-radius: 4px;
+            display: block;
+            margin: auto;
         }
     </style>
 </head>
@@ -109,24 +26,28 @@
         <table>
             <thead>
                 <tr>
-                    <th>Foto</th> <th>ID</th>
+                    <th>Foto</th>
+                    <th>ID Usuario</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Mail</th>
-                    </tr>
+                </tr>
             </thead>
             <tbody>
                 <tr th:if="${#lists.isEmpty(usuarios)}">
                     <td colspan="5" style="text-align: center;">No hay usuarios para mostrar.</td>
                 </tr>
-                <tr th:each="foto : ${fotos}">
+                <tr th:each="usuario : ${usuarios}">
                     <td>
-                    </td>
-                    <td th:text="${foto.id}">1</td>
-                    <td th:text="${foto.nombre}">Juan</td>
-                    <td th:text="${foto.mime}">Pérez</td>
-                    <td > <img th:src="${'data:' + foto.mime + ';base64,' + foto.contenido}" /></td>
-                    </tr>
+                        <img th:src="@{/foto/usuario/{id}(id=${usuario.id})}"
+                             th:alt="${'Foto de ' + usuario.nombre}"
+                             class="user-photo"
+                             onerror="this.style.display='none'; console.error('Error cargando imagen para usuario ID: ' + this.getAttribute('data-userid'));" th:attr="data-userid=${usuario.id}" /> </td>
+                    <td th:text="${usuario.id}">ID Ejemplo</td>
+                    <td th:text="${usuario.nombre}">Nombre Ejemplo</td>
+                    <td th:text="${usuario.apellido}">Apellido Ejemplo</td>
+                    <td th:text="${usuario.mail}">Mail Ejemplo</td>
+                </tr>
             </tbody>
         </table>
     </div>

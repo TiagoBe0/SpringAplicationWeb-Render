@@ -106,6 +106,7 @@ public class FotoController {
     @GetMapping("/galeria-render")
     public String tablaFotos(ModelMap modelo){
     modelo.put("fotos",fotoServicio.getAll());
+    modelo.put("usuarios",usuarioServicio.todosLosUsuarios());
     return "tablaUsuario.html";
     }
 
