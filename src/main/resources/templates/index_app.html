@@ -726,11 +726,13 @@
                                 <th>Barra</th>
                                 <th>Stock</th>
                                 <th>Precio Unit.</th>
-                                </tr>
+                                <th>idUsuario</th>
+                                <th>Img</th>
+                            </tr>
                         </thead>
                         <tbody>
                             <tr th:if="${#lists.isEmpty(cristalerias)}">
-                                <td colspan="5" style="text-align: center;">No hay cristalerías para mostrar.</td>
+                                <td colspan="7" style="text-align: center;">No hay cristalerías para mostrar.</td>
                             </tr>
                             <tr th:each="cristaleria : ${cristalerias}">
                                 <td>
@@ -741,12 +743,13 @@
                                 <td th:text="${cristaleria.barraPertenecienteNombre}"></td>
                                 <td th:text="${cristaleria.enStock}"></td>
                                 <td><strong th:text="${(cristaleria.precio ?: 0) + '$'}"></strong></td>
-                                </tr>
+                                <td th:text="${cristaleria.idUsuario}"></td>
+                                <td> <img th:if="${cristaleria.id != null}" th:src="@{'/foto/cristaleriafoto/' + ${cristaleria.id}}" alt="Foto cristalería" style="max-width: 50px;"> </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
             <div class="table-data">
                  <div class="order" id="panelDeRupturas">
                     <div class="head">
