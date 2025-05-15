@@ -277,4 +277,24 @@ public class CristaleriaServicio {
 
     }
     
+    
+    
+    
+    public List<Cristaleria> buscarCristaleriasPorIdUsuario(String idUsuario){
+            List<Cristaleria> cristalerias = cristaleriaRepositorio.findAll();
+            List<Cristaleria> cristaleriasFiltradas = null;
+            for (Cristaleria cristaleria : cristalerias) {
+                
+                if(cristaleria.getIdUsuario().equals(idUsuario)){
+                
+                    cristaleriasFiltradas.add(cristaleria);
+                
+                
+                }
+            
+        }
+    
+                return cristaleriasFiltradas;
+    }
+    
 }

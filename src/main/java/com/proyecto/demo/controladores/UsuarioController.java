@@ -683,5 +683,31 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         modelo.put("cristalerias", cristaleriaServicio.todasCristalrias());
     return "tablaCristaleria.html";
     }
+    
+    
+         //Este es el que llega a crear barra
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/cristalerias-usuario")
+    public String cristaleriasPorUsuario(HttpSession session, @RequestParam String id,String nombre, ModelMap model) throws ErrorServicio {
+        
+
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+            
+            model.addAttribute("perfil", usuario);
+            
+            model.put("cristalerias",cristaleriaServicio.buscarCristaleriasPorIdUsuario(id));
+            
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "cristaleriaUsuario.html";
+    }
+    
 
 }//llave de clase
