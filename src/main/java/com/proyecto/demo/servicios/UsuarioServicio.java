@@ -1,7 +1,6 @@
 package com.proyecto.demo.servicios;
 
 import com.proyecto.demo.entidades.Barra;
-import com.proyecto.demo.entidades.Cristal;
 import com.proyecto.demo.entidades.Cristaleria;
 import com.proyecto.demo.entidades.Foto;
 import com.proyecto.demo.entidades.Proveedor;
@@ -11,7 +10,6 @@ import com.proyecto.demo.entidades.Zona;
 import com.proyecto.demo.enums.Rol;
 import com.proyecto.demo.errores.ErrorServicio;
 import com.proyecto.demo.repositorios.BarraRepositorio;
-import com.proyecto.demo.repositorios.CristaleriaRepositorio;
 import com.proyecto.demo.repositorios.ProveedorRepositorio;
 import com.proyecto.demo.repositorios.UsuarioRepositorio;
 import com.proyecto.demo.repositorios.ZonaRepositorio;
@@ -45,16 +43,13 @@ public class UsuarioServicio implements UserDetailsService {
     
     
     @Autowired
-    private CristaleriaRepositorio cristaleriaRepositorio;
-
-     @Autowired
-     private CristalServicio cristalServicio;
-         
-    @Autowired
     private ProveedorServicio proveedorServicio;
     @Autowired
     private CristaleriaServicio cristaleriaServicio;
-
+ @Autowired
+    private CristalServicio cristalServicio;
+  @Autowired
+    private RupturaServicio rupturaServicio;
     @Autowired
     private FotoServicio fotoServicio;
     @Autowired
@@ -87,7 +82,8 @@ public class UsuarioServicio implements UserDetailsService {
     }
     @Transactional
     public void registrar(MultipartFile archivo, String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
-        
+     
+
         validar(nombre, apellido, mail, clave, clave2);
 
         Usuario usuario = new Usuario();
@@ -104,14 +100,15 @@ public class UsuarioServicio implements UserDetailsService {
 
         Foto foto = fotoServicio.guardar(archivo);
         usuario.setFoto(foto);
+         //modificarBarra(usuario.getId(), "Barra(cristaleria");
+         //modificarInsumo(usuario.getId(), "Barra(insumos)");
 
         usuarioRepositorio.save(usuario);
 
     }
         @Transactional
     public void registrarAdmin(MultipartFile archivo, String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
-        System.out.println("LLEGARON DATOS A LOS SERVICIOOOOOOOOOOOOOOS");
-        System.out.println("LLEGARON DATOS A LOS SERVICIOOOOOOOOOOOOOOS");
+        
 
         validar(nombre, apellido, mail, clave, clave2);
 
@@ -167,68 +164,6 @@ public class UsuarioServicio implements UserDetailsService {
         }
 
     }
-    
-    
-    @javax.transaction.Transactional
-    public void modificarCristaleria(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra,String id,String idCristal) throws ErrorServicio {
-
-       Cristaleria cristaleria = new Cristaleria();
-       Cristal cristal = cristalServicio.buscarPorId(idCristal);
-        if(cristal !=null){
-              cristaleria.setCristalRepo(cristal);
-           
-            cristaleria.setFoto(cristal.getFoto());
-               
-        
-        }else{
-        Foto foto = fotoServicio.guardar(archivo);
-        cristaleria.setFoto(foto);
-        
-        
-        }
-   
-        if (!idBarra.isEmpty()) {
-
-            
-        Barra barraPerteneciente = barraServicio.buscarPorId(idBarra);
-        Usuario usuario = buscarPorId(id);
-        cristaleria.setDescripcion(descripcion);
-        cristaleria.setPrecio(precio);
-        cristaleria.setEnStock(enStock);
-        cristaleria.setPrecioTotal();
-        cristaleria.setIdUsuario(id);
-        cristaleria.setTipo(tipo);
-        cristaleria.setBarraPerteneciente(barraPerteneciente);
-        cristaleria.setBarraPertenecienteNombre(barraPerteneciente.getNombre());
-        List<Cristaleria> cristalerias = barraPerteneciente.getListaCristalerias();
-        
-        cristalerias.add(cristaleria);
-        barraPerteneciente.setTotalUnidades(barraPerteneciente.getTotalUnidades()+cristaleria.getEnStock());
-         List<Cristaleria> cristaleriaUsuario =usuario.getTodasLasCristalerias();
-         cristaleriaUsuario.add(cristaleria);
-         usuario.setTodasLasCristalerias(cristaleriaUsuario);
-        
-         barraPerteneciente.setPrecioTotal(barraServicio.calcularPrecioTotal(cristalerias));
-        barraPerteneciente.setListaCristalerias(cristalerias);
-        
-           //barraRepositorio.save(barraPerteneciente);
-/*
-            String idFoto = null;
-            if (cristaleria.getFoto() != null) {
-                idFoto = cristaleria.getFoto().getId();
-                   Foto foto = fotoServicio.actualizar(idFoto, archivo);
-            cristaleria.setFoto(foto);
-
-            }
-*/
-         
-            cristaleriaRepositorio.save(cristaleria);
-        } else {
-
-            throw new ErrorServicio("No se encontró el usuario solicitado");
-        }
-
-    }
     @Transactional
     public void modificarBarra( String id, String nombre) throws ErrorServicio {
 
@@ -236,7 +171,39 @@ public class UsuarioServicio implements UserDetailsService {
         Barra barra = new Barra();
         barra.setNombre(nombre);
         barra.setUsuario(buscarPorId(id));
-       
+       barra.setInsumo(false);
+         barraRepositorio.save(barra);
+        
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+
+            Usuario usuario = respuesta.get();
+           
+            actualizarListBarras(id, barra.getId());
+            
+            usuario.setCapitalTotal(barraServicio.calcularPrecioTotal(usuario.getTodasLasCristalerias()));
+            
+           
+            
+
+            
+
+            usuarioRepositorio.save(usuario);
+        } else {
+
+            throw new ErrorServicio("No se encontró el usuario solicitado");
+        }
+
+    }
+    @Transactional
+     public void modificarInsumo( String id, String nombre) throws ErrorServicio {
+
+        
+        Barra barra = new Barra();
+        barra.setNombre(nombre);
+        barra.setUsuario(buscarPorId(id));
+       barra.setInsumo(true);
          barraRepositorio.save(barra);
         
 
@@ -294,8 +261,19 @@ public class UsuarioServicio implements UserDetailsService {
         }
 
     }
+    //BORRAR TODA LA BASE DE DATOS
+    @Transactional
+    public void borrarTodo(){
+        cristaleriaServicio.borrarTodo();
+        cristalServicio.borrarTodo();
+        barraServicio.borrarTodo();
+        rupturaServicio.borrarTodo();
+    fotoServicio.borrarTodo();
+    proveedorServicio.borrarTodo();
+    //pedidoServicio.borrarTodo();
+   
     
-    
+    }
     
     //CALCULAR CAPITAL TOTAL EN STCOK
     public void actualizarCapitalTotal(String idUsuario) throws ErrorServicio{
@@ -304,33 +282,166 @@ public class UsuarioServicio implements UserDetailsService {
         
         if(usuario!=null){
             float suma=0.f;
+            float sumaInsumos=0.f;
             List<Barra> barras = usuario.getBarras();
             for (Barra barra : barras) {
+                if(barra.isInsumo()){
+                    sumaInsumos=sumaInsumos+barra.getPrecioTotal();
                 
-                suma=suma+barra.getPrecioTotal();
+                }
+                else{
+                    suma=suma+barra.getPrecioTotal();
+                
+                }
+                
+                
                 
             }
         usuario.setCapitalTotal(suma);
-        usuario.setTotalCristalerias(barraServicio.actualizarStockBarra(idUsuario));
+        usuario.setCapitalTotalInsumos(sumaInsumos);
+        int[] array = barraServicio.actualizarStockBarra(idUsuario);
+        usuario.setTotalCristalerias(array[0]);
+        usuario.setTotalInsumos(array[1]);
         Calendar calendario = new GregorianCalendar();
-            actualizacionCosteMensualRupturas(idUsuario,calendario );
+       
+
+         usuario.setCosteMensualInsumos(actualizacionCosteMensualVencimientos(idUsuario, calendario));
+            usuario.setCosteMensual(actualizacionCosteMensualRupturas(idUsuario, calendario));
+        }
+        
+           
        
         }
     
     
+    @Transactional
+    public void actualizarPerdidasTotales(String id) throws ErrorServicio{
+        
+        Usuario usuario = buscarPorId(id);
+        float suma=0.f;
+        for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
+            suma=suma+ruptura.getCostoRuptura();
+        }
+        usuario.setCosteMensual(suma);
+        
     
+    
+        
+            
+            }
+    
+    
+    //RUPTURA DEL MES
+    @Transactional
+    public float actualizacionCosteMensualRupturas(String idUsuario,Calendar calendario) throws ErrorServicio{
+        float costeMensual=0.f;
+         float costeMensualVencimiento=0.f;
+        Usuario usuario =buscarPorId(idUsuario);
+        int diasLimpios=32;
+        int diasVencimiento=32;
+        if(usuario!=null){
+            for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
+                if(!ruptura.isInsumo()){
+                if(true){
+                    
+                    costeMensual=costeMensual+ruptura.getCostoRuptura();
+                    if(calendario.get(Calendar.DATE)-ruptura.getDia()<=diasLimpios){
+                    
+                    diasLimpios=calendario.get(Calendar.DATE)-ruptura.getDia();
+                    }
+                    usuario.setDiasLimpios(diasLimpios);
+            usuario.setCosteMensual(costeMensual);
+                
+                
+                
+                }else{
+                
+                
+                    if(ruptura.getMes()==calendario.get(Calendar.MONTH)+1){
+                    
+                    costeMensualVencimiento=costeMensualVencimiento+ruptura.getCostoRuptura();
+                    if(calendario.get(Calendar.DATE)-ruptura.getDia()<=diasLimpios){
+                    
+                    diasVencimiento=calendario.get(Calendar.DATE)-ruptura.getDia();
+                    }
+                }
+                     usuario.setDiasLimpiosInsumos(diasVencimiento);
+            usuario.setCosteMensualInsumos(costeMensualVencimiento);
+                }
+                
+                
+            }
+                
+            
+            return costeMensual;
+        }
+        }
+    
+    return costeMensual;
     
     }
     
-    //RUPTURA DEL MES
+    public float costeMensualTotal(String id) throws ErrorServicio{
+       Usuario usuario =buscarPorId(id);
+        float suma=0.f;
+       if(usuario!=null){
+          
+           for (Ruptura r : usuario.getTodasLasRupturas()) {
+               if(!r.isInsumo()){
+               
+                   suma=suma+r.getCostoRuptura();
+               }
+           }
+       
+       }
+    return suma;
+    }
+    public float costeMensualTotalVencimientos(String id) throws ErrorServicio{
+       Usuario usuario =buscarPorId(id);
+        float suma=0.f;
+       if(usuario!=null){
+          
+           for (Ruptura r : usuario.getTodasLasRupturas()) {
+               if(r.isInsumo()){
+               
+                   suma=suma+r.getCostoRuptura();
+               }
+           }
+       
+       }
+    return suma;
+    }
+    @Transactional
+    public float costeMensualTotalPorMes(String id) throws ErrorServicio{
+       Usuario usuario =buscarPorId(id);
+       Calendar calendario = new GregorianCalendar();
+        float suma=0.f;
+       if(usuario!=null){
+          
+           for (Ruptura r : usuario.getTodasLasRupturas()) {
+               if(!r.isInsumo()){
+               
+                   if((r.getMes()-1)==calendario.get(Calendar.MONTH)){
+                   
+                       suma+=r.getCostoRuptura();
+                   }
+               }
+               
+           }
+       usuario.setCosteMensual(suma);
+       }
+       
+    return suma;
+    }
+    //VENCIMIENTOS
     
-    public float actualizacionCosteMensualRupturas(String idUsuario,Calendar calendario) throws ErrorServicio{
+    public float actualizacionCosteMensualVencimientos(String idUsuario,Calendar calendario) throws ErrorServicio{
         float costeMensual=0.f;
         Usuario usuario =buscarPorId(idUsuario);
         int diasLimpios=32;
         if(usuario!=null){
             for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
-                
+                if(ruptura.isInsumo()){
                 if(ruptura.getCalendario().get(Calendar.MONTH)==calendario.get(Calendar.MONTH)){
                     
                     costeMensual=costeMensual+ruptura.getCostoRuptura();
@@ -339,14 +450,14 @@ public class UsuarioServicio implements UserDetailsService {
                     diasLimpios=calendario.get(Calendar.DATE)-ruptura.getDia();
                     }
                 
-                
+                }
                 
                 }
                 
                 
             }
-            usuario.setDiasLimpios(diasLimpios);
-            usuario.setCosteMensual(costeMensual);
+            usuario.setDiasLimpiosInsumos(diasLimpios);
+            usuario.setCosteMensualInsumos(costeMensual);
             return costeMensual;
         }
     
@@ -396,11 +507,19 @@ public void actualizarNumeroTotalDeCristalerias(String id ) throws ErrorServicio
     
         List<Barra> barras = usuario.getBarras();
         int total=0;
+        int totalInsumos=0;
         for (Barra barra : barras) {
+            if(!barra.isInsumo()){
             total=total+barra.getTotalUnidades();
-        }
+            }else{
+            
+            totalInsumos=totalInsumos+barra.getTotalUnidades();
+            }
+            
+            }
         
         usuario.setTotalCristalerias(total);
+        usuario.setTotalInsumos(totalInsumos);
     }
 
 
@@ -513,7 +632,25 @@ public void actualizarNumeroTotalDeCristalerias(String id ) throws ErrorServicio
 
     }
     
+    //GET ALGUNAS CRISTALERIAS
+    public List<Cristaleria> listarAlgunasCristalerias(String id) throws ErrorServicio{
+    List<Cristaleria> cristalerias=buscarPorId(id).getTodasLasCristalerias();
+    List<Cristaleria> algunasCristalerias=null;
+    int size = cristalerias.size();
+        if(size>=5){
+            for (int i = 0; i < 5; i++) {
+                algunasCristalerias.add(cristalerias.get(i));
+            }
+            
+            
+            return algunasCristalerias;
+
+
+        }
     
+    
+    return cristalerias;
+    }
     //listar toda crtistaleria de barras
     public List<Cristaleria> listarTodaLaCristaleria(String id) throws ErrorServicio{
           
@@ -524,7 +661,28 @@ public void actualizarNumeroTotalDeCristalerias(String id ) throws ErrorServicio
         for (Barra barra : barras) {
             
             for (Cristaleria obj : barra.getListaCristalerias()) {
+                if(!obj.isInsumo()){
                 todasLasCristalerias.add(obj);
+                }
+            }
+            
+        }
+    return todasLasCristalerias;
+    
+    }
+       //listar toda crtistaleria de barras
+    public List<Cristaleria> listarTodosLosInsumos(String id) throws ErrorServicio{
+          
+        Usuario usuario = buscarPorId(id);
+        List<Barra> barras =usuario.getBarras();
+        List<Cristaleria> todasLasCristalerias = null;
+        
+        for (Barra barra : barras) {
+            
+            for (Cristaleria obj : barra.getListaCristalerias()) {
+                if(obj.isInsumo()){
+                todasLasCristalerias.add(obj);
+                }
             }
             
         }
@@ -607,14 +765,23 @@ public void actualizarNumeroTotalDeCristalerias(String id ) throws ErrorServicio
     //sumamos las barras a la list
     barras.add(barraServicio.buscarPorId(idBarra));
     usuario.setBarras(barras);
-    usuario.setTotalCristalerias(barraServicio.actualizarStockBarra(idUsuario));
+    int[] array= barraServicio.actualizarStockBarra(idUsuario);
+    usuario.setTotalCristalerias(array[0]);
+     usuario.setTotalInsumos(array[1]);
     usuario.setTotalDeBarras(barras.size());
     float suma=0.f;
+    float sumaInsumos=0.f;
         for (Barra barra : barras) {
+            if(!barra.isInsumo()){
             suma=suma+barra.getPrecioTotal();
+            }else{
+                
+                 sumaInsumos=sumaInsumos+barra.getPrecioTotal();
             
+            }
         }
         usuario.setCapitalTotal(suma);
+        usuario.setCapitalTotalInsumos(sumaInsumos);
     
     
     

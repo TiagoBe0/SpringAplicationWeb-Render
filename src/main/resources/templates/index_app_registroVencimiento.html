@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="/fragments/head_app">
+	
+</head>
+<body style="background-image: url(https://th.bing.com/th/id/OIP.XqXoj7lKuHP_6zfTPiOAawHaE6?rs=1&pid=ImgDetMain)" >
+
+	<!-- SIDEBAR -->
+	<section id="sidebar" th:replace="/fragments/navGeneral">
+		
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content" >
+		<!-- NAVBAR -->
+		<nav  th:replace="/fragments/barraGeneral">
+			
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+                    <a class="boton" th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" type="submit"  >DASHBOARD</a>
+			<section class="form-register">
+  <h4 style="color: black">Nueva Ruptura</h4>
+  <!-- MAIN FORMULARIOOO -->
+   <form action="/usuario/actualizar-ruptura" method="POST" enctype="multipart/form-data">
+       
+  <input style="color: black" class="controls" type="text" name="nombre" id="nombre" placeholder="nombre de responsable">
+  <input type="hidden" name="id" th:value="${perfil.id}"/>
+   <input style="color: black" class="controls" type="text" name="explicacion" id="nombre" placeholder="explicacion (opcional)">
+ 
+  <input style="color: black" class="controls" type="number" name="cantidad" id="nombre" placeholder="unidades perdidas ">
+  <label style="color: #660000">Tipo de Cristaleria Rota</label>
+  <select style="color: #000" class="controls" name="idCristaleria"> 
+      <option  th:each="cristaleria: ${cristalerias}" th:value="${cristaleria.id}" th:text="${cristaleria.tipo+'-'+cristaleria.barraPerteneciente.nombre}" th:if="${cristaleria.insumo}"  ></option>
+      </select>
+  
+  <label style="color: #660000">Barra Perteneciente</label>
+  <select  class="controls" style="color: #000" name="idBarra" > 
+      <option style="color: #660000" th:each="barra : ${barras}" th:value="${barra.id}" th:text="${barra.nombre}" th:if="${barra.insumo}"> </option>
+  </select>     
+  
+                                                                                                      
+                                                                         
+                                                                                                      
+  
+  
+  
+  <input class="botons" type="submit" value="enviar">
+ </form>
+</section>
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	
+
+	<script src="../script.js"></script>
+</body>
+</html>

@@ -33,9 +33,9 @@ public class Barra {
        @ManyToOne
        private Usuario usuario;
        
-       
+       private boolean insumo;
        private float precioTotal;
-       
+       private float precioTotalInsumos;
        private int totalUnidades;
         @Temporal(TemporalType.TIMESTAMP)
     private Date alta;
@@ -56,6 +56,14 @@ public class Barra {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public float getPrecioTotalInsumos() {
+        return precioTotalInsumos;
+    }
+
+    public void setPrecioTotalInsumos(float precioTotalInsumos) {
+        this.precioTotalInsumos = precioTotalInsumos;
     }
 
     public boolean isActiva() {
@@ -84,6 +92,14 @@ public class Barra {
 
     public float getPrecioTotal() {
         return precioTotal;
+    }
+
+    public boolean isInsumo() {
+        return insumo;
+    }
+
+    public void setInsumo(boolean insumo) {
+        this.insumo = insumo;
     }
 
     public void setPrecioTotal(float precioTotal) {

@@ -139,5 +139,10 @@ public class ProveedorServicio {
      
      }
      
-
+ @Transactional
+    public void borrarTodo(){
+    
+    barraRepositorio.deleteAll();
+    }
+       
 }

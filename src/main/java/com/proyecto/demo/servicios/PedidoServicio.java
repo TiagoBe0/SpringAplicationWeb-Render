@@ -12,7 +12,9 @@ import com.proyecto.demo.repositorios.BarraRepositorio;
 import com.proyecto.demo.repositorios.PedidoRepositorio;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -27,24 +29,66 @@ public class PedidoServicio {
     @Autowired
     private UsuarioServicio usuarioServicio;
     
+    @Autowired
+    private CristaleriaServicio cristaleriaServicio;
+    
     @Transactional
-    public void registrar(String nombre,String idUsuario) throws ErrorServicio {
-
-       
-       Pedido barra = new Pedido();
-       //barra.setAlta(new Date());
-       barra.setUsuario(usuarioServicio.buscarPorId(idUsuario));
-       barra.setActiva(true);
-       usuarioServicio.actualizarListBarras(idUsuario,barra.getId());
-       barra.setNombre(nombre);
-       
+    public void registrar(List<String> id,List<Integer> cantidad,String idUsuario) throws ErrorServicio {
+        System.out.println("    kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+         List<Cristaleria> cristalerias=null; 
       
         
-        barraRepositorio.save(barra);
+       Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
+       Calendar calendario = new GregorianCalendar();
+       List<Pedido> pedidos = usuario.getPedidos();
+              
+       Pedido pedido = new Pedido();
+       
+       pedido.setUsuario(usuario);
+       pedido.setActiva(true);
+       pedido.setCalendario(calendario);
+      
+       for (String i : id) {
+            // Lógica para registrar en la base de datos
+            System.out.println("Selected Cristaleria ID: " + i);
+           
+               
+            cristalerias.add(cristaleriaServicio.buscarPorId(i));
+        }
+       if(cristalerias!=null){
+       pedido.setListaCristalerias(cristalerias);
+       }
+       
+       pedidos.add(pedido);
+       usuario.setPedidos(pedidos);
+      
+        
+        barraRepositorio.save(pedido);
         
 
        
 
+    }
+    @Transactional
+    public List<Cristaleria> coonvertirEnListaCistalerias(List<String> ids,List<Integer> cantidad) throws ErrorServicio{
+        List<Cristaleria> cristalerias=null;
+        
+           for (String id : ids) {
+               Cristaleria cristaleria = new Cristaleria();
+               cristaleria = cristaleriaServicio.buscarPorId(id);
+               
+               cristalerias.add(cristaleria);
+               
+               
+            
+        }
+                
+                
+            
+        
+        
+    
+    return cristalerias;
     }
     
     //ACTUALIZAR PRECIO TOTAL DE BARRA
@@ -172,6 +216,14 @@ public class PedidoServicio {
           barraRepositorio.deleteById(id);
      
      }
+     
+     
+      @Transactional
+    public void borrarTodo(){
+    
+    barraRepositorio.deleteAll();
+    }
+       
      
 
 }

@@ -1,6 +1,5 @@
 package com.proyecto.demo.entidades;
 
-import java.util.Base64;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,8 +20,6 @@ public class Foto {
     private String nombre;
     private String mime;
     
-     private String contenidoBase64; // El nuevo atributo que contendrá la cadena Base64
-
     
 
     @Lob @Basic(fetch = FetchType.LAZY)
@@ -38,14 +35,6 @@ public class Foto {
 
     public String getNombre() {
         return nombre;
-    }
-
-    public String getContenidoBase64() {
-        return contenidoBase64;
-    }
-
-    public void setContenidoBase64(String contenidoBase64) {
-        this.contenidoBase64 = contenidoBase64;
     }
 
     public void setNombre(String nombre) {
@@ -67,12 +56,6 @@ public class Foto {
 
     public void setContenido(byte[] contenido) {
         this.contenido = contenido;
-        
-         if (contenido != null && contenido.length > 0) {
-            this.contenidoBase64 = Base64.getEncoder().encodeToString(contenido);
-        } else {
-            this.contenidoBase64 = null; // O una cadena vacía, según tu preferencia
-        }
     }
     
     

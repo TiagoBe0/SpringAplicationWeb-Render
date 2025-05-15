@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.proyecto.demo.entidades.Usuario;
+import com.proyecto.demo.errores.ErrorServicio;
 import com.proyecto.demo.servicios.BarraServicio;
 import com.proyecto.demo.servicios.UsuarioServicio;
+import javax.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @Controller
 @RequestMapping("/admin")
@@ -73,6 +76,19 @@ public class AdminController {
 			return "inicioAdmin";
 		}
 	}
+        
+        
+        //POST BORRAR TODA LA BASE DE DATOS
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @DeleteMapping("/borrar-todo/{id}")
+    public String borrarTodo( ModelMap modelo,  @PathVariable String id ) throws ErrorServicio {
+       
+        modelo.put("perfil",usuarioServicio.buscarPorId(id));
+         usuarioServicio.borrarTodo();
+         
+         return "index_app_inicio.html";
+      
+    }
 	
 	
 }

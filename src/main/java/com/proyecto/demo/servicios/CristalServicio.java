@@ -23,12 +23,18 @@ public class CristalServicio {
      
      
     @Transactional
-    public void registrar(MultipartFile archivo , String nombre) throws ErrorServicio{
+    public void registrar(MultipartFile archivo , String nombre,int insumo) throws ErrorServicio{
         
         Cristal cristal = new Cristal();
       
         Foto foto = fotoServicio.guardar(archivo);
         
+        if(insumo>0){
+        cristal.setInsumo(true);
+        }else{
+            cristal.setInsumo(false);
+        
+        }
         cristal.setFoto(foto);
         cristal.setNombre(nombre);
         
@@ -46,6 +52,11 @@ public class CristalServicio {
     return cristalRepositorio.findAll();
     }
     
+    @Transactional
+    public void borrarTodo(){
+    
+    cristalRepositorio.deleteAll();
+    }
        
 
 }

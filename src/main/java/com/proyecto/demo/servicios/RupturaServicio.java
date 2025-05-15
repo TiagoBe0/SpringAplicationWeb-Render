@@ -41,22 +41,39 @@ public class RupturaServicio {
         if (!idCristaleria.isEmpty()) {
 
             Cristaleria cristaleria = cristaleriaServicio.buscarPorId(idCristaleria);
-                 Usuario usuario = usuarioServicio.buscarPorId(id);
-                 
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+          
            ruptura.setNombre(nombre);
            ruptura.setExplicacion(explicacion);
+           ruptura.setIdUsuario(id);
+           ruptura.setUsuario(usuario);
+           
            ruptura.setNumeroDeRuptura(cantidad);
            ruptura.setCostoRuptura(cristaleria.getPrecio()*cantidad);
            ruptura.setTipoCristaleria(cristaleria);
            ruptura.setCalendario(calendario);
            cristaleria.setEnStock(cristaleria.getEnStock()-cantidad);
-           cristaleria.setIdUsuario(usuario.getId());
+           
+           if(cristaleria.isInsumo()){
+               ruptura.setInsumo(true);
+               
+           }
+           else{
+           
+               ruptura.setInsumo(false);
+           }
+           
+           
            List<Ruptura> rupturas =usuario.getTodasLasRupturas();
            rupturas.add(ruptura);
            usuario.setTodasLasRupturas(rupturas);
+       
           barraServicio.actualizarStockBarra(cristaleria.getBarraPerteneciente().getId(), cantidad);
            barraServicio.actualizarPrecioBarra(cristaleria.getBarraPerteneciente(), ruptura.getCostoRuptura());
         usuarioServicio.actualizarCapitalTotal(id);
+        //COSTE MENSUAL
+         
+       
            //barraRepositorio.save(barraPerteneciente);
 
         }
@@ -65,7 +82,7 @@ public class RupturaServicio {
     
     
     //RUPTURA DEL MES
-    
+    @Transactional
     public float actualizacionCosteMensualRupturas(String idUsuario,Calendar calendario) throws ErrorServicio{
         float costeMensual=0.f;
         Usuario usuario =usuarioServicio.buscarPorId(idUsuario);
@@ -73,7 +90,7 @@ public class RupturaServicio {
         if(usuario!=null){
             for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
                 
-                if(ruptura.getCalendario().get(Calendar.MONTH)==calendario.get(Calendar.MONTH)){
+                if(ruptura.getCalendario().get(Calendar.MONTH)==(calendario.get(Calendar.MONTH)+1)){
                     
                     costeMensual=costeMensual+ruptura.getCostoRuptura();
                 
@@ -90,6 +107,31 @@ public class RupturaServicio {
     return costeMensual;
     
     }
-   
-
+   public List<Ruptura> listarTodasRupturas(String id) throws ErrorServicio{
+   List<Ruptura> rupturas = usuarioServicio.buscarPorId(id).getTodasLasRupturas();
+      
+ return rupturas;
+   }
+    
+ @Transactional
+    public void borrarTodo(){
+    
+    rupturaRepositorio.deleteAll();
+    }
+ 
+    
+    
+    public List<Ruptura> todasLasRupturas(String idUsuario){
+      List<Ruptura> rupturas=null;
+        for (Ruptura ruptura : rupturaRepositorio.findAll()) {
+            if(ruptura.getIdUsuario().equals(idUsuario)){
+            
+                rupturas.add(ruptura);
+            }
+            
+        }
+      
+    return rupturas;
+    }
+    
 }

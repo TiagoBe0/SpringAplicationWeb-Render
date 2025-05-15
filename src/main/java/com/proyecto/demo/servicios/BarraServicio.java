@@ -58,19 +58,29 @@ public class BarraServicio {
     }
     
     
-    public int actualizarStockBarra(String idUsuario) throws ErrorServicio{
+    public int[] actualizarStockBarra(String idUsuario) throws ErrorServicio{
+        int[] array=new int[2];
         int total=0;
+        int totalInsumos=0;
         Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
         if(usuario!=null){
             
             for (Barra barra : usuario.getBarras()) {
-                total=total+barra.getTotalUnidades();
+               if(barra.isInsumo() ){
+                    totalInsumos=totalInsumos+barra.getTotalUnidades();
+               }else{
+                    total=total+barra.getTotalUnidades();
+               
+               
+               }
             }
+            array[0]=total;
+            array[1]=totalInsumos;
         
         
         }
     
-    return total;
+    return array;
     }
         
     @Transactional
@@ -91,9 +101,27 @@ public class BarraServicio {
         float suma =0;
         
         for (Cristaleria cristaleria : cristalerias) {
-            
+            if(!cristaleria.isInsumo()){
             suma = suma + cristaleria.getPrecioTotal();
-            System.out.println("precio"+suma);
+            
+            }
+        }
+        
+    
+    return suma;
+    
+    
+    }
+    public float calcularPrecioTotalInsumos(List<Cristaleria> cristalerias){
+        
+        float suma =0;
+        
+        for (Cristaleria cristaleria : cristalerias) {
+            
+             if(cristaleria.isInsumo()){
+            suma = suma + cristaleria.getPrecioTotal();
+            
+            }
         }
         
     
@@ -113,7 +141,12 @@ public class BarraServicio {
         
     }
     
+     @Transactional
+    public void borrarTodo(){
     
+   barraRepositorio.deleteAll();
+    }
+       
     
      public Barra buscarPorId(String id) throws ErrorServicio {
 

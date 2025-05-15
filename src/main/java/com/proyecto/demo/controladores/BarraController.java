@@ -40,7 +40,7 @@ public class BarraController {
         //modelo.addAttribute("barra",barraServicio.listarTodas().get(0).getNombre() );
         
         
-        return "index_app_listarBarras.html";
+        return "listarBarras.html";
     }
     
     

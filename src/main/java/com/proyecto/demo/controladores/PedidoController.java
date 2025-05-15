@@ -84,14 +84,7 @@ public class PedidoController {
 
          
          
-        try {
-            barraServicio.registrar(nombre,idUsuario);
-        } catch (ErrorServicio ex) {
-           modelo.put(nombre,"nombre");
-            
-             
-            return "registroCristaleria.html";
-        }
+        
         modelo.put("titulo", "Bienvenido");
         modelo.put("descripcion", "Barra cargada correctamente");
         return "exitoBarra.html";

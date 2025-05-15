@@ -14,7 +14,9 @@ import com.proyecto.demo.repositorios.CristalRepositorio;
 import com.proyecto.demo.repositorios.CristaleriaRepositorio;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -63,6 +65,8 @@ public class CristaleriaServicio {
         cristaleria.setPrecio(precio);
         cristaleria.setEnStock(enStock);
         cristaleria.setTipo(tipo);
+        Calendar calendario = new GregorianCalendar();
+        cristaleria.setCalendario(calendario);
         //Creamos una barra de pertenecencia y añadimos a lista de cristaleria comoa tributo
         Barra barra =barraServicio.buscarPorId(idBarra);
         Usuario usuario = usuarioServicio.buscarPorId(barra.getUsuario().getId());
@@ -85,26 +89,57 @@ public class CristaleriaServicio {
 
     }
     
-    public List<Cristaleria> listarPorIdUsuario(String mail){
+    public List<Cristaleria> listarCristaleriasPorIdUsuario(String idUsuario){
     
     
-    return cristaleriaRepositorio.buscarPorIdUsuario(mail);
+   return cristaleriaRepositorio.buscarPorIdUsuario(idUsuario);
+   
+    
     }
+     public List<Cristaleria> listarInsumosPorIdUsuario(String idUsuario){
+    
+    
+    return cristaleriaRepositorio.buscarPorIdUsuario(idUsuario);
+  
+       
+    
+    }
+    
+    
+    public List<Cristaleria> listarPorIdUsuario(String idUsuario){
+    
+    
+    return cristaleriaRepositorio.buscarPorIdUsuario(idUsuario);
+    }
+     
 
     @Transactional
     public void modificar(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra,String id,String idCristal) throws ErrorServicio {
-
+       Cristal cristal =null;
+       Cristal cristalNuevo = null;
        Cristaleria cristaleria = new Cristaleria();
-       Cristal cristal = cristalServicio.buscarPorId(idCristal);
-        if(cristal !=null){
+       if(idCristal!=null){
+       cristal = cristalServicio.buscarPorId(idCristal);
+       }
+           
+       if(cristal !=null){
               cristaleria.setCristalRepo(cristal);
            
             cristaleria.setFoto(cristal.getFoto());
                
         
         }else{
+            if(archivo!=null){
         Foto foto = fotoServicio.guardar(archivo);
+      
+        
+        
         cristaleria.setFoto(foto);
+            }
+            else{
+            
+                cristaleria.setFoto(null);
+            }
         
         
         }
@@ -113,6 +148,20 @@ public class CristaleriaServicio {
 
             
         Barra barraPerteneciente = barraServicio.buscarPorId(idBarra);
+        if(barraPerteneciente.isInsumo()){
+            cristaleria.setInsumo(true);
+            if(idCristal ==null && archivo != null){
+            cristalServicio.registrar(archivo, null, 1);
+            }
+        
+        
+        }else{
+            cristaleria.setInsumo(false);
+            if(idCristal ==null && archivo != null){
+            cristalServicio.registrar(archivo, null, -1);
+            }
+        }
+        
         Usuario usuario = usuarioServicio.buscarPorId(id);
         cristaleria.setDescripcion(descripcion);
         cristaleria.setPrecio(precio);
@@ -129,8 +178,19 @@ public class CristaleriaServicio {
          List<Cristaleria> cristaleriaUsuario =usuario.getTodasLasCristalerias();
          cristaleriaUsuario.add(cristaleria);
          usuario.setTodasLasCristalerias(cristaleriaUsuario);
-        
-         barraPerteneciente.setPrecioTotal(barraServicio.calcularPrecioTotal(cristalerias));
+          if( barraPerteneciente.isInsumo()){
+                   
+                    float suma = barraServicio.calcularPrecioTotalInsumos(cristalerias);
+                     barraPerteneciente.setPrecioTotal(suma);
+               }
+               else{
+                    float suma = barraServicio.calcularPrecioTotal(cristalerias);
+                     barraPerteneciente.setPrecioTotal(suma);
+               
+               }
+          
+          
+      
         barraPerteneciente.setListaCristalerias(cristalerias);
         
            //barraRepositorio.save(barraPerteneciente);
@@ -151,9 +211,15 @@ public class CristaleriaServicio {
         }
 
     }
+    
+     @Transactional
+    public void borrarTodo(){
+    
+    cristaleriaRepositorio.deleteAll();
+    }
+       
       @Transactional
     public void alterar(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String id,String idUsuario) throws ErrorServicio {
-          System.out.println("CCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"+precio+enStock+descripcion+tipo+idUsuario+""+id);
                 
                 
          if(!id.isEmpty()){
@@ -198,11 +264,16 @@ public class CristaleriaServicio {
         
     }
     
-   
+   @Transactional
      public void deshabilitar(String id) throws ErrorServicio{
-     
-          cristaleriaRepositorio.deleteById(id);
-     
+          
+         Cristaleria cristaleria= buscarPorId(id);
+         if(cristaleria.isActivo()){
+             cristaleria.setActivo(false);
+         }
+         else{
+             cristaleria.setActivo(true);
+         }
      }
      
      @Transactional
@@ -248,9 +319,18 @@ public class CristaleriaServicio {
                  }
                 
                  
+               if(barra.isInsumo()){
+                   
+                    float suma = barraServicio.calcularPrecioTotalInsumos(cristalerias);
+                    barra.setPrecioTotal(suma);
+               }
+               else{
+                    float suma = barraServicio.calcularPrecioTotal(cristalerias);
+                    barra.setPrecioTotal(suma);
                
-                float suma = barraServicio.calcularPrecioTotal(cristalerias);
-                 barra.setPrecioTotal(suma);
+               }
+               
+                 
                  barra.setTotalUnidades(conteo);
                 
                   //usuarioServicio.actualizarListBarras(idUsuario, idBarra);
@@ -275,40 +355,6 @@ public class CristaleriaServicio {
             throw new ErrorServicio("No se encontró la cristaleria solicitada");
         }
 
-    }
-    
-    
-    
-    
-  public List<Cristaleria> buscarCristaleriasPorIdUsuario(String idUsuario) {
-        // Obtener todas las cristalerías del repositorio.
-        // Es buena práctica verificar si el idUsuario es nulo o vacío al inicio.
-        if (idUsuario == null || idUsuario.trim().isEmpty()) {
-            System.err.println("El idUsuario proporcionado es nulo o vacío.");
-            return new ArrayList<>(); // Retornar lista vacía
-        }
-
-        List<Cristaleria> cristalerias = cristaleriaRepositorio.findAll();
-        
-        // *** CORRECCIÓN PRINCIPAL: Inicializar la lista filtrada ***
-        List<Cristaleria> cristaleriasFiltradas = new ArrayList<>(); // Inicializar aquí
-
-        if (cristalerias == null) { // Manejar el caso en que findAll() pueda retornar null
-             System.err.println("El repositorio devolvió una lista nula de cristalerías.");
-             return cristaleriasFiltradas; // Retornar la lista vacía inicializada
-        }
-
-        // Iterar sobre la lista completa de cristalerías.
-        for (Cristaleria cristaleria : cristalerias) {
-            // Verificar que el objeto cristaleria y su idUsuario no sean nulos antes de llamar a .equals()
-            if (cristaleria != null && cristaleria.getIdUsuario() != null && cristaleria.getIdUsuario().equals(idUsuario)) {
-                // Si el idUsuario coincide, añadir la cristalería a la lista filtrada.
-                cristaleriasFiltradas.add(cristaleria);
-            }
-        }
-        
-        // Retornar la lista de cristalerías que coinciden con el idUsuario.
-        return cristaleriasFiltradas;
     }
     
 }

@@ -27,6 +27,8 @@ public class Cristal {
       List<Cristaleria> listaCristalerias;
     @OneToOne
     private Foto foto;
+    
+    private boolean insumo;
 
     public String getId() {
         return id;
@@ -44,6 +46,14 @@ public class Cristal {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public boolean isInsumo() {
+        return insumo;
+    }
+
+    public void setInsumo(boolean insumo) {
+        this.insumo = insumo;
     }
 
     public Foto getFoto() {
