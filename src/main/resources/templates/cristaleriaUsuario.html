@@ -113,9 +113,9 @@
                                 <th>Descripción</th>
                                 <th>Barra</th>
                                 <th>Stock </th>
-                                
+                                <th>precio unitario </th>
                                 <th>idUsuario</th>
-                                <th>Precio Unit.</th>
+                                <th>img</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -124,9 +124,15 @@
                                 <td th:text="${cristaleria.descripcion}"></td>
                                 <td th:text="${cristaleria.barraPertenecienteNombre}"></td>
                                 <td th:text="${cristaleria.enStock}"></td>
+                                 <td><strong th:text="${(cristaleria.precio ?: 0) + '$'}"></strong></td>
                                 
                                 <td th:text="${cristaleria.idUsuario}"></td>
                                 <td><strong th:text="${cristaleria.idUsuario}"></strong></td>
+                                 <td>
+                                    <img th:if="${cristaleria.id != null}" th:src="@{'/foto/cristaleriafoto/' + ${cristaleria.id}}" alt="Foto cristalería">
+                                    <p th:text="${cristaleria.tipo}"></p>
+                                </td>
+                            
                             </tr>
                         </tbody>
                     </table>
