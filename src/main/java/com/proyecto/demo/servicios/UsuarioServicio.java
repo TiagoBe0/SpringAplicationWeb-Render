@@ -1,6 +1,7 @@
 package com.proyecto.demo.servicios;
 
 import com.proyecto.demo.entidades.Barra;
+import com.proyecto.demo.entidades.Cristal;
 import com.proyecto.demo.entidades.Cristaleria;
 import com.proyecto.demo.entidades.Foto;
 import com.proyecto.demo.entidades.Proveedor;
@@ -10,6 +11,7 @@ import com.proyecto.demo.entidades.Zona;
 import com.proyecto.demo.enums.Rol;
 import com.proyecto.demo.errores.ErrorServicio;
 import com.proyecto.demo.repositorios.BarraRepositorio;
+import com.proyecto.demo.repositorios.CristaleriaRepositorio;
 import com.proyecto.demo.repositorios.ProveedorRepositorio;
 import com.proyecto.demo.repositorios.UsuarioRepositorio;
 import com.proyecto.demo.repositorios.ZonaRepositorio;
@@ -42,6 +44,12 @@ public class UsuarioServicio implements UserDetailsService {
     private UsuarioRepositorio usuarioRepositorio;
     
     
+    @Autowired
+    private CristaleriaRepositorio cristaleriaRepositorio;
+
+     @Autowired
+     private CristalServicio cristalServicio;
+         
     @Autowired
     private ProveedorServicio proveedorServicio;
     @Autowired
@@ -153,6 +161,68 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setFoto(foto);
 
             usuarioRepositorio.save(usuario);
+        } else {
+
+            throw new ErrorServicio("No se encontró el usuario solicitado");
+        }
+
+    }
+    
+    
+    @javax.transaction.Transactional
+    public void modificarCristaleria(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra,String id,String idCristal) throws ErrorServicio {
+
+       Cristaleria cristaleria = new Cristaleria();
+       Cristal cristal = cristalServicio.buscarPorId(idCristal);
+        if(cristal !=null){
+              cristaleria.setCristalRepo(cristal);
+           
+            cristaleria.setFoto(cristal.getFoto());
+               
+        
+        }else{
+        Foto foto = fotoServicio.guardar(archivo);
+        cristaleria.setFoto(foto);
+        
+        
+        }
+   
+        if (!idBarra.isEmpty()) {
+
+            
+        Barra barraPerteneciente = barraServicio.buscarPorId(idBarra);
+        Usuario usuario = buscarPorId(id);
+        cristaleria.setDescripcion(descripcion);
+        cristaleria.setPrecio(precio);
+        cristaleria.setEnStock(enStock);
+        cristaleria.setPrecioTotal();
+        cristaleria.setIdUsuario(id);
+        cristaleria.setTipo(tipo);
+        cristaleria.setBarraPerteneciente(barraPerteneciente);
+        cristaleria.setBarraPertenecienteNombre(barraPerteneciente.getNombre());
+        List<Cristaleria> cristalerias = barraPerteneciente.getListaCristalerias();
+        
+        cristalerias.add(cristaleria);
+        barraPerteneciente.setTotalUnidades(barraPerteneciente.getTotalUnidades()+cristaleria.getEnStock());
+         List<Cristaleria> cristaleriaUsuario =usuario.getTodasLasCristalerias();
+         cristaleriaUsuario.add(cristaleria);
+         usuario.setTodasLasCristalerias(cristaleriaUsuario);
+        
+         barraPerteneciente.setPrecioTotal(barraServicio.calcularPrecioTotal(cristalerias));
+        barraPerteneciente.setListaCristalerias(cristalerias);
+        
+           //barraRepositorio.save(barraPerteneciente);
+/*
+            String idFoto = null;
+            if (cristaleria.getFoto() != null) {
+                idFoto = cristaleria.getFoto().getId();
+                   Foto foto = fotoServicio.actualizar(idFoto, archivo);
+            cristaleria.setFoto(foto);
+
+            }
+*/
+         
+            cristaleriaRepositorio.save(cristaleria);
         } else {
 
             throw new ErrorServicio("No se encontró el usuario solicitado");

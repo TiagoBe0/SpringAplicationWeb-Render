@@ -394,7 +394,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @PostMapping("/actualizar-barra")
     public String actualizarBarra(ModelMap modelo, HttpSession session,   String id,  String nombre ) throws ErrorServicio {
-        System.out.println("ACTUALIZAR BARRA"+nombre+id);
+        
         //Aqui me comunico con MODIFICARBARRA
          usuarioServicio.modificarBarra(id, nombre);
         Usuario usuario = null;
@@ -539,7 +539,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     
         //Aqui me comunico con modificar cristaleria
           //usuarioServicio.actualizarCapitalTotal(id);
-         cristaleriaServicio.modificar(archivo, tipo, descripcion, precio, enStock, idBarra,id, idCristal);
+         usuarioServicio.modificarCristaleria(archivo, tipo, descripcion, precio, enStock, idBarra,id, idCristal);
         Usuario usuario = null;
         try {
             //usuarioServicio.actualizarCapitalTotal(id);
