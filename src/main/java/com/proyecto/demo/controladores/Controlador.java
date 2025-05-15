@@ -81,6 +81,12 @@ public class Controlador {
     }
     
     
+        @GetMapping("/cristaleriaUsuario")
+    public String verCristaleria(ModelMap modelo){
+        
+         modelo.put("cristalerias",usuarioServicio.todosLosUsuarios().get(0).getTodasLasCristalerias());
+        return "cristaleriaUsuario.html";
+    }
     
        
      @GetMapping("/tablaUsuario")
