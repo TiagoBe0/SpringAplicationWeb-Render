@@ -280,21 +280,35 @@ public class CristaleriaServicio {
     
     
     
-    public List<Cristaleria> buscarCristaleriasPorIdUsuario(String idUsuario){
-            List<Cristaleria> cristalerias = cristaleriaRepositorio.findAll();
-            List<Cristaleria> cristaleriasFiltradas = null;
-            for (Cristaleria cristaleria : cristalerias) {
-                
-                if(cristaleria.getIdUsuario().equals(idUsuario)){
-                
-                    cristaleriasFiltradas.add(cristaleria);
-                
-                
-                }
-            
+  public List<Cristaleria> buscarCristaleriasPorIdUsuario(String idUsuario) {
+        // Obtener todas las cristalerías del repositorio.
+        // Es buena práctica verificar si el idUsuario es nulo o vacío al inicio.
+        if (idUsuario == null || idUsuario.trim().isEmpty()) {
+            System.err.println("El idUsuario proporcionado es nulo o vacío.");
+            return new ArrayList<>(); // Retornar lista vacía
         }
-    
-                return cristaleriasFiltradas;
+
+        List<Cristaleria> cristalerias = cristaleriaRepositorio.findAll();
+        
+        // *** CORRECCIÓN PRINCIPAL: Inicializar la lista filtrada ***
+        List<Cristaleria> cristaleriasFiltradas = new ArrayList<>(); // Inicializar aquí
+
+        if (cristalerias == null) { // Manejar el caso en que findAll() pueda retornar null
+             System.err.println("El repositorio devolvió una lista nula de cristalerías.");
+             return cristaleriasFiltradas; // Retornar la lista vacía inicializada
+        }
+
+        // Iterar sobre la lista completa de cristalerías.
+        for (Cristaleria cristaleria : cristalerias) {
+            // Verificar que el objeto cristaleria y su idUsuario no sean nulos antes de llamar a .equals()
+            if (cristaleria != null && cristaleria.getIdUsuario() != null && cristaleria.getIdUsuario().equals(idUsuario)) {
+                // Si el idUsuario coincide, añadir la cristalería a la lista filtrada.
+                cristaleriasFiltradas.add(cristaleria);
+            }
+        }
+        
+        // Retornar la lista de cristalerías que coinciden con el idUsuario.
+        return cristaleriasFiltradas;
     }
     
 }
