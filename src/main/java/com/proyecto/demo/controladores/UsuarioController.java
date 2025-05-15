@@ -105,7 +105,7 @@ public class UsuarioController {
        @GetMapping("/cristaleriaUsuario")
     public String verCristaleria(ModelMap modelo){
         
-         modelo.put("cristalerias",usuarioServicio.todosLosUsuarios().get(0).getTodasLasCristalerias());
+         modelo.put("cristalerias",usuarioServicio.todosLosUsuarios().get(1).getTodasLasCristalerias());
         return "cristaleriaUsuario.html";
     }
     
@@ -536,7 +536,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @PostMapping("/actualizar-cristaleria")
     public String actualizarCristaleria(ModelMap modelo, HttpSession session,   String id,MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra,String idCristal) throws ErrorServicio {
-        System.out.println("CRISTALERIA LELGA A CONTROLADRO USUARIO"+ precio +";"+idCristal);
+    
         //Aqui me comunico con modificar cristaleria
           //usuarioServicio.actualizarCapitalTotal(id);
          cristaleriaServicio.modificar(archivo, tipo, descripcion, precio, enStock, idBarra,id, idCristal);
