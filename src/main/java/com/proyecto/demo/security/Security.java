@@ -15,7 +15,7 @@ public class Security extends WebSecurityConfigurerAdapter {
 
    
     protected void configure(HttpSecurity http) throws Exception {
-        
+        System.out.println("LLEGAMOS AL LOGIN SECURITY");
         http
                .authorizeRequests()
                 .antMatchers("/admin/*").hasRole("ADMIN")
@@ -23,11 +23,11 @@ public class Security extends WebSecurityConfigurerAdapter {
                         "/**").permitAll()
                 .and().
                 formLogin()
-                .loginPage("/loginUsuario")
+                .loginPage("/usuario/loginUsuario")
                 .loginProcessingUrl("/logincheck")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/inicioUsuario")
+                .defaultSuccessUrl("/usuario/inicioUsuario")
                 .permitAll()
                 .and().logout()
                 .logoutUrl("/logout")
