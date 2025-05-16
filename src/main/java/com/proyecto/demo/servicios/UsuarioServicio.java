@@ -15,6 +15,7 @@ import com.proyecto.demo.repositorios.UsuarioRepositorio;
 import com.proyecto.demo.repositorios.ZonaRepositorio;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -60,6 +61,35 @@ public class UsuarioServicio implements UserDetailsService {
      @Autowired
     private ProveedorRepositorio proveedorRepositorio;
 
+     
+     
+     
+     
+     
+     
+   @Override
+public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+    // Busca por username o email, según tu lógica
+    Usuario usuario = usuarioRepositorio.buscarPorMail(usernameOrEmail); // O findByUsername
+    if (usuario == null) {
+        throw new UsernameNotFoundException("Usuario no encontrado: " + usernameOrEmail);
+    }
+
+    // Asumiendo que tu entidad Usuario tiene un método getRoles() que devuelve una colección de Strings o Entidades Rol
+    // Y que tu entidad Usuario tiene un campo 'activo' o similar
+    // if (!usuario.isActivo()) {
+    //     throw new DisabledException("Usuario deshabilitado");
+    // }
+
+    List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString())); // o usuario.getRoles().stream()...
+
+    return new User(usuario.getMail(), // o getUsername()
+                    usuario.getClave(), // ¡DEBE SER LA CONTRASEÑA HASHEADA DE LA BD!
+                    authorities);
+}  
+     
+     
+     
  @javax.transaction.Transactional
     public void registrarBarra(String nombre,String idUsuario) throws ErrorServicio {
 
@@ -694,38 +724,6 @@ public void actualizarNumeroTotalDeCristalerias(String id ) throws ErrorServicio
     public List<Cristaleria> buscarCristaleriaPorIdUsuario(String id){
     
     return cristaleriaServicio.listarPorIdUsuario(id);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
-    	
-        Usuario usuario = usuarioRepositorio.buscarPorMail(mail);
-        
-        if (usuario != null) {
-        	
-            List<GrantedAuthority> permisos = new ArrayList<>();
-                        
-            //Creo una lista de permisos! 
-            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_"+ usuario.getRol());
-            
-            permisos.add(p1);
-         
-            //Esto me permite guardar el OBJETO USUARIO LOG, para luego ser utilizado
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            HttpSession session = attr.getRequest().getSession(true);
-            
-            session.setAttribute("usuariosession", usuario); // llave + valor
-
-            User user = new User(usuario.getMail(), usuario.getClave(), permisos);
-            
-    
-            
-            return user;
-
-        } else {
-            return null;
-        }
-
     }
 
  @Transactional(readOnly=true)
