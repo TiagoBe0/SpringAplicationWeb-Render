@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Une los bordes de las celdas */
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd; /* Añade un borde a cada celda */
+            padding: 12px; /* Espaciado interno en las celdas */
+            text-align: left; /* Alinea el texto a la izquierda */
+        }
+        th {
+            background-color: #6f42c1; /* Un color de fondo para las cabeceras (morado) */
+            color: white; /* Texto blanco para las cabeceras */
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* Color de fondo para filas pares, para mejor legibilidad */
+        }
+        tr:hover {
+            background-color: #f1f1f1; /* Color de fondo al pasar el mouse sobre una fila */
+        }
+        .empty-message {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lista de Todos los Usuarios</h1>
+
+        <div th:if="${usuarios == null or #lists.isEmpty(usuarios)}">
+            <p class="empty-message">No hay usuarios para mostrar.</p>
+        </div>
+
+        <table th:unless="${usuarios == null or #lists.isEmpty(usuarios)}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Mail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.id}">1</td>
+                    <td th:text="${usuario.nombre}">Juan</td>
+                    <td th:text="${usuario.apellido}">Pérez</td>
+                    <td th:text="${usuario.mail}">juan.perez@example.com</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

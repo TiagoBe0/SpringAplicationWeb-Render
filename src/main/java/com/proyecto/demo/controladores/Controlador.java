@@ -44,6 +44,17 @@ public class Controlador {
         return "error.html";
     }
     
+    
+    
+    @GetMapping("/listaUsuarios")
+    public String todosUSuarios(ModelMap modelo){
+    
+        modelo.put("usuarios",usuarioServicio.todosLosUsuarios());
+    return "render-listaUsuarios.html";
+    }
+    
+    
+    
     @GetMapping("/formularioBarra")
     public String form(ModelMap modelo) {
         
