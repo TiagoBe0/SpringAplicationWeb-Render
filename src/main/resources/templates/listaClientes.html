@@ -27,6 +27,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     
                     <td th:text="${cliente.descripcion}">1</td>
                 </tr>
+                   <tr th:each="cliente : ${clientes}">
+                    
+                    <td th:text="${cliente.nombre}">1</td>
+                    
+                </tr>
+                   <tr th:each="cliente : ${clientes}">
+                    
+                    <td th:text="${cliente.descripcion}">1</td>
+                </tr>
             </tbody>
         </table>
     </body>
