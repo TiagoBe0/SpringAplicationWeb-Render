@@ -84,7 +84,7 @@ public class UsuarioServicio implements UserDetailsService {
     public void registrar(MultipartFile archivo, String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
      
 
-        validar(nombre, apellido, mail, clave, clave2);
+        //validar(nombre, apellido, mail, clave, clave2);
 
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
