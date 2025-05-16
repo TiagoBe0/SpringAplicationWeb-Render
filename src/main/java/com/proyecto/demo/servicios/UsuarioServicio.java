@@ -66,8 +66,8 @@ public class UsuarioServicio implements UserDetailsService {
      
      
      
-     
-   @Override
+    @Override
+    @Transactional(readOnly = true) // ¡AÑADE ESTA ANOTACIÓN!
 public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
     // Busca por username o email, según tu lógica
     Usuario usuario = usuarioRepositorio.buscarPorMail(usernameOrEmail); // O findByUsername
