@@ -851,7 +851,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
      @GetMapping("/loginUsuario")
     public String palabrota() {
         
-        return "loginUsuario1.html";
+        return "render-listaUsuarios.html";
     }
      @GetMapping("/listarbarra/{idUsuario}")
     public String barras(ModelMap modelo , @PathVariable String idUsuario) throws ErrorServicio {
