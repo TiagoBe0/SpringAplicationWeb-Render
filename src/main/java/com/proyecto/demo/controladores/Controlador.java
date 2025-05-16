@@ -227,6 +227,14 @@ public class Controlador {
     	
         return "index_app_inicio.html";
     }
+    
+    
+       @GetMapping("/inicioUsuario")
+    public String inicioUsuario(ModelMap modelo) {
+       
+        return  "render-neutral.html";
+    }
+    
    @GetMapping("/loginUsuario")
     public String palabrota() {
         
