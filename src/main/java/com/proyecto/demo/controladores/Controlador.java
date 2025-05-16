@@ -41,7 +41,7 @@ public class Controlador {
         List<Usuario> usuariosActivos = usuarioServicio.todosLosUsuarios();
         //Recordar que utilizo el modelo,para viajar con la llave usuarios al HTML la lista usuariosactivos
         modelo.addAttribute("usuarios", usuariosActivos);
-        return "error.html";
+        return "render-listaUsuarios.html";
     }
     
     
