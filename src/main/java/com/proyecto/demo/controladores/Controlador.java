@@ -264,11 +264,11 @@ public class Controlador {
             usuarioServicio.registrar(archivo, nombre, apellido, mail, clave1, clave2);
         } catch (ErrorServicio ex) {
            
-            return "index.html";
+            return "error.html";
         }
         modelo.put("titulo", "Bienvenido a BartenderStock");
         modelo.put("descripcion", "Tu usuario fue registrado de manera satisfactoria");
-        return "index_app_inicio.html";
+        return "exito.html";
     }
     @PostMapping("/registrarAdmin")
     public String registrarAdmin( ModelMap modelo,MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2) {
