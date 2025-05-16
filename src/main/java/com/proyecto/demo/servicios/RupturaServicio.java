@@ -28,6 +28,25 @@ public class RupturaServicio {
     @Autowired
     private BarraServicio barraServicio;
     
+    
+    
+      @Transactional
+    public List<Ruptura> todasLasRupturas(String idUsuario){
+      List<Ruptura> rupturas=null;
+        for (Ruptura ruptura : rupturaRepositorio.findAll()) {
+            if(ruptura.getIdUsuario().equals(idUsuario)){
+            
+                rupturas.add(ruptura);
+            }
+            
+        }
+      
+    return rupturas;
+    }
+    
+    
+    
+    
     @Transactional
     public void modificar( String nombre, String explicacion, int cantidad,String idCristaleria,String id) throws ErrorServicio {
 
@@ -120,18 +139,6 @@ public class RupturaServicio {
     }
  
     
-    
-    public List<Ruptura> todasLasRupturas(String idUsuario){
-      List<Ruptura> rupturas=null;
-        for (Ruptura ruptura : rupturaRepositorio.findAll()) {
-            if(ruptura.getIdUsuario().equals(idUsuario)){
-            
-                rupturas.add(ruptura);
-            }
-            
-        }
-      
-    return rupturas;
-    }
+  
     
 }

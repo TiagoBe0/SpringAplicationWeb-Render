@@ -84,7 +84,7 @@ public class AdminController {
     public String borrarTodo( ModelMap modelo,  @PathVariable String id ) throws ErrorServicio {
        
         modelo.put("perfil",usuarioServicio.buscarPorId(id));
-         usuarioServicio.borrarTodo();
+         
          
          return "index_app_inicio.html";
       

@@ -1,60 +1,220 @@
 <!DOCTYPE html>
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <!-- Head -->
 
-        <section>
-            <div class="container">
-                <div class="row align-items-center">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6; /* Un gris claro para el fondo */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 960px; /* Un ancho máximo para el contenido principal */
+            margin: 0 auto; /* Centrar el contenedor */
+            padding: 20px;
+        }
+
+        section {
+            flex-grow: 1; /* Permite que la sección crezca para empujar el footer hacia abajo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0; /* Espaciado vertical */
+        }
+
+        .registration-form-container {
+            background-color: #ffffff; /* Fondo blanco para el contenedor del formulario */
+            padding: 30px;
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+            width: 100%;
+        }
+
+        .align-items-center {
+            align-items: center !important; /* Asegurar alineación vertical */
+        }
+
+        .p-5 { /* Bootstrap suele usar p-5 para padding, lo ajustamos si es necesario */
+            padding: 2rem !important; /* Un padding generoso */
+        }
+
+        img.img-fluid.rounded-circle {
+            max-width: 100%;
+            height: auto;
+            border: 5px solid #6f42c1; /* Borde violeta para la imagen, como en tu otro archivo */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        h2.display-4 {
+            color: #6f42c1; /* Color primario para el título */
+            font-weight: 300; /* Un peso de fuente más ligero para display-4 */
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        form label {
+            display: block; /* Hace que cada label ocupe su propia línea */
+            margin-top: 1rem; /* Espacio arriba de cada label */
+            margin-bottom: 0.5rem; /* Espacio debajo de cada label */
+            color: #555;
+            font-weight: bold;
+        }
+
+        form .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        form .form-control:focus {
+            border-color: #6f42c1; /* Color del borde al enfocar */
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25); /* Sombra al enfocar */
+        }
+
+        /* Estilo para el mensaje de error */
+        p[style="color:red;"] {
+            background-color: #f8d7da;
+            color: #721c24 !important; /* Importante para sobreescribir el inline style */
+            padding: 10px;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+
+        .btn-primary {
+            background-color: #6f42c1; /* Color primario del botón */
+            border-color: #6f42c1;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 0.25rem;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+            display: block; /* Hacer que el botón ocupe todo el ancho disponible */
+            width: 100%;
+            margin-top: 1.5rem; /* Espacio arriba del botón */
+        }
+
+        .btn-primary:hover {
+            background-color: #5a34a7; /* Un tono más oscuro al pasar el mouse */
+            border-color: #5a34a7;
+        }
+
+        /* Footer styles */
+        footer.bg-black {
+            background-color: #222 !important; /* Un negro no tan puro */
+            color: #ccc; /* Texto gris claro para el footer */
+            padding-top: 2rem !important;
+            padding-bottom: 2rem !important;
+            text-align: center;
+            width: 100%;
+        }
+
+        footer .container p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        /* Media Queries para responsividad */
+        @media (max-width: 991.98px) { /* Tablets y móviles grandes */
+            .col-lg-6.order-lg-1, .col-lg-6.order-lg-2 {
+                order: initial !important; /* Quitar el ordenamiento en pantallas pequeñas */
+                text-align: center; /* Centrar contenido en la columna de la imagen */
+            }
+            img.img-fluid.rounded-circle {
+                margin-bottom: 2rem; /* Espacio debajo de la imagen en móviles */
+                max-width: 250px; /* Reducir un poco la imagen en móviles */
+            }
+            h2.display-4 {
+                font-size: 2.5rem; /* Reducir tamaño del título */
+            }
+            .registration-form-container {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 767.98px) { /* Móviles */
+             h2.display-4 {
+                font-size: 2rem;
+            }
+            .p-5 {
+                padding: 1.5rem !important;
+            }
+            form .form-control, .btn-primary {
+                font-size: 0.9rem;
+                padding: 0.6rem 1rem;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <section>
+        <div class="container">
+            <div class="registration-form-container"> <div class="row align-items-center">
                     <div class="col-lg-6 order-lg-2">
-                        <div class="p-5">
-                            <img class="img-fluid rounded-circle" src="../statics/img/bartender.jpg" alt="">
+                        <div class="p-5 text-center"> <img class="img-fluid rounded-circle" th:src="@{/statics/img/bartender.jpg}" src="../statics/img/bartender.jpg" alt="Bartender">
                         </div>
                     </div>
                     <div class="col-lg-6 order-lg-1">
                         <div class="p-5">
-                            
-                            <h2 class="display-4">Registrate</h2>
+                            <h2 class="display-4">Regístrate</h2>
                             <form th:action="@{/registrar}" method="POST" enctype="multipart/form-data">
 
-
                                 <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
+                                <label for="nombre">Nombre</label> <input type="text" id="nombre" class="form-control" name="nombre" th:value="${nombre}" required/>
 
-                                <!-- <p th:if="${error != null}" th:text="${error}" style="color:red;"></p> -->
+                                <label for="apellido">Apellido</label>
+                                <input type="text" id="apellido" class="form-control" name="apellido" th:value="${apellido}" required/>
 
-                                <label>NombreASAS</label>
-                                <input type="text" class="form-control" name="nombre" th:value="${nombre}"/>
-                                <label>Apellido</label>
-                                <input type="text" class="form-control" name="apellido" th:value="${apellido}"/>
-                                    <label>Mail</label>
-                                    <input type="email" class="form-control" name="mail" th:value="${mail}"/>
-                                <label>Clave</label>
-                                <input type="password" class="form-control" name="clave1" th:value="${clave1}"/>
-                                <label>Verificar Clave</label>
-                                <input type="password" class="form-control" name="clave2" th:value="${clave2}"/>
-                                <label>Foto</label>
-                                <input type="file" class="form-control" name="archivo" />
+                                <label for="mail">Mail</label>
+                                <input type="email" id="mail" class="form-control" name="mail" th:value="${mail}" required/>
 
+                                <label for="clave1">Clave</label>
+                                <input type="password" id="clave1" class="form-control" name="clave1" th:value="${clave1}" required/>
 
-                                
-                                <br/><button   type="submit" class="btn btn-primary">Registrarme</button>
+                                <label for="clave2">Verificar Clave</label>
+                                <input type="password" id="clave2" class="form-control" name="clave2" th:value="${clave2}" required/>
+
+                                <label for="archivo">Foto (opcional)</label>
+                                <input type="file" id="archivo" class="form-control" name="archivo" />
+
+                                <button type="submit" class="btn btn-primary">Registrarme</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-
-        <!-- Footer -->
-        <footer class="py-5 bg-black">
-            <div class="container">
-                <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2019</p>
-            </div>
-            <!-- /.container -->
+    <footer class="py-5 bg-black">
+        <div class="container">
+            <p class="m-0 text-center text-white small">Copyright &copy; Tu Sitio Web 2025</p> </div>
         </footer>
 
-        <!-- Bootstrap core JavaScript -->
-        <script th:replace="/fragments/boostjs :: script"></script>
     </body>
 
 </html>
