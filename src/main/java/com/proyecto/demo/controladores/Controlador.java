@@ -227,7 +227,11 @@ public class Controlador {
     	
         return "index_app_inicio.html";
     }
-
+   @GetMapping("/loginUsuario")
+    public String palabrota() {
+        
+        return "loginUsuario1.html";
+    }
     @GetMapping("/loginUsuarioModelo")
     public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap model) {
         if (error != null) {
