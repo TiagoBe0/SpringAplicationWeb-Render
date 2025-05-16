@@ -5,77 +5,7 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-  /* Estilo para el contenedor de la lista */
-        .dropdown-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Cambiar según el número de columnas deseadas */
-            grid-gap: 10px;
-            width: 300px; /* Ancho del contenedor */
-            border: 1px solid #ccc;
-            padding: 10px;
-            cursor: pointer;
-        }
 
-        /* Estilo para cada opción de la lista */
-        .dropdown-option {
-            padding: 5px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-
-        /* Estilo para el botón que activa/desactiva el dropdown */
-        .dropdown-button {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;}
-        
-        
-        select {
-            display: none;
-        }
-     .image-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Columnas responsivas */
-            gap: 10px;
-        }
-
-        /* Estilo para cada elemento de la galería */
-        .image-item {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Estilo para la imagen dentro del elemento */
-        .image-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 50%; /* Redondear la imagen */
-            margin-bottom: 5px;
-        }
-
-        /* Estilo para el checkbox oculto */
-        .image-item input[type="checkbox"] {
-            display: none;
-        }
-
-        /* Estilo para simular el efecto de selección de la imagen */
-        .image-item input[type="checkbox"]:checked + .form-check-label {
-            border-color: #007bff; /* Cambiar color del borde al seleccionar */
-        }
-
-        /* Estilo para la etiqueta que rodea la imagen */
-        .form-check-label {
-            cursor: pointer;
-            border: 1px solid #ccc;
-            padding: 5px;
-            text-align: center;
-        }   
-        
 a {
 	text-decoration: none;
 }
@@ -172,7 +102,7 @@ body {
 	padding: 4px;
 }
 #sidebar .side-menu li.active {
-	background: var(--light-bluegrey);
+	background: var(--grey);
 	position: relative;
 }
 #sidebar .side-menu li.active::before {
@@ -183,7 +113,7 @@ body {
 	border-radius: 50%;
 	top: -40px;
 	right: 0;
-	box-shadow: 20px 20px 0 var(--light-bluegrey);
+	box-shadow: 20px 20px 0 var(--grey);
 	z-index: -1;
 }
 #sidebar .side-menu li.active::after {
@@ -194,7 +124,7 @@ body {
 	border-radius: 50%;
 	bottom: -40px;
 	right: 0;
-	box-shadow: 20px -20px 0 var(--light-bluegrey);
+	box-shadow: 20px -20px 0 var(--grey);
 	z-index: -1;
 }
 #sidebar .side-menu li a {
@@ -210,7 +140,7 @@ body {
 	overflow-x: hidden;
 }
 #sidebar .side-menu.top li.active a {
-	color: var(--light-bluegrey);
+	color: var(--blue);
 }
 #sidebar.hide .side-menu li a {
 	width: calc(48px - (4px * 2));
@@ -383,10 +313,6 @@ body {
 	font-family: var(--poppins);
 	max-height: calc(100vh - 56px);
 	overflow-y: auto;
-        background-image: url('https://www.bing.com/images/search?view=detailV2&ccid=rO%2bgzm8F&id=DE390DDB888686A3444D9DC0901B139FB6913A32&thid=OIP.rO-gzm8FVxGJpUaIjfF9LgHaE7&mediaurl=https%3a%2f%2fimage.jimcdn.com%2fapp%2fcms%2fimage%2ftransf%2fnone%2fpath%2fs74c18b79ac3a3f9a%2fimage%2fif2a27e8ad1670e71%2fversion%2f1625333685%2fimage.jpg&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.acefa0ce6f05571189a546888df17d2e%3frik%3dMjqRtp8TG5DAnQ%26pid%3dImgRaw%26r%3d0&exph=1213&expw=1820&q=barra+bar&simid=608033757737219848&FORM=IRPRST&ck=B6B7EED65CBFBFD763E75F752F2CC560&selectedIndex=27&itb=0'); /* URL de la imagen */
-    background-size: cover; /* Ajustar la imagen para cubrir todo el elemento */
-    background-position: center; /* Centrar la imagen dentro del elemento */
-    background-repeat: no-repeat; /* Evitar repetir la imagen */
 }
 #content main .head-title {
 	display: flex;
@@ -434,12 +360,10 @@ body {
 
 
 #content main .box-info {
-    
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 	grid-gap: 14px;
 	margin-top: 16px;
-        
 }
 #content main .box-info li {
 	padding: 14px;
@@ -447,7 +371,7 @@ body {
 	border-radius: 10px;
 	display: flex;
 	align-items: center;
-	grid-gap: 14px;
+	grid-gap: 24px;
 }
 #content main .box-info li .bx {
 	width: 80px;
@@ -653,7 +577,7 @@ body {
 	}
 
 	#content main .box-info {
-		grid-template-columns: 0.5fr;
+		grid-template-columns: 1fr;
 	}
 
 	#content main .table-data .head {
