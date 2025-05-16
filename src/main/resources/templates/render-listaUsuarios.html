@@ -56,25 +56,17 @@
     <div class="container">
         <h1>Lista de Todos los Usuarios</h1>
 
-        <div th:if="${usuarios == null or #lists.isEmpty(usuarios)}">
-            <p class="empty-message">No hay usuarios para mostrar.</p>
-        </div>
+  
 
-        <table th:unless="${usuarios == null or #lists.isEmpty(usuarios)}">
+        <table >
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Mail</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="usuario : ${usuarios}">
                     <td th:text="${usuario.id}">1</td>
-                    <td th:text="${usuario.nombre}">Juan</td>
-                    <td th:text="${usuario.apellido}">Pérez</td>
-                    <td th:text="${usuario.mail}">juan.perez@example.com</td>
                 </tr>
             </tbody>
         </table>

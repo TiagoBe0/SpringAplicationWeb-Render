@@ -83,6 +83,17 @@ public class UsuarioController {
         }
         return "perfilModificar.html";
     }
+    
+    
+    
+        @GetMapping("/listaUsuarios")
+    public String todosUSuarios(ModelMap modelo){
+    
+        modelo.put("usuarios",usuarioServicio.todosLosUsuarios());
+    return "render-listaUsuarios.html";
+    }
+    
+    
         //Este es el que llega a crear barra
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/editar-perfil")
