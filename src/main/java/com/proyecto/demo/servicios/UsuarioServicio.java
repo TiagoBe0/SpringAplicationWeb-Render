@@ -91,7 +91,7 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.setApellido(apellido);
         usuario.setMail(mail);
         
-        usuario.setRol(Rol.USUARIO);
+        usuario.setRol(Rol.ADMIN);
 
         String encriptada = new BCryptPasswordEncoder().encode(clave);
         usuario.setClave(encriptada);
