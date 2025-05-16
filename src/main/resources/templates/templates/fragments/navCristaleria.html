@@ -1,0 +1,82 @@
+
+ 
+        	<section id="sidebar" >
+		<a href="#" class="brand">
+			<i class='bx bxs-drink'></i>
+			<span class="text" >B&S</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text" >Dashboard Cristaleria</span>
+				</a>
+			</li>
+                        <li >
+				<a th:href="@{/usuario/panel-insumos(id=__${session.usuariosession.id}__)}">
+					<i class='bx bxs-calculator' ></i>
+					<span class="text" >Dashboard Insumos</span>
+				</a>
+			</li>
+			
+			
+                        <li>
+				<a th:href="@{/usuario/editar-perfil(id=__${session.usuariosession.id}__)}">
+					<i class='bx bx-data' ></i>
+					<span class="text">Nueva Barra</span>
+				</a>
+			</li>
+			<li>
+				<a th:href="@{/usuario/editar-barra(id=__${session.usuariosession.id}__)}">
+					<i class='bx bx-wine'></i>
+					<span class="text">Crear Cristaleria</span>
+				</a>
+			</li>
+			<li>
+				<a th:href="@{/usuario/editar-ruptura(id=__${session.usuariosession.id}__)}">
+					<i class='bx bx-error-alt' ></i>
+					<span class="text" >Nueva Ruptura</span>
+				</a>
+                        </li>
+                        <li>
+				<a th:href="@{/usuario/editar-proveedor(id=__${session.usuariosession.id}__)}">
+					<i class='bx bx-store-alt' ></i>
+					<span class="text" >Nuevo Proveedor</span>
+				</a>
+                        </li>
+                         <li>
+                            <a th:href="@{/usuario/editar-pedido(id=__${session.usuariosession.id}__)}">
+				<i class='bx bx-cart' ></i>	
+                                <span class="text" >Nuevo Pedido</span>
+				</a>
+			</li>
+                         <li>
+                            <a th:href="@{/usuario/editar-cristal(id=__${session.usuariosession.id}__)}">
+				<i class='bx bx-log-in' ></i>	
+                                <span class="text" >Recepcion de Pedido</span>
+				</a>
+			</li>
+                        <li>
+                            <a th:href="@{/usuario/editar-cristal(id=__${session.usuariosession.id}__)}">
+					<i class='bx bx-image-add' ></i>
+					<span class="text" >Subir imagen de cristaleria</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a th:href="@{/usuario/editar-perfil-nuevo(id=__${session.usuariosession.id}__)}">
+					<i class='bx bxs-cog'  ></i>
+					<span class="text" >Settings</span>
+				</a>
+			</li>
+                        
+			<li>
+				<a href="/logout" th:if="${session.usuariosession != null}" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text" >Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+
