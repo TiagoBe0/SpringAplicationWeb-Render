@@ -851,7 +851,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
      @GetMapping("/loginUsuario")
     public String palabrota() {
         
-        return "render-listaUsuarios.html";
+        return "loginUsuario1.html";
     }
      @GetMapping("/listarbarra/{idUsuario}")
     public String barras(ModelMap modelo , @PathVariable String idUsuario) throws ErrorServicio {
@@ -865,7 +865,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         
         
         
-        return  "index_app_inicio.html";
+        return  "render-listaUsuarios.html";
     }
     
      @PostMapping("/registrar")
