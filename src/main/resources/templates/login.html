@@ -1,48 +1,231 @@
 <!DOCTYPE html>
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<!-- Head -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso al Bar</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #4A148C; /* Morado oscuro para el fondo */
+            color: #E0E0E0; /* Texto claro para contraste con fondo oscuro */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center; /* Centra el contenido verticalmente */
+            justify-content: center; /* Centra el contenido horizontalmente */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        section {
+            width: 100%; /* Asegura que la sección ocupe el ancho disponible */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-form-container {
+            background-color: #7E57C2; /* Morado claro para el contenedor del formulario */
+            padding: 30px;
+            border-radius: 12px; /* Bordes más redondeados */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); /* Sombra más pronunciada */
+            width: 100%;
+            color: #ffffff; /* Texto blanco dentro del formulario */
+        }
+
+        .align-items-center {
+            align-items: center !important;
+        }
+
+        .p-5 {
+            padding: 2rem !important;
+        }
+
+        img.img-fluid.rounded-circle {
+            max-width: 100%;
+            height: auto;
+            border: 5px solid #AB47BC; /* Un morado intermedio para el borde de la imagen */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h2.display-4 {
+            color: #ffffff; /* Título blanco */
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        form label {
+            display: block;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: #EDE7F6; /* Un morado muy claro, casi blanco, para labels */
+            font-weight: bold;
+        }
+
+        form .form-control {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #4A148C; /* Texto morado oscuro en inputs */
+            background-color: #EDE7F6; /* Fondo muy claro para inputs */
+            border: 1px solid #B39DDB; /* Borde morado medio */
+            border-radius: 0.3rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        form .form-control:focus {
+            border-color: #ffffff; /* Borde blanco al enfocar */
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.3); /* Sombra blanca translúcida */
+        }
+
+        /* Estilo para mensajes */
+        p[style="color:red;"], p[style="color:greenyellow;"] {
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        p[style="color:red;"] { /* Error */
+            background-color: #FFCDD2; /* Rojo claro */
+            color: #B71C1C !important; /* Rojo oscuro */
+            border: 1px solid #E57373;
+        }
+        p[style="color:greenyellow;"] { /* Logout/Success */
+            background-color: #C8E6C9; /* Verde claro */
+            color: #1B5E20 !important; /* Verde oscuro */
+            border: 1px solid #81C784;
+        }
+
+
+        .btn-primary {
+            background-color: #D1C4E9; /* Morado muy pálido para el botón */
+            border-color: #D1C4E9;
+            color: #4A148C; /* Texto morado oscuro */
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem; /* Un poco más grande */
+            font-weight: bold;
+            border-radius: 0.3rem;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+            display: block;
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffffff; /* Fondo blanco al pasar el mouse */
+            border-color: #ffffff;
+            color: #4A148C; /* Mantiene el texto morado oscuro */
+        }
+
+        /* Footer styles */
+        footer.bg-black {
+            background-color: #311B92 !important; /* Morado más oscuro para el footer */
+            color: #B39DDB; /* Texto morado claro para el footer */
+            padding-top: 1.5rem !important;
+            padding-bottom: 1.5rem !important;
+            text-align: center;
+            width: 100%;
+            margin-top: auto; /* Empuja el footer hacia abajo */
+        }
+
+        footer .container p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        /* Media Queries */
+        @media (max-width: 991.98px) {
+            .col-lg-6.order-lg-1, .col-lg-6.order-lg-2 {
+                order: initial !important;
+                text-align: center;
+            }
+            img.img-fluid.rounded-circle {
+                margin-bottom: 2rem;
+                max-width: 220px;
+            }
+            h2.display-4 {
+                font-size: 2.2rem;
+            }
+            .login-form-container {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            body {
+                padding-top: 20px; /* Añadir un poco de padding arriba en móviles */
+                padding-bottom: 20px;
+            }
+            h2.display-4 {
+                font-size: 1.8rem;
+            }
+            .p-5 {
+                padding: 1.5rem !important;
+            }
+            form .form-control, .btn-primary {
+                font-size: 0.9rem;
+                padding: 0.7rem 1rem;
+            }
+             .login-form-container {
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+        }
+    </style>
+</head>
 
 <body>
 
   <section>
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6 order-lg-2">
-          <div class="p-5">
-            <img class="img-fluid rounded-circle" src="img/m2.jpg" alt="">
+      <div class="login-form-container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 order-lg-2">
+            <div class="p-5 text-center">
+              <img class="img-fluid rounded-circle" th:src="@{/img/m2.jpg}" src="img/m2.jpg" alt="Imagen Login">
+            </div>
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <div class="p-5">
+              <h2 class="display-4">Ingresá a tu Bar</h2>
+              
+              <form action="/logincheck" method="POST">
+                 <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
+                 <p th:if="${logout != null}" th:text="${logout}" style="color:greenyellow;"></p>
+
+                 <label for="username">E-Mail</label>
+                 <input type="email" id="username" class="form-control" name="username" required/>
+                
+                 <label for="password">Clave</label>
+                 <input type="password" id="password" class="form-control" name="password" required/>
+                
+                 <button type="submit" class="btn btn-primary">Ingresar</button>
+              </form>
+            </div>
           </div>
         </div>
-        <div class="col-lg-6 order-lg-1">
-          <div class="p-5">
-            <h2 class="display-4">Ingresá a tu Bar</h2>
-            
-            
-            <form action="/logincheck" method="POST">
-               <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-               <p th:if="${logout != null}" th:text="${logout}" style="color:greenyellow"></p>
-
-               <label>E-Mail</label>
-              <input type="email" class="form-control" name="username"/>
-              
-              <label>Clave</label>
-              <input type="password" class="form-control" name="password"/>
-              
-              <br/><button type="submit" class="btn btn-primary">Ingresar</button>
-            </form>
-          </div>
       </div>
     </div>
   </section>
 
-
-  <!-- Footer -->
   <footer class="py-5 bg-black">
     <div class="container">
-      <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2019</p>
+      <p class="m-0 text-center small">Copyright &copy; Tu Bar 2025</p>
     </div>
-    <!-- /.container -->
-  </footer>
+    </footer>
 
 </body>
-
 </html>
