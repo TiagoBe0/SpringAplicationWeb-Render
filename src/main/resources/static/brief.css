@@ -1,0 +1,150 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+}
+
+/* Variables de color y tema */
+:root {
+  --bg-color: #4a1580;
+  --text-color: black;
+  --nav-bg: #1a1725;
+  --footer-bg: rgba(30, 27, 33, 0.89);
+}
+body {
+  background-color: var(--bg-color);
+  background-image: url('layaout-web/archivos/textura-fondo.svg');
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+  font-weight: 300;
+  height: 100%;
+}
+body.dark-theme {
+  --bg-color: #111;
+  --text-color: #060607;
+  --nav-bg: #2b2a2a;
+  --footer-bg: #111;
+}
+body.dark-theme nav,
+body.dark-theme .footer {
+  background-color: #333;
+}
+
+/* Wrapper flex para sticky footer */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+/* Empuja el footer hasta abajo */
+.wrapper > footer {
+  margin-top: auto;
+}
+
+/* Header / Navegación */
+header nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: right;
+  background-color: var(--nav-bg);
+  padding: 1rem;
+}
+.nav-list li {
+  margin: 0 1rem;
+}
+.nav-list a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Botón toggle tema */
+#theme-toggle {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: #720599cc;
+  color: #0a0303;
+  border: none;
+  border-radius: 50%;
+  padding: 0.8rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1000;
+}
+#theme-toggle:hover {
+  background-color: #42097c9a;
+  transform: scale(1.05);
+}
+
+/* WhatsApp flotante */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #25d3658a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 600;
+}
+.whatsapp-float img {
+  width: 30px;
+}
+
+/* Formulario en brief.html */
+.brief-form .form-control::placeholder {
+  color: rgba(255,255,255,0.7);
+  font-style: italic;
+}
+.brief-form textarea {
+  resize: none;
+}
+
+/* Footer */
+.footer {
+  background-color: rgba(50, 7, 90, 0.983);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+.footer-left p {
+  margin: 0;
+  color: #fff;
+  font-size: 1.5rem;
+}
+.footer-right {
+  display: flex;
+  align-items: center;
+}
+.social-icon {
+  margin-left: 1.5rem;
+}
+.social-icon img {
+  width: 44px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .content { padding: 1rem; }
+  .footer {
+    flex-direction: column;
+    text-align: center;
+    gap: .5rem;
+  }
+  .footer-left p { font-size: 1rem; }
+  .social-icon img { width: 30px; }
+}

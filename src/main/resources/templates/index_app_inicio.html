@@ -1,50 +1,336 @@
 <!DOCTYPE html>
-<html lang="en">
-<head th:replace="/fragments/head_app">
-	
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página con Estilos Mejorados</title>
+    <style>
+        /* Reset Básico y Estilos del Body */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #f4f4f4; /* Fondo gris claro */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Contenedor Fluido Básico (si no se usa Bootstrap) */
+        .container-fluid {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        /* Fila Básica (si no se usa Bootstrap) */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        /* Definiciones básicas de columnas (simplificado, ajustar si no usa Bootstrap) */
+        .col-md-2, .col-md-8, .col-sm-3, .col-sm-6, .col-xs-12 {
+            position: relative;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+        @media (min-width: 768px) { /* sm */
+            .col-sm-3 { flex: 0 0 25%; max-width: 25%; }
+            .col-sm-6 { flex: 0 0 50%; max-width: 50%; }
+        }
+        @media (min-width: 992px) { /* md */
+            .col-md-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
+            .col-md-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+        }
+        /* Para .visible-xs si no se usa Bootstrap 3/4 */
+        .visible-xs { display: none !important; }
+        @media (max-width: 767px) { /* xs breakpoint */
+            .visible-xs { display: block !important; }
+        }
+
+
+        /* Estilos del Encabezado */
+        .tbay-header {
+            background-color: #ffffff; /* Fondo blanco para el encabezado */
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0; /* Borde sutil */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra ligera para profundidad */
+        }
+
+        .tbay-header .container-fluid {
+            max-width: 1200px; /* O tu ancho máximo preferido */
+            margin: 0 auto;
+        }
+
+        .tbay-header .row.vertical-center {
+            display: flex;
+            align-items: center; /* Alinea verticalmente los ítems en la fila */
+        }
+        @media (max-width: 991px) { /* En tablets y móviles, apilar elementos del header */
+            .tbay-header .row.vertical-center {
+                flex-direction: column;
+            }
+            .tbay-header .row.vertical-center > div {
+                margin-bottom: 15px;
+                width: 100%; /* Asegurar que las columnas tomen el ancho completo */
+                max-width: 100%; /* Sobrescribir max-width de col-md-* */
+                flex-basis: auto; /* Sobrescribir flex-basis de col-md-* */
+            }
+            .tbay-logo, .tbay-login {
+                display: flex;
+                justify-content: center;
+            }
+            .tbay-search {
+                 order: 3; /* Mover la búsqueda abajo en móvil si es necesario */
+            }
+            .tbay-logo { order: 1; }
+            .tbay-login { order: 2;}
+        }
+
+
+        /* Estilos del Logo */
+        .tbay-logo a {
+            display: inline-block;
+        }
+        .tbay-logo img {
+            max-height: 50px; /* Ajusta según necesites */
+            width: auto;
+        }
+
+        /* Estilos del Formulario de Búsqueda */
+        .tbay-search .searchform {
+            display: flex; /* Contenedor principal de la barra de búsqueda */
+            border: 1px solid #ccc;
+            border-radius: 25px; /* Esquinas redondeadas para toda la barra */
+            overflow: hidden; /* Para que los hijos respeten las esquinas redondeadas */
+            background-color: #fff;
+            width: 100%;
+        }
+
+        .tbay-search .searchform .form-group {
+            display: flex; /* Alinea los elementos internos (select, input, button) */
+            flex-grow: 1;
+            margin-bottom: 0; /* Remover margen si es de Bootstrap */
+        }
+        
+        .tbay-search .searchform .select-category {
+            /* Este div envuelve el Chosen select */
+        }
+
+        /* Estilos para Chosen.js para integrarlo */
+        .tbay-search .searchform .chosen-container-single .chosen-single {
+            background-color: #f8f8f8; /* Fondo para el select */
+            border: none; /* Sin borde propio, el searchform lo tiene */
+            border-right: 1px solid #e0e0e0; /* Separador */
+            padding: 0 15px;
+            font-size: 14px;
+            height: 40px; /* Altura fija */
+            line-height: 40px; /* Centrado vertical del texto */
+            color: #333;
+            box-shadow: none; /* Quitar sombra de Chosen */
+            border-radius: 0; /* Las esquinas las maneja .searchform */
+            display: flex;
+            align-items: center;
+            position: relative; /* Para la flecha de Chosen */
+        }
+        .tbay-search .searchform .chosen-container-single .chosen-single span {
+            margin-right: 0;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .tbay-search .searchform .chosen-container-single .chosen-single div {
+            position: static; /* Ajustar la flecha de Chosen */
+            width: auto;
+        }
+        .tbay-search .searchform .chosen-container-single .chosen-single div b {
+            background: none; /* Quitar imagen de flecha por defecto de Chosen */
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #555; /* Color de la flecha */
+            margin-left: 8px;
+        }
+        .tbay-search .searchform .chosen-container {
+            font-size: 14px; /* Heredar tamaño de fuente */
+        }
+        /* Para el dropdown de Chosen */
+        .chosen-drop {
+             border: 1px solid #ccc;
+             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+             border-radius: 4px;
+             margin-top: 2px;
+        }
+        .chosen-results li {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+        .chosen-results .highlighted {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+
+        .tbay-search .searchform .text-search {
+            border: none; /* Sin borde propio */
+            border-right: 1px solid #e0e0e0; /* Separador */
+            padding: 0 15px;
+            font-size: 14px;
+            flex-grow: 1; /* Para que ocupe el espacio disponible */
+            height: 40px; /* Altura fija */
+            line-height: 40px; /* Centrado vertical */
+            outline: none;
+            min-width: 100px; /* Ancho mínimo para que no colapse */
+        }
+
+        .tbay-search .searchform .button-search {
+            background-color: #007bff; /* Color primario para el botón */
+            color: white;
+            border: none; /* Sin borde propio */
+            padding: 0 15px;
+            cursor: pointer;
+            font-size: 14px;
+            height: 40px; /* Altura fija */
+            line-height: 40px; /* Centrado vertical */
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        .tbay-search .searchform .button-search:hover {
+            background-color: #0056b3; /* Tono más oscuro al pasar el mouse */
+        }
+        .tbay-search .searchform .button-search .icon_search {
+            margin-right: 6px; /* Espacio entre icono y texto */
+            display: inline-block;
+        }
+        .tbay-search .searchform .button-search .icon_search::before {
+            content: '🔎'; /* Emoji de lupa, considera SVG o Font Icon */
+            font-size: 1em;
+        }
+
+        /* Estilos para Acciones (Login/Carrito) */
+        .tbay-login {
+            display: flex;
+            justify-content: flex-end; /* Alinea ítems a la derecha */
+            align-items: center;
+        }
+        @media (max-width: 991px) { /* Centrar en móvil si se apila */
+             .tbay-login {
+                justify-content: center;
+            }
+        }
+
+
+        .cart-dropdown {
+            position: relative; /* Para posicionar el contador */
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-dropdown .cart-icon {
+            font-size: 24px; /* Tamaño del icono del carrito */
+            color: #333;
+            text-decoration: none;
+            position: relative;
+        }
+        .cart-dropdown .cart-icon .icon-bag {
+            font-style: normal; /* Para que el emoji se muestre correctamente */
+        }
+        .cart-dropdown .cart-icon .icon-bag::before {
+            content: '🛒'; /* Emoji de carrito, considera SVG o Font Icon */
+            font-size: 28px; /* Ajusta tamaño del emoji si es necesario */
+            line-height: 1;
+        }
+
+        .cart-dropdown .cart-count {
+            background-color: #007bff; /* Color primario para el contador */
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 50%; /* Contador circular */
+            position: absolute;
+            top: -8px;
+            right: -10px; /* Ajusta para que quede bien sobre el ícono */
+            line-height: 1;
+            border: 1px solid white; /* Borde para destacar */
+        }
+
+    </style>
 </head>
-<body style="background-image: url(https://www.finedininglovers.com/es/sites/g/files/xknfdk1706/files/2022-07/cocktail-garnishes-onions%C2%A9iStock.jpeg) ;background-repeat: no-repeat">
+<body>
 
+    <div class="tbay-header ">
+        <div class="container-fluid">
+            <div class="row vertical-center"> <div class="col-xs-12 visible-xs tbay- κοινωνικής δικτύωσης">
+                    <p style="text-align:center; margin:0; padding:5px; background:#eee;">Menú móvil / Sociales</p>
+                </div>
 
-	<!-- SIDEBAR -->
-	<section id="sidebar" th:replace="/fragments/navGeneral">
-		
-	</section>
-	
-	<section id="content">
-		<!-- NAVBAR -->
-		<nav > 
-			<i class='bx bx-menu' ></i>
-			<a href="#" class="nav-link">Buscar</a>
-			<form action="#">
-				<div class="form-input">
-                                    
-                                    
-					<input type="search" placeholder="Search...">
-					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
-				</div>
-			</form>
-                        <input type="checkbox" id="switch-mode" value="check">
-			<label for="switch-mode" class="switch-mode"></label>
-			<a href="#" class="notification">
-				<i class='bx bxs-bell' ></i>
-				<span class="num">8</span>
-			</a>
-			<a href="#" class="profile">
-                            <img src="../img/barra6.jpg">
-			</a>
-		</nav>
-		<!-- NAVBAR -->
+                <div class="col-md-2 col-sm-3 tbay-logo">
+                    <a href="https://seguridadactual.es/">
+                        <img src="https://via.placeholder.com/150x50?text=Tu+Logo" alt="Logo de la empresa">
+                    </a>
+                </div>
 
-		<!-- MAIN -->
-                <main >
-                  
-		</main>
-		<!-- MAIN -->
-	</section>
-	<!-- CONTENT -->
-	
+                <div class="col-md-8 col-sm-6 tbay-search">
+                    <div class="search-min-wrapper">
+                        <form action="https://seguridadactual.es" method="GET" class="searchform">
+                            <div class="form-group">
+                                <div class="select-category input-group-addon">
+                                    <select name="product_cat" class="category-chosen" tabindex="-1" style="display: none;">
+                                        <option value="">Buscar en todas</option>
+                                        <option value="aparatos">APARATOS</option>
+                                        <option value="cartuchos">CARTUCHOS</option>
+                                        <option value="climatizacion">CLIMATIZACIÓN</option>
+                                        <option value="desinfectantes">DESINFECTANTES</option>
+                                        <option value="dispensadores">DISPENSADORES</option>
+                                        <option value="equipos-de-proteccion">EQUIPOS DE PROTECCIÓN</option>
+                                        <option value="sistemas-de-limpieza">SISTEMAS DE LIMPIEZA</option>
+                                    </select>
+                                    <div class="chosen-container chosen-container-single" style="width: 100%;" title="" id="product_cat_chosen">
+                                        <a class="chosen-single">
+                                            <span>Buscar en todas</span> <div><b></b></div>
+                                        </a>
+                                        <div class="chosen-drop">
+                                            <div class="chosen-search">
+                                                <input class="chosen-search-input" type="text" autocomplete="off">
+                                            </div>
+                                            <ul class="chosen-results"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="text" value="" placeholder="Estoy buscando por..." name="s" class="text-search">
+                                <button type="submit" class="button-search">
+                                    <span class="icon_search" aria-label="Icono de búsqueda"></span>Buscar
+                                </button>
+                            </div>
+                            </form>
+                    </div>
+                </div>
 
-	<script src="../script.js"></script>
+                <div class="col-md-2 col-sm-3 tbay-login"> <div class="top-login">
+                        <div class="cart-dropdown">
+                            <a class="cart-icon" href="#" title="Ver tu carrito de compras">
+                                <i class="icon-bag"></i>
+                            </a>
+                            <span class="cart-count">8</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div style="padding: 20px; text-align: center; min-height: 300px;">
+        <h1>Contenido Principal de la Página</h1>
+        <p>Aquí va el resto de tu sitio web.</p>
+    </div>
+
 </body>
 </html>
