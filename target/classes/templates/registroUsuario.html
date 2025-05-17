@@ -1,223 +1,58 @@
 <!DOCTYPE html>
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Nuevo Usuario</title>
-    <style>
-        /* Reset básico y tipografía */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        /* Cuerpo de la página */
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
-            background-color: #6f42c1; /* Color de fondo principal */
-            padding-top: 20px;
-            padding-bottom: 40px; /* Espacio extra al final para scroll si es necesario */
-        }
-
-        /* Encabezado */
-        header {
-            width: 100%;
-            background-color: blueviolet; /* Color de fondo del encabezado */
-            padding: 15px 0;
-            text-align: center;
-            margin-bottom: 30px; /* Espacio entre el header y el form box */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .logo img {
-            width: 100px;
-            height: 100px;
-            vertical-align: middle;
-        }
-
-        /* Contenedor principal para centrar el form box */
-        .form-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            flex-grow: 1;
-        }
-
-        /* Caja de Registro */
-        .register-box {
-            background: #f3f3f3;
-            padding: 30px 40px;
-            border-radius: 15px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            width: 100%;
-            max-width: 480px; /* Un poco más ancho para más campos */
-        }
-
-        .register-box h2 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 25px;
-        }
-        
-        .register-box .icon {
-            font-size: 40px; 
-            color: #6f42c1; 
-            margin-bottom: 20px;
-        }
+   <body>
+   
+        <section>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 order-lg-2">
+                        <div class="p-5">
+                            <img class="img-fluid rounded-circle" src="../statics/img/bartender.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-lg-1">
+                        <div class="p-5">
+                            
+                            <h2 class="display-4">Registrate</h2>
+                            <form th:action="@{/registrar}" method="POST" enctype="multipart/form-data">
 
 
-        /* Grupo de Inputs */
-        .input-group {
-            margin-bottom: 18px; /* Espacio entre inputs ajustado */
-            text-align: left; /* Alinea labels a la izquierda */
-        }
-        
-        .input-group label {
-            display: block;
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 5px;
-        }
+                                <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
 
-        .input-group input[type="text"],
-        .input-group input[type="email"],
-        .input-group input[type="password"],
-        .input-group input[type="file"] {
-            width: 100%;
-            padding: 10px 15px; /* Padding ajustado */
-            border-radius: 20px;
-            border: 1px solid #ddd;
-            background-color: #ffffff;
-            color: #333;
-            font-size: 15px;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
+                                <!-- <p th:if="${error != null}" th:text="${error}" style="color:red;"></p> -->
 
-        .input-group input::placeholder {
-            color: #aaa;
-        }
-
-        .input-group input:focus {
-            border-color: #6f42c1;
-            box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.2);
-        }
-
-        /* Estilo específico para input file (básico) */
-        .input-group input[type="file"] {
-            padding: 8px 12px; /* Ajustar padding para file input */
-        }
-         /* Para darle un aspecto más consistente al input de archivo */
-        .input-group input[type="file"]::file-selector-button {
-            margin-right: 10px;
-            padding: 8px 12px;
-            border: none;
-            background: #6f42c1;
-            color: white;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .input-group input[type="file"]::file-selector-button:hover {
-            background: #5a34a7;
-        }
+                                <label>NombreASAS</label>
+                                <input type="text" class="form-control" name="nombre" th:value="${nombre}"/>
+                                <label>Apellido</label>
+                                <input type="text" class="form-control" name="apellido" th:value="${apellido}"/>
+                                    <label>Mail</label>
+                                    <input type="email" class="form-control" name="mail" th:value="${mail}"/>
+                                <label>Clave</label>
+                                <input type="password" class="form-control" name="clave1" th:value="${clave1}"/>
+                                <label>Verificar Clave</label>
+                                <input type="password" class="form-control" name="clave2" th:value="${clave2}"/>
+                                <label>Foto</label>
+                                <input type="file" class="form-control" name="archivo" />
 
 
-        /* Botón de Enviar */
-        .btn {
-            display: inline-block;
-            width: auto;
-            padding: 12px 35px; /* Padding ajustado */
-            border-radius: 25px;
-            border: 2px solid #6f42c1;
-            background: #6f42c1;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-            text-transform: uppercase;
-            margin-top: 10px; /* Espacio antes del botón */
-        }
-
-        .btn:hover {
-            background: #5a34a7;
-            border-color: #5a34a7;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        /* Enlaces adicionales */
-        .links {
-            margin-top: 25px;
-            font-size: 14px;
-        }
-
-        .links a {
-            color: #6f42c1;
-            text-decoration: none;
-        }
-
-        .links a:hover {
-            text-decoration: underline;
-        }
-
-    </style>
-</head>
-<body>
-    <header>
-        <div class="logo">
-            <img src="img/rahip-logo-blanco.svg" alt="Logo Rahip">
-        </div>
-    </header>
-
-    <div class="form-container">
-        <div class="register-box">
-            <div class="icon">📝</div> <h2>Crear Nueva Cuenta</h2>
-            <form th:action="@{/registrar}" method="POST"  enctype="multipart/form-data"> <div class="input-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" >
+                                
+                                <br/><button   type="submit" class="btn btn-primary">Registrarme</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" name="apellido" placeholder="Ingresa tu apellido" >
-                </div>
-                <div class="input-group">
-                    <label for="mail">Correo Electrónico</label>
-                    <input type="email" id="mail" name="mail" placeholder="tu.correo@ejemplo.com" >
-                </div>
-                <div class="input-group">
-                    <label for="foto">Foto de Perfil</label>
-                    <input type="file" id="foto" name="archivo" >
-                </div>
-                <div class="input-group">
-                    <label for="clave">Contraseña</label>
-                    <input type="password" id="clave1" name="clave1" placeholder="Crea una contraseña segura" >
-                </div>
-                <div class="input-group">
-                    <label for="clave2">Confirmar Contraseña</label>
-                    <input type="password" id="clave2" name="clave2" placeholder="Vuelve a escribir tu contraseña" >
-                </div>
-                <button type="submit" class="btn">Enviar</button>
-            </form>
-            <div class="links">
-                <a th:href="@{/login-render}">¿Ya tienes una cuenta? Ingresa aquí</a>
             </div>
-        </div>
-    </div>
+        </section>
 
-</body>
+
+        <!-- Footer -->
+        <footer class="py-5 bg-black">
+            <div class="container">
+                <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2019</p>
+            </div>
+            <!-- /.container -->
+        </footer>
+
+   </body>
+
 </html>

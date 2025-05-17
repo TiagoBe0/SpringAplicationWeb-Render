@@ -862,7 +862,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
      @GetMapping("/inicioUsuario")
     public String inicioUsuario(ModelMap modelo) {
         modelo.put("usuarios", usuarioServicio.todosLosUsuarios());
-        return  "render-neutral.html";
+        return  "index_app_inicio.html";
     }
     
      @PostMapping("/registrar")

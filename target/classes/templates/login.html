@@ -1,168 +1,52 @@
 <!DOCTYPE html>
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Mejorado</title>
-    <style>
-        /* Reset básico y tipografía */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<!-- Head -->
 
-        /* Cuerpo de la página */
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start; /* Alinea el contenido al inicio y el login-container lo centrará */
-            min-height: 100vh;
-            background-color: #6f42c1; /* Color de fondo principal */
-            padding-top: 20px; /* Espacio para que el header no esté pegado al borde */
-        }
-
-        /* Encabezado */
-        header {
-            width: 100%;
-            background-color: blueviolet; /* Color de fondo del encabezado */
-            padding: 15px 0; /* Padding vertical */
-            text-align: center;
-            margin-bottom: 40px; /* Espacio entre el header y el login box */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .logo img {
-            width: 100px;
-            height: 100px;
-            vertical-align: middle; /* Alinea la imagen correctamente si hubiera texto */
-        }
-
-        /* Contenedor principal para centrar el login box */
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            flex-grow: 1; /* Permite que este contenedor ocupe el espacio restante */
-        }
-
-        /* Caja de Login */
-        .login-box {
-            background: #f3f3f3; /* Fondo de la caja de login */
-            padding: 30px 40px; /* Más padding para un look más espacioso */
-            border-radius: 15px; /* Bordes redondeados */
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
-            text-align: center;
-            width: 100%;
-            max-width: 380px; /* Ancho máximo de la caja */
-        }
-
-        .login-box .icon {
-            font-size: 50px; /* Tamaño del ícono */
-            color: #6f42c1; /* Color del ícono, igual al principal */
-            margin-bottom: 25px; /* Espacio debajo del ícono */
-        }
-
-        /* Grupo de Inputs */
-        .input-group {
-            margin-bottom: 20px; /* Espacio entre inputs */
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px 20px; /* Padding interno del input */
-            border-radius: 25px; /* Bordes más redondeados para los inputs */
-            border: 1px solid #ddd; /* Borde sutil */
-            background-color: #ffffff; /* Fondo blanco para los inputs para contraste */
-            color: #333; /* Color del texto del input */
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .input-group input::placeholder {
-            color: #aaa; /* Color del placeholder */
-        }
-
-        .input-group input:focus {
-            border-color: #6f42c1; /* Color del borde al enfocar */
-            box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.2); /* Sombra al enfocar */
-        }
-
-        /* Botón de Ingresar */
-        .btn {
-            display: inline-block; /* Permite centrarlo si es necesario y aplicar padding */
-            width: auto; /* Ancho automático basado en el contenido y padding */
-            padding: 12px 30px; /* Padding del botón */
-            border-radius: 25px; /* Bordes redondeados del botón */
-            border: 2px solid #6f42c1; /* Borde con el color principal */
-            background: #6f42c1; /* Fondo del botón con el color principal */
-            color: white; /* Color del texto del botón */
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-            text-transform: uppercase; /* Texto en mayúsculas */
-        }
-
-        .btn:hover {
-            background: #5a34a7; /* Un tono más oscuro de morado al pasar el mouse */
-            border-color: #5a34a7;
-            color: white;
-            transform: translateY(-2px); /* Ligero efecto de elevación */
-        }
-
-        .btn:active {
-            transform: translateY(0); /* Efecto al hacer clic */
-        }
-
-        /* Enlaces adicionales (opcional) */
-        .links {
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        .links a {
-            color: #6f42c1;
-            text-decoration: none;
-            margin: 0 5px;
-        }
-
-        .links a:hover {
-            text-decoration: underline;
-        }
-
-    </style>
-</head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="img/rahip-logo-blanco.svg" alt="Logo Rahip">
-        </div>
-    </header>
+ <!-- Navigation -->
 
-    <div class="login-container">
-        <div class="login-box">
-            <div class="icon">👤</div> 
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2">
+          <div class="p-5">
+            <img class="img-fluid rounded-circle" src="img/m2.jpg" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <div class="p-5">
+            <h2 class="display-4">Ingresá a tu Bar</h2>
             
             
             <form action="/logincheck" method="POST">
-                <div class="input-group">
-                    <input type="email" placeholder="email" name="username" >
-                </div>
-                <div class="input-group">
-                    <input type="password" placeholder="Contraseña" name="password" >
-                </div>
-                <button type="submit" class="btn">Ingresar</button>
+               <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+               <p th:if="${logout != null}" th:text="${logout}" style="color:greenyellow"></p>
+
+               <label>E-Mail</label>
+              <input type="email" class="form-control" name="username"/>
+              
+              <label>Clave</label>
+              <input type="password" class="form-control" name="password"/>
+              
+              <br/><button type="submit" class="btn btn-primary">Ingresar</button>
             </form>
-            <div class="links">
-                <a href="#">¿Olvidaste tu contraseña?</a>
-            </div>
-        </div>
+          </div>
+      </div>
     </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="py-5 bg-black">
+    <div class="container">
+      <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+ <script th:replace="/fragments/boostjs :: script"></script>
 
 </body>
+
 </html>
