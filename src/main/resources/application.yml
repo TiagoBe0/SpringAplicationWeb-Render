@@ -1,0 +1,39 @@
+spring:
+  # Configuración del DataSource (Conexión a la Base de Datos)
+  datasource:
+    # URL de conexión JDBC. Se tomará de la variable de entorno.
+    # Ejemplo: jdbc:postgresql://HOST:PORT/DBNAME
+    url: ${SPRING_DATASOURCE_URL}
+    
+    # Nombre de usuario para la conexión. Se tomará de la variable de entorno.
+    username: ${SPRING_DATASOURCE_USERNAME}
+    
+    # Contraseña para la conexión. Se tomará de la variable de entorno.
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    
+    # Nombre de la clase del driver JDBC para PostgreSQL.
+    # CORREGIDO: Error tipográfico y valor fijo en lugar de variable.
+    driver-class-name: org.postgresql.Driver 
+
+  # Configuración de JPA (Java Persistence API) y Hibernate
+  jpa:
+    # Dialecto de Hibernate específico para PostgreSQL.
+    # CORREGIDO: Valor fijo en lugar de variable.
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    
+    # Configuración de Hibernate para la generación/actualización del esquema de la BD.
+    # 'update': Intenta actualizar el esquema si hay cambios en las entidades.
+    # Considera usar 'validate' o 'none' en entornos de producción más estables.
+    hibernate:
+      ddl-auto: update
+      
+    # Opcional: Mostrar las sentencias SQL generadas por Hibernate en los logs (útil para depuración)
+    # show-sql: true 
+    # Opcional: Formatear las sentencias SQL mostradas para que sean más legibles
+    # properties:
+    #   hibernate:
+    #     format_sql: true
+
+# Opcional: Configuración del servidor (si necesitas cambiar el puerto por defecto 8080)
+# server:
+#   port: 8080 

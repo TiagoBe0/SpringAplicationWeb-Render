@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rahip</title>
+  <link rel="stylesheet" href="servicios.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  
+  <!-- Opcional: Si deseas incluir estilos rápidos de ejemplo, podrías usar un bloque style:
+  <style>
+    .banner-servicios {
+      position: relative;
+      width: 100%;
+      height: 300px; /* Ajusta la altura a tus necesidades */
+      background: #333; /* Color de fondo (puedes incluir imagen de fondo si lo deseas) */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .banner-servicios .banner-text {
+      font-family: 'Lilita One', cursive;
+      font-size: 4rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+  -->
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Cabecera -->
+      <header>
+    <nav>
+      <ul class="nav-list">
+        <li class="brand">
+          <a th:href="@{/index}">
+            <img src="layaout-web/archivos/rahip-logo-blanco.svg"
+                 alt="Marca" width="100px" class="brand-icon">
+          </a>
+        </li>
+        <li class="nav-item"><a th:href="@{/nosotros}">NOSOTROS</a></li>
+        <li class="nav-item"><a th:href="@{/servicios}">SERVICIOS</a></li>
+        <li class="nav-item"><a th:href="@{/brief}">BRIEF</a></li>
+        <li class="nav-item"><a th:href="@{/calificanos}">CALIFICÁNOS</a></li>
+        <li class="nav-item"><a th:href="@{/contacto}">CONTACTO</a></li>
+        <li class="user">
+          <a th:href="@{/registro}">
+            <img src="layaout-web/archivos/base-datos-icono.svg"
+                 alt="Usuario" class="user-icon">
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+    
+    <!-- Botón para alternar tema -->
+    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+    
+ 
+    
+    <!-- Contenido principal -->
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/+5492617501005" target="_blank" class="whatsapp-float">
+      <img src="layaout-web/archivos/iconos-redes/whatsapp-blanco.svg" alt="WhatsApp">
+    </a>
+    <main class="content">
+      <section class="nosotros">
+        <!-- GALERÍA DE SERVICIOS -->
+        <section class="gallery">
+          <div class="gallery-item" style="background-image: url('layaout-web/archivos/servicios-img/servicio-diseño.jpg');">
+            <div class="gallery-text">DISEÑO</div>
+          </div>
+          <div class="gallery-item" style="background-image: url('layaout-web/archivos/servicios-img/servicio-fotografia.jpg');">
+            <div class="gallery-text">FOTO</div>
+          </div>
+          <div class="gallery-item" style="background-image: url('layaout-web/archivos/servicios-img/servicio-branding.jpg');">
+            <div class="gallery-text">BRANDING<br><span>diseñá la marca para tu empresa o pyme de la mejor forma posible</span></div>
+          </div>
+          <div class="gallery-item" style="background-image: url('layaout-web/archivos/servicios-img/servicio-redes.jpg');">
+            <div class="gallery-text">REDES</div>
+          </div>
+          <div class="gallery-item" style="background-image: url('layaout-web/archivos/servicios-img/servicio-uxui.jpg');">
+            <div class="gallery-text">UX/UI</div>
+          </div>
+        </section>
+      </section>
+
+      <section class="rahip-info">
+        <!-- Información adicional si la hubiera -->
+      </section>
+      <section class="section-servicios">
+        <!-- Aquí puedes agregar tarjetas o contenido adicional relacionado a los servicios -->
+      </section>
+         <!-- Banner con el texto "SERVICIOS" en el fondo -->
+    <section class="banner-servicios">
+      <div class="banner-text">SERVICIOS</div>
+    </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-left">
+        <p>RAHIP Estudio Creativo | Todos los derechos reservados 2025</p>
+      </div>
+      <div class="footer-right">
+        <a href="#" class="social-icon"><img src="layaout-web/archivos/iconos-redes/whatsapp-blanco.svg" alt="WhatsApp"></a>
+        <a href="#" class="social-icon"><img src="layaout-web/archivos/iconos-redes/instagram-blanco.svg" alt="Instagram"></a>
+        <a href="#" class="social-icon"><img src="layaout-web/archivos/iconos-redes/linkedin-blanco.svg" alt="LinkedIn"></a>
+        <a href="#" class="social-icon"><img src="layaout-web/archivos/iconos-redes/mail-blanco.svg" alt="Email"></a>
+      </div>
+    </footer>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const button = document.getElementById('theme-toggle');
+      body.classList.toggle('dark-theme');
+      button.textContent = body.classList.contains('dark-theme') ? '☀️' : '🌙';
+    }
+  </script>
+</body>
+</html>

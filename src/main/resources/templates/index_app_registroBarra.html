@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="/fragments/head_app">
+	
+</head>
+<body style="background-image: url(https://th.bing.com/th/id/OIP.XqXoj7lKuHP_6zfTPiOAawHaE6?rs=1&pid=ImgDetMain)" >
+
+	<!-- SIDEBAR -->
+	<section id="sidebar" th:replace="/fragments/navGeneral">
+		<a th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text">B&S</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}">
+					<i class='bx bxs-cog' ></i>
+					<span class="text" >Dashboard</span>
+				</a>
+			</li>
+                        <li>
+				<a  th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" >
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Administrar Barra</span>
+				</a>
+			</li>
+			<li>
+				<a th:href="@{/usuario/editar-perfil(id=__${session.usuariosession.id}__)}">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Nueva Barra</span>
+				</a>
+			</li>
+			<li>
+				<a th:href="@{/usuario/editar-barra(id=__${session.usuariosession.id}__)}">
+					<i class='bx bxs-cog'></i>
+					<span class="text">Crear Cristaleria</span>
+				</a>
+			</li>
+			
+			<li>
+				<a th:href="@{/usuario/editar-ruptura(id=__${session.usuariosession.id}__)}">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Nueva Ruptura</span>
+				</a>
+                            <a th:href="@{/usuario/editar-cristal(id=__${session.usuariosession.id}__)}">
+					<i class='bx bxs-group' ></i>
+					<span class="text">Subir imagen de cristaleria</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a th:href="@{/usuario/editar-perfil-nuevo(id=__${session.usuariosession.id}__)}">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
+                        
+			<li>
+				<a href="/logout" th:if="${session.usuariosession != null}" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav  th:replace="/fragments/barraGeneral">
+			
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+                    <a class="boton" th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" type="submit"  >DASHBOARD</a>
+			<section class="form-register">
+  <h4 style="color: black">Registro de Barra</h4>
+  <form action="/usuario/actualizar-barra"  method="POST" enctype="multipart/form-data">
+      <p th:if="${exito!=null}" th:text="${exito}" style="color:green">registro de barra exitoso</p>
+       <p th:if="${error!=null}" th:text="${exito}" style="color:red">falta algun campo obligatorio</p>
+      <div class="form-check">
+  <input class="form-check-input" type="radio" name="insumo" value="-1">
+  <label style="color: #000" for="flexRadioDefault1">
+    Administracion de Cristaleria
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="insumo"  value="1" checked>
+  <label style="color: #000" for="flexRadioDefault2">
+    Administracion de Insumos/Stock
+  </label>
+</div>
+  <input style="color: black" class="controls" type="text" name="nombre" id="nombre" placeholder="Ingrese un nombre">
+  <input type="hidden" name="id" th:value="${perfil.id}"/>
+   
+  <input class="botons" type="submit" value="enviar">
+  
+ </form>
+</section>
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	
+
+	<script src="../script.js"></script>
+</body >
+</html>

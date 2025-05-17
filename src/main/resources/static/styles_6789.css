@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #4B0082;
+    color: white;
+}
+
+header {
+    
+    
+    align-items: right;
+    background: #8A2BE2;
+    color: #fff;
+    padding: 1rem;
+}
+
+.logo {
+        font-size: 50px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        background-color: blueviolet;
+        text-align: center;
+        margin-top: 0;
+        padding: 10px;
+}
+
+.logo span {
+    color: #FFF;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hero {
+    text-align: center;
+    padding: 50px;
+}
+
+.hero h1 {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.hero h2 {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.marcas {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.servicios {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px;
+}
+
+.servicio-card {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 150px;
+    font-weight: bold;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #3A006A;
+}
+
+.social-icons img {
+    width: 24px;
+    margin-left: 10px;
+}

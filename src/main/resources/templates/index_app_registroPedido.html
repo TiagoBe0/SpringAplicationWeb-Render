@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+        <link rel="stylesheet" href="../styles.css">
+ 
+        
+          <style>
+     
+
+      .gallery {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(70px,70px));
+          grid-gap: 1px;
+          max-width: 500px;
+      }
+
+      .gallery-item {
+          position: relative;
+          overflow: hidden;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+          .gallery-item img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              transition: transform 0.3s ease;
+          }
+
+          .gallery-item:hover img {
+              transform: scale(1.1);
+          }
+  </style>
+	<title>AdminHub</title>
+</head>
+<body style="background-image: url(https://th.bing.com/th/id/OIP.XqXoj7lKuHP_6zfTPiOAawHaE6?rs=1&pid=ImgDetMain)" >
+
+	<!-- SIDEBAR -->
+	<section id="sidebar" th:replace="/fragments/navCristaleria">
+		
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav  th:replace="/fragments/barraGeneral">
+			
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+                    <a class="boton" th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" type="submit"  >DASHBOARD</a>
+			<section class="form-register">
+  <h4 style="color: black">Nuevo Pedido</h4>
+  
+  <h6 style="color: black" >Marcar la cristaleria que quieras sumar al carrito</h6>
+  <!-- MAIN FORMULARIOOO -->
+   <form action="/usuario/registro-pedido" method="POST" >
+       <p th:if="${exito!=null}" th:text="${exito}" style="color:green">registro de pedido exitoso</p>
+       <p th:if="${error!=null}" th:text="${exito}" style="color:red">falta algun campo obligatorio</p>
+        <input type="hidden" name="idUsuario" th:value="${perfil.id}"/>
+       <div th:each="cristaleria: ${cristalerias}" th:if="${!cristaleria.insumo}" style="display: flex">
+           
+           <img th:src="${'/foto/cristaleriafoto/' + cristaleria.id}" style="max-width: 60px;max-height: 60px;justify-content: space-evenly">
+                
+                <input style="color: #000; max-width: 100px" class="controls" type="number" th:name="cantidad[]" th:value="${0}">
+                <p style="color: #000;padding-left: 10px" th:text="${cristaleria.tipo}"></p>
+                <div class="form-check" style="padding-left: 50px;padding-right: 0px ">
+                    <input  class="form-check-input" type="checkbox" th:value="${cristaleria.id}"  th:name="id[]" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQNJREFUSEvNlNENwjAMRK+bwCawCfzCEMAQ8AtMApvAJtBDMbISJ7EUguqvqkl9frlLB3SuoXN//FXgFWieAK7j8/4XdJpABKTvEsC9VcQ6ohWAc2hOEatkmOoRWxtmAB6ha46iSYC9SUCSC4C1gdAsIBQ0fN5DgD1vow+LQEASpmqX8URIE/KSSWK2pqA3pNPFpEkYZJ3U/K540Syz+Y5kIqLFzfTVYibHos3WIjpl8ZF+KGsCObMpzOkpLGUmqyagzT4Ufh8WqYuAm5gk4nsquZgeAjYuRVSEdZq+w3gFPNObe7wCRwAbACcA26hTaa2aojghVvL0bz4ZeDIE3T2YrsAbv7hAGc/p7GMAAAAASUVORK5CYII=">
+                    </label>
+                </div>
+           
+       </div>
+  
+  
+  
+  
+  <input class="botons" type="submit" value="enviar">
+ </form>
+  <form th:action="@{/usuario/registro-pedido-chat}" th:method="post">
+    <th:block th:each="cristaleria : ${cristalerias}">
+        <input type="checkbox" th:value="${cristaleria.id}" th:name="selectedIds[]" /> <br>
+    </th:block>
+    <button type="submit">Submit</button>
+</form>
+  <form  th:action="@{/usuario/registro-pedido-variable}" th:method="post">
+    <th:block th:each="cristaleria, iterStat : ${cristalerias}">
+        <input type="checkbox" th:value="${cristaleria.id}" th:name="'id' + ${iterStat.index + 1}" /> <br>
+    </th:block>
+    <button type="submit">Submit</button>
+</form>
+  <form th:action="@{/usuario/registro-pedido-variable}" th:method="post">
+    <th:block th:each="cristaleria, iterStat : ${cristalerias}">
+        <!-- Checkbox for selecting cristaleria -->
+        <input type="checkbox" th:value="${cristaleria.id}" th:name="'id' + ${iterStat.index + 1}" /> <br>
+        
+        <!-- Text input for additional string input for each cristaleria -->
+        <input type="text" th:value="${cristaleria.id}" th:name="'input' + ${iterStat.index + 1}" /> <br>
+    </th:block>
+    <button type="submit">Submit</button>
+</form>
+</section>
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	
+
+	<script src="../script.js"></script>
+</body>
+</html>

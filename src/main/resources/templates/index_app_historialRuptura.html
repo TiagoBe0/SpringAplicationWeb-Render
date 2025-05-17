@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="/fragments/head_app">
+	
+</head>
+<body style="background-image: url(https://static.vecteezy.com/system/resources/previews/002/623/583/original/abstract-black-geometric-shape-background-with-diagonal-line-texture-design-for-presentation-banner-cover-web-flyer-card-poster-game-texture-slide-and-powerpoint-illustration-vector.jpg)" >
+
+
+	<!-- SIDEBAR -->
+	<section id="sidebar"  th:replace="/fragments/navInsumo">
+		
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+        <section id="content" >
+		<!-- NAVBAR -->
+		<nav  th:replace="/fragments/barraGeneral">
+			
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+                                    <h1 style="color: #ffffff">Dashboard Insumos</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#" >Dashboard</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Home</a>
+						</li>
+					</ul>
+				</div>
+				<a href="#" class="btn-download">
+					<i class='bx bxs-cloud-download' ></i>
+					<span   class="text">Download PDF</span>
+				</a>
+			</div>
+                         
+
+
+                    <div class="table-data">
+                            <div class="order" >
+					<div class="head">
+						<h3 >Panel de Insumos</h3>
+						<i class='bx bx-search' ></i>
+                                                <a  th:href="@{/usuario/data-insumos(id=__${session.usuariosession.id}__)}">
+                                                <i class='bx bx-data' >
+                                                                                                    </i>
+
+                                                   </a>
+                                                
+					</div>
+					<table>
+						<thead >
+							<tr>
+								<th>Tipo</th>
+								
+                                                               
+                                                                <th>Total en Stock  <p  th:text="${' '+perfil.totalCristalerias}"></p></th>
+                                                                <th>precio </th>
+                                                                <th>Total<h3 th:text="${' '+costeMensual+'$'}"></h3></th>
+							</tr>
+						</thead>
+						
+                                                <tbody>
+                                                
+							<tr th:each="ruptura: ${rupturas}" th:if="${!ruptura.insumo}" >
+                                              
+								<td th:text="${ruptura.tipoCristaleria.tipo}"></td>
+                                                                <td th:text="${'-'+ruptura.numeroDeRuptura}"></td>
+                                                             
+                                      
+                                                                <!-- comment 
+                                       
+                                         <td th:text="${ruptura.dia+'/'+ruptura.mes}" ></td>
+                                         -->
+                                        
+                                                                
+                                         <td style="color :red" th:text="${'-'+ruptura.costoRuptura+'$'}"></td>
+                                         <td style="color:red" th:text="${'-'+ruptura.numeroDeRuptura*ruptura.costoRuptura}"></td>
+							
+                                               
+							
+                                                
+                                                </tr>
+							
+						</tbody>
+                                                
+					</table>
+				</div>
+                   
+
+                        </div>
+                                
+                                
+                    <div class="table-data">
+                           
+                                   <div class="todo" >
+					<div class="head">
+						<h3>Proveedores</h3>
+                                                <a th:href="@{/usuario/editar-proveedor(id=__${session.usuariosession.id}__)}" ><i class='bx bx-plus' style="width: 50px"></i></a>
+						
+						<i class='bx bx-filter' ></i>
+					</div>
+					<ul class="todo-list" >
+                                            <li class="completed" th:each="proveedor : ${proveedores}" >
+                                               
+                                                    <h4 th:text="${proveedor.nombre}"></h4>
+                                                    <h7 th:text="${'+'+proveedor.celular}"></h7>
+                                                    <i class='bx bx-whatsapp' th:href="${proveedor.link}"><a href="https://api.whatsapp.com/send?phone=TUNUMERODEREGISTRO&text=Hola,%20estoy%20interesado%20en%20obtener%20más%20información." target="${proveedor.link}">
+                                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAzBJREFUSEvFlUuIFFcUhv9T1be7buuMzM4QRQxRIgq+ULMxiGBX9UxwoyNECDiIAeMjiDAL3RjQhcSNMQmCMCjoQtSFJLFvt6/EEDDi4Gx8EBiHiCsfiGmZW1O36x5TM91hnOlq3cjcZZ2/zlfnP+fcIrznQ+85P6YeIAr55eTyJmZ8BmA+gJgZf4L4LyKnbErDd1q5kFqBLMjZscMnGOQDqIJxB8T3QRTCYimIFwM0g4AjUZvej3OImoGaAnKdufmxda4TkAPzHlMOTwPgiQlEUe4C4wiAh8Tuxqj86u5EzWRA57SZGWtvEyF2YNeOlEYGW1mQLUxfxE58EYBjhF6InzE8Xj8JkPW9S0y00rW8IqyEQ/Jz+WEcxW1RJXqQBqpD+kHcZ0rh9lRAxvdWE9ENEG81pbAv25VdwLF7G8BTo/TcZjY1kmV8bx8RHWJrC7XKyOXG8zcqEEV5DIwe81R3oB8m48teIhxOxEzWr5VGKql2dUOKqqwycLGm9IbmgEAOMPCopvT6RCCC/NcA/zgm5h6jwpOt+iECOZDEjdJLmgIygXxMzJdMOfxqVODnPxDEQwS8iEI9G7+h1hrgHQdos1G6Pc2iv8HoN0p/0RDUR/F7AD8ZpXe26kO2KA8z4xujtNcUkA08xaAOo/Sq8V8qAnkWwKbEX2Gxyzo2b+GcBFGfccR5/PryxZilo7plRul5zQF+/iAT9xrrzkLl1ZP/Id1wRVUe/W+adgD0b9JyAG1JnIDvIqV7cQCOuCmfAXzBqHBbU4DX5X0UxzRIoG8jNXxgot+ZQm4dOU5i1yf1mGVrg2Qss77czIQzE6dt0qLVJyE2Si9Pa6jw88uYbHvG4p9kGb1Ob05s6RaA+0bpNembXMA04cjEz2NG6b2tJqYRqye/AqDdrfGK8Er4KBXg+vkuh/gXAn+ZbBYTFcC4adqHT+Ec9PgXZVHOMsxbCLR7dA/ZXfvWy04E8oexRjYO3wXoYwAREX5nxlB9TFcC+LSu+sMh25N2Kb55VQT5y4AdJKZrUS1zFVerz7EG00XO62aiIhFWgdEBxj0i3GDGeVPWifepZ+p/me/S6Cmt4DVIXl0oZr233QAAAABJRU5ErkJggg=="/>
+                                                         </a></i>
+						 </li>
+                                                <li>
+				<a th:href="@{/usuario/editar-pedido(id=__${session.usuariosession.id}__)}">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Nuevo Pedido</span>
+				</a>
+			</li>
+						
+					</ul>
+				</div>
+			</div>
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	
+
+	<script src="../script.js"></script>
+</body>
+</html>

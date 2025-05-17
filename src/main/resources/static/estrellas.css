@@ -1,0 +1,80 @@
+.star-rating {
+    direction: rtl;           /* RTL para que el hover coloree hacia la izq */
+    font-size: 0;             /* elimina gaps extra en algunos navegadores */
+    user-select: none;
+  }
+  
+  .star-rating input {
+    display: none;            /* ocultamos los radio buttons */
+  }
+  
+  .star-rating label {
+    display: inline-block;
+    font-size: 6rem;          /* tamaño ¡MUY grande! */
+    padding: 0 .5rem;         /* separación entre estrellas */
+    color: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: color .2s ease-in-out, transform .1s;
+  }
+  
+  /* Hover colorea esta estrella y todas las “anteriores” (por direction:rtl) */
+  .star-rating label:hover,
+  .star-rating label:hover ~ label {
+    color: #fff;
+    transform: scale(1.1);
+  }
+  
+  /* Mantener coloreada la selección actual */
+  .star-rating input:checked ~ label {
+    color: #fff;
+  }
+  /* Y si cambias la selección, quita el hover sobrante */
+  .star-rating input:checked ~ label:hover,
+  .star-rating input:checked ~ label:hover ~ label {
+    color: rgba(255,255,255,0.7);
+  }
+  /* ==== Estrellas animadas ==== */
+.star-rating {
+    direction: rtl;
+    user-select: none;
+  }
+  
+  .star-rating input {
+    display: none;
+  }
+  
+  .star-rating label {
+    font-size: 6rem;                /* tamaño grande */
+    color: rgba(255,255,255,0.3);   /* estrellas apagadas */
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+    padding: 0 .5rem;
+  }
+  
+  /* Hover: agranda y enciende la estrella y las anteriores */
+  .star-rating label:hover,
+  .star-rating label:hover ~ label {
+    color: #fff;
+    transform: scale(1.2);
+  }
+  
+  /* Al seleccionar, “pop” animado en la estrella clicada */
+  .star-rating input:checked ~ label {
+    color: #fff;
+    animation: pop 0.3s ease forwards;
+  }
+  
+  /* Si mueves el mouse sobre la selección activa, que no se apague del todo */
+  .star-rating input:checked ~ label:hover,
+  .star-rating input:checked ~ label:hover ~ label {
+    color: rgba(255,255,255,0.7);
+    transform: scale(1.1);
+  }
+  
+  /* Keyframes del “pop” */
+  @keyframes pop {
+    0%   { transform: scale(0.8); }
+    50%  { transform: scale(1.4); }
+    100% { transform: scale(1);   }
+  }
+  

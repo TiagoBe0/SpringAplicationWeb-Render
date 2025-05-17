@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #5A1D87;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 95%;
+            margin: auto;
+            padding: 20px;
+            background-color: #6A1E99;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+        .header-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header-logo img {
+            width: 100px;
+            height: auto;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: white;
+            color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+            vertical-align: middle; /* Para alinear verticalmente el contenido de las celdas */
+        }
+        th {
+            background-color: #8A2BE2;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .button {
+            display: inline-block;
+            background-color: white;
+            color: #5A1D87;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin: 10px 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            border: 2px solid #5A1D87;
+        }
+        .button:hover {
+            background-color: #5A1D87;
+            color: white;
+        }
+        .search-controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .search-bar {
+            width: 50%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+        }
+        /* Estilo para las imágenes en la tabla */
+        .user-photo {
+            max-width: 80px; /* Ajusta el tamaño según necesites */
+            max-height: 80px;
+            border-radius: 4px; /* Opcional: para redondear las imágenes */
+            display: block; /* Para centrar si es necesario o manejar márgenes */
+            margin: auto; /* Para centrar la imagen en la celda */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-logo">
+            <img src="static/rahip-logo-blanco.svg" alt="Logo Rahip">
+        </div>
+
+        <h2>Listado de Usuarios</h2>
+
+      <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Descripción</th>
+                                <th>Barra</th>
+                                <th>Stock </th>
+                                <th>precio unitario </th>
+                                <th>idUsuario</th>
+                                <th>img</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="cristaleria : ${cristalerias}">
+                                
+                                <td th:text="${cristaleria.descripcion}"></td>
+                                <td th:text="${cristaleria.barraPertenecienteNombre}"></td>
+                                <td th:text="${cristaleria.enStock}"></td>
+                                 <td><strong th:text="${(cristaleria.precio ?: 0) + '$'}"></strong></td>
+                                
+                                <td th:text="${cristaleria.idUsuario}"></td>
+                                <td><strong th:text="${cristaleria.idUsuario}"></strong></td>
+                                 <td>
+                                    <img th:if="${cristaleria.id != null}" th:src="@{'/foto/cristaleriafoto/' + ${cristaleria.id}}" alt="Foto cristalería">
+                                    <p th:text="${cristaleria.tipo}"></p>
+                                </td>
+                            
+                            </tr>
+                        </tbody>
+                    </table>
+    </div>
+</body>
+</html>
